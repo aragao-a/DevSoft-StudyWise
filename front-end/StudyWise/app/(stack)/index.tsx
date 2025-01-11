@@ -6,33 +6,53 @@ import Logo from '@/components/ui/logo';
 import { useState } from 'react';
 import LoginForm from '@/components/ui/login-form';
 import HandIcon from '@/assets/svg/hand-icon';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 export default function App() {
 
     // hook pra controle de navegação
     const router = useRouter();
 
-    const handleScreenTouch = () => hasTouched(true);
+    const transition = useSharedValue(0);
     const [firstTouch, hasTouched] = useState(false);
-    
+
+    const handleScreenTouch = () => {
+        transition.value =  withTiming(firstTouch ? 0 : 1, { duration: 200 });
+        hasTouched(true);
+    }
+
+    const beforeTouchStyle = useAnimatedStyle(() => {
+        return {
+        opacity: 1 - transition.value,
+        };
+    });
+
+    const afterTouchStyle = useAnimatedStyle(() => {
+        return {
+        opacity: transition.value,
+        };
+    });
+
     if(!firstTouch) {
         return (
         <Pressable style={styles.container} onPress={handleScreenTouch}>
             <IndexBackground>
-            <StatusBar backgroundColor='#0054C1'/>
-            <SafeAreaView style={styles.container}>
-                    <View style={styles.group}>
-                        <View style={styles.logo}>
-                            <Logo style={styles.logo}imageSize={0.14} imageVersion='1-1'/>
-                        </View>
-                        <View style = {styles.touchInstuction}> 
-                            <HandIcon/>
-                            <Text style= {styles.baseText}> 
-                                TOQUE NA TELA
-                            </Text>
-                        </View>
-                    </View>
-            </SafeAreaView>
+                <StatusBar backgroundColor='#0054C1'/>
+                <Animated.View style={[styles.container, beforeTouchStyle]}>
+                    <SafeAreaView style={styles.container}>
+                            <View style={styles.group}>
+                                <View style={styles.logo}>
+                                    <Logo style={styles.logo}imageSize={0.14} imageVersion='1-1'/>
+                                </View>
+                                <View style = {styles.touchInstuction}> 
+                                    <HandIcon/>
+                                    <Text style= {styles.baseText}> 
+                                        TOQUE NA TELA
+                                    </Text>
+                                </View>
+                            </View>
+                    </SafeAreaView>
+                </Animated.View>
             </IndexBackground>
         </Pressable>
     )
@@ -40,13 +60,15 @@ export default function App() {
     
     return (
         <IndexBackground>
-                    <StatusBar backgroundColor='#0054C1'/>
-                    <SafeAreaView style={styles.container}>
-                        <View style={styles.container}>
-                        <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
-                <LoginForm/>
-                </View>
-            </SafeAreaView>
+            <StatusBar backgroundColor='#0054C1'/>
+            <Animated.View style={[styles.container, afterTouchStyle]}>
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.container}>
+                    <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
+                    <LoginForm/>
+                    </View>
+                </SafeAreaView>
+            </Animated.View>
         </IndexBackground>
     )
 }
