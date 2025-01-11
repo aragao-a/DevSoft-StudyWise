@@ -1,16 +1,20 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable} from "react-native";
+import { StyleSheet, View, Text, Image, Pressable} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
+import ProfileIcon from "@/assets/svg/profile-icon";
+import PlusIcon from "@/assets/svg/plus-icon";
+import { useForm } from "react-hook-form";
 
 export default function Home() {
     const router = useRouter();
-    const handleButtonPress = () => {router.push('/home-stage-2')}
-    const handleProfileIconPress = () => {router.push('/profile')}
+    const handleButtonPress = () => {router.push('/home-stage-2')};
+    const handleProfileIconPress = () => {router.push('/profile')};
+    const {control} = useForm();
     return (
         <HomeBackground>
-            <SearchBar/>
+            <SearchBar formProps={{name: 'pesquisa', control}} inputProps={{}}/>
             <View style={styles.container}>
                 <Text style={styles.baseText}>
                     SEUS QUIZZES:
@@ -26,10 +30,10 @@ export default function Home() {
                             Novo Quiz!
                         </Text>
                     </View>
-                    <Image source={require('@assets/images/plus.png')}/>
+                    <PlusIcon/>
                 </Pressable>
                 <Pressable onPress= {handleProfileIconPress} >
-                    <Image style={styles.profileIcon} source={require('@assets/images/profile-icon.png')}/>
+                    <ProfileIcon style={styles.profileIcon}/>
                 </Pressable>
             </View>
         </HomeBackground>

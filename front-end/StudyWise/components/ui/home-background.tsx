@@ -8,13 +8,13 @@ const windowHeight = Dimensions.get("window").height;
 export default function HomeBackground({children, ...rest}: ViewProps) {
     return (
         <SafeAreaView style = {{height:windowHeight, backgroundColor:'white'}}>
-            <StatusBar backgroundColor='rgba(0, 0, 0, 0.2)'/>
+            <StatusBar backgroundColor='white'/>
             <View style={styles.header}>
                 <View style={styles.headerSides}>
                     <GobackButton/>
                 </View>
                 <View style={styles.container}>
-                <Logo style={styles.logo} imageSize={0.04} imageVersion="1-2"/>
+                <Logo style={styles.logo} imageSize={0.05} imageVersion="1-2"/>
                 </View>
                 <View style={styles.headerSides}>
                 </View>

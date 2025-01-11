@@ -1,14 +1,21 @@
-import { TextInput, TextInputProps} from "react-native"
+import { TextInput, TextInputProps} from "react-native";
+import { Controller, UseControllerProps } from 'react-hook-form';
+import { forwardRef } from "react";
 
-type Props = TextInputProps & {
-    inputDescription: (string | undefined)
+type Props = {
+    formProps:UseControllerProps;
+    inputProps: TextInputProps;
 }
 
-export default function CustomInput({onFocus, onBlur, inputDescription, style, ...rest} : Props) {
+const CustomInput = forwardRef<TextInput, Props> (({inputProps, formProps}, ref) => {
     return (
-        <TextInput style={style} onFocus={onFocus} onBlur={onBlur} submitBehavior='blurAndSubmit'
-            placeholder={inputDescription}
+        <Controller {...formProps} render={({field}) => (
+        <TextInput  ref={ref} value={field.value} onChangeText={field.onChange} submitBehavior='blurAndSubmit' {...inputProps}
             placeholderTextColor="#999"
         />
+        )}
+        />
     )
-}
+});
+
+export { CustomInput };

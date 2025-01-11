@@ -1,6 +1,7 @@
-import { TouchableWithoutFeedback, Image, View, StatusBar} from "react-native"
+import { Pressable, View} from "react-native"
 import { useRouter } from "expo-router";
 import { usePathname } from "expo-router";
+import ArrowBack from "@/assets/svg/arrow-back";
 
 export default function GobackButton() {
     const router = useRouter();
@@ -11,9 +12,9 @@ export default function GobackButton() {
     }
     return (
         <View style={{aspectRatio:1}}>
-            <TouchableWithoutFeedback onPress={handlePress}>
-                <Image source={require('@assets/images/arrow_back.png')}/>
-            </TouchableWithoutFeedback>
+            <Pressable onPress={handlePress}>
+                <ArrowBack/>
+            </Pressable>
         </View>
     )
 }

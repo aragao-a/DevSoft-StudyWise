@@ -47,14 +47,13 @@ export default function RootLayout() {
 
   // stack de navegação
   return (
-    <RootBackground colors={colors}>
+    <RootBackground>
     <Stack screenOptions={{
       headerShown: false,
       statusBarAnimation: 'slide',
       animationTypeForReplace:'push',
       }}>
         <Stack.Screen name="index" />
-        <Stack.Screen name="sign-in" />
         <Stack.Screen name="sign-up"/>
         <Stack.Screen name="home-stage-1" />
         <Stack.Screen name="home-stage-2" />

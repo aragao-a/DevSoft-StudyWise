@@ -1,16 +1,22 @@
-import {Text, View, TouchableOpacity, StyleSheet, StatusBar} from 'react-native';
-import CustomInput from './custom-input';
+import {Text, View, StyleSheet, TextInput, Pressable} from 'react-native';
+import {CustomInput} from './custom-input';
 import { useRouter } from 'expo-router';
+import { useForm } from 'react-hook-form';
+import { useRef } from 'react';
 
 const relativeSize = '90%';
 
 export default function LoginForm() {
 
+    const { control, handleSubmit} = useForm();
+
+    const passwordRef = useRef<TextInput>(null);
+
     //hook pra controle de navegação
 
     const router = useRouter();
     
-    const handleSignInButtonPress = () => {
+    const handleLogin = () => {
         router.push("./home-stage-1");
     }
 
@@ -26,28 +32,46 @@ export default function LoginForm() {
                 </Text>
             </View>
             <View style={styles.inputArea}>
-                <CustomInput style={styles.input}
-                    inputDescription="E-mail"
+                <CustomInput
+                    inputProps={{
+                        style:styles.input,
+                        placeholder:"E-mail",
+                        onSubmitEditing: () => passwordRef.current?.focus(),
+                        returnKeyType:'next',
+                    }} 
+                    formProps={{
+                        name:'LoginEmail',
+                        control,
+                    }}
                 />
-                <CustomInput style={styles.input}
-                    inputDescription="Senha"
+                <CustomInput 
+                    ref={passwordRef} 
+                    inputProps={{
+                        style:styles.input,
+                        secureTextEntry: true,
+                        placeholder:'Senha',
+                        onSubmitEditing: handleSubmit(handleLogin),
+                    }} 
+                    formProps={{
+                        name:'LoginPassword',
+                        control,
+                    }}
                 />
             </View>
             <View style={styles.loginButtonArea}>
-                <TouchableOpacity
-                    activeOpacity={0.85}
+                <Pressable
                     style={styles.loginButton}
-                    onPress= {handleSignInButtonPress}
+                    onPress= {handleSubmit(handleLogin)}
                 >
                     <Text style={styles.baseText}>
                         Entrar
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleSignUpTextPress}>
+                </Pressable>
+                <Pressable onPress={handleSubmit(handleSignUpTextPress)}>
                     <Text style={styles.linkText}>
                     Cadastre-se
                     </Text>
-                </TouchableOpacity>
+                </Pressable>
         </View>
     </View>
     )

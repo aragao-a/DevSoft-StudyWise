@@ -1,5 +1,7 @@
-import {Image, View, ViewProps, Dimensions, ImageSourcePropType} from 'react-native';
+import {View, ViewProps, Dimensions} from 'react-native';
 import useComponentSize from '@/hooks/use-component-size';
+import StudyWiseLogo2 from '@/assets/svg/studywise-logo-2';
+import StudyWiseLogo1 from '@/assets/svg/studywise-logo-1';
 
 //Define o altura da tela do usuário
 const windowHeight = Dimensions.get("window").height;
@@ -8,19 +10,23 @@ const findScale:scaleMap = new Map;
 findScale.set('1-1', 1.77);
 findScale.set('1-2', 5.3);
 
+function fitsScreen(imageHeight:number, containerSize?: ({width: number; height: number} | null)) {
+    return (containerSize?.height !== null  && containerSize?.height !== undefined && (containerSize?.height - imageHeight > 20))
+}
 type Props = ViewProps & {
     imageSize:number,
     imageVersion:string,
 }
+
 export default function Logo({imageSize, imageVersion, style, ...rest}: Props) {
 
     //Avalia qual versão da logo é e faz ajustes
-    let imgPath: ImageSourcePropType = require('@assets/images/studywise-logo-1-1.png');
+    let version = 1;
     let scale = findScale.get('1-1');
     
     switch(imageVersion) {
         case '1-2':
-            imgPath = require('@assets/images/studywise-logo-1-2.png');
+            version = 2;
             scale = findScale.get('1-2')
             break;
     }
@@ -34,8 +40,9 @@ export default function Logo({imageSize, imageVersion, style, ...rest}: Props) {
 
     return (
         <View style={style} onLayout= {onLayout}>
-            {(containerSize?.height !== null  && containerSize?.height !== undefined && (containerSize?.height - imageHeight > 20)) && 
-            <Image style={{height: imageHeight, width: imageWidth}} source= {imgPath}/>}
+            { fitsScreen(imageHeight, containerSize) && (
+            (version === 1 && <StudyWiseLogo1 height={imageHeight} width={imageWidth}/>) ||
+            (version === 2 && <StudyWiseLogo2 height={imageHeight} width={imageWidth}/>))}
         </View>
     )
 }
