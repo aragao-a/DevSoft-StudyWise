@@ -1,31 +1,44 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Image, Pressable} from "react-native";
+import { StyleSheet, View, Text, Pressable} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
 import { useForm } from "react-hook-form";
-
+import { useState } from "react";
+import { Quiz } from "@/constants/quiz-type";
+import QuizList from "@/components/ui/quiz-list";
+import SearchIcon from "@/assets/svg/search-icon";
 export default function Home() {
+    const [searchResult, setSearchResult] = useState('')
+    const [quizzes, setQuizzes] = useState<Quiz[]>([{id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, {id: '1', grade:1, field:'asdeem', name:'Plat'}, {id: '1', grade:1, field:'Biol', name:'Pl'}, {id: '1', grade:1, field:'a', name:'B'}, {id: '1', grade:1, field:'a', name:'b'}])
     const router = useRouter();
     const handleButtonPress = () => {router.push('/home-stage-2')};
     const handleProfileIconPress = () => {router.push('/profile')};
     const {control} = useForm();
     return (
         <HomeBackground>
-            <SearchBar formProps={{name: 'pesquisa', control}} inputProps={{}}/>
-            <View style={styles.container}>
-                <Text style={styles.baseText}>
+            <View style={{marginTop: 35}}>
+                <SearchBar 
+                    animatedStyle={{height:40}}
+                    layoutProps={{children:<SearchIcon/>}} 
+                    formProps={{name: 'pesquisa', control}} 
+                    inputProps={{
+                        onChangeText: (text) => {setSearchResult(text)},readOnly: quizzes.length === 0 ? true: false
+                    }}
+                />
+            </View>
+            <View style={quizzes.length === 0 ?styles.container: [styles.container, {justifyContent: 'flex-start'}]}>
+                <Text  style={styles.baseText}>
                     SEUS QUIZZES:
                 </Text>
-                <NoQuizSign/>
+                {(quizzes.length === 0 &&
+                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult}/>)}
             </View>
             <View style={styles.footer}>
                 <Pressable style={styles.buttonArea} onPress= {handleButtonPress}>
-                    <View
-                        style={styles.createQuizButton}
-                    >
+                    <View style={styles.createQuizButton}>
                         <Text style={styles.ButtonText}>
                             Novo Quiz!
                         </Text>
@@ -44,7 +57,7 @@ const styles = StyleSheet.create({
     container: {
         flex:1, 
         justifyContent: 'center',
-        gap:30,
+        gap:'5%',
         backgroundColor: 'white',
         alignItems:'center'
     },
@@ -76,7 +89,8 @@ const styles = StyleSheet.create({
     footer: {
         height:'25%', 
         alignItems:'stretch', 
-        justifyContent:'space-around'
+        justifyContent:'space-around',
+        paddingTop:'5%'
     },
     profileIcon:{
         alignSelf:'flex-end', 

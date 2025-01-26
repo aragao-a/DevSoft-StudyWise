@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, TextInput, Pressable} from 'react-native';
+import {Text, View, StyleSheet, TextInput, Pressable, TextInputProps} from 'react-native';
 import {CustomInput} from './custom-input';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ const relativeSize = '90%';
 
 export default function LoginForm() {
 
-    const { control, handleSubmit} = useForm();
+    const { control, handleSubmit, setValue} = useForm();
 
     const passwordRef = useRef<TextInput>(null);
 
@@ -18,10 +18,13 @@ export default function LoginForm() {
     
     const handleLogin = () => {
         router.push("./home-stage-1");
+        setValue('loginPassword', {content: ''});
     }
 
     const handleSignUpTextPress = () => {
         router.push("./sign-up");
+        setValue('loginPassword', {content: ''});
+        setValue('loginEmail', {content: ''});
     }
 
     return(
@@ -38,10 +41,14 @@ export default function LoginForm() {
                         placeholder:"E-mail",
                         onSubmitEditing: () => passwordRef.current?.focus(),
                         returnKeyType:'next',
+                        submitBehavior: 'submit'
                     }} 
                     formProps={{
-                        name:'LoginEmail',
+                        name:'loginEmail',
                         control,
+                        rules: {
+                            required:true,
+                        }
                     }}
                 />
                 <CustomInput 
@@ -53,8 +60,11 @@ export default function LoginForm() {
                         onSubmitEditing: handleSubmit(handleLogin),
                     }} 
                     formProps={{
-                        name:'LoginPassword',
+                        name:'loginPassword',
                         control,
+                        rules: {
+                            required:true,
+                        }
                     }}
                 />
             </View>

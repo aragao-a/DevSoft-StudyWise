@@ -4,7 +4,7 @@ import {SignUpField} from "@/components/ui/sign-up-field";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import { useRouter} from "expo-router";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useRef} from "react";
 
 
 const windowHeight = Dimensions.get('window').height;
@@ -21,6 +21,7 @@ export default function Signup() {
     const emailRef = useRef<TextInput>(null);
     const dateOfBirthRef = useRef<TextInput>(null);
     const passwordRef = useRef<TextInput>(null);
+
 
     return (
         <KeyboardAwareScrollView style={styles.container}>
@@ -40,7 +41,8 @@ export default function Signup() {
                             fieldDescription='Nome' 
                             inputProps={{
                                 placeholder:"Digite seu nome completo",
-                                onSubmitEditing: () => emailRef.current?.focus()
+                                onSubmitEditing: () => emailRef.current?.focus(),
+                                submitBehavior: 'submit',
                             }}
                         />
                         <SignUpField
@@ -60,7 +62,8 @@ export default function Signup() {
                             fieldDescription='E-mail' 
                             inputProps={{
                                 placeholder:"Digite seu E-mail",
-                                onSubmitEditing: () => dateOfBirthRef.current?.focus()
+                                onSubmitEditing: () => dateOfBirthRef.current?.focus(),
+                                submitBehavior: 'submit',
                             }}
                         />
                         <SignUpField
@@ -80,7 +83,8 @@ export default function Signup() {
                             fieldDescription='Data de Nascimento' 
                             inputProps={{
                                 placeholder:"dd/mm/aa",
-                                onSubmitEditing: () => passwordRef.current?.focus()
+                                onSubmitEditing: () => passwordRef.current?.focus(),
+                                submitBehavior: 'submit',
                             }}
                         />
                         <SignUpField

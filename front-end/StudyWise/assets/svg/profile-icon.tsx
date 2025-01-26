@@ -3,6 +3,7 @@ import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg";
 import { ISvgProps } from "@/constants/svg.types";
 const ProfileIcon = (props:ISvgProps) => (
   <Svg
+   opacity={0}
     width={30}
     height={30}
     viewBox="0 0 30 30"

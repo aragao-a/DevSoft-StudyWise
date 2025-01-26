@@ -24,7 +24,10 @@ const SignUpField = forwardRef<TextInput, Props>(({fieldDescription, groupProps,
                 <CustomInput 
                     ref={ref}
                     formProps={formProps}
-                    inputProps={{style:styles.input, ...inputProps}}
+                    inputProps={{
+                        style:styles.input, 
+                        ...inputProps
+                    }}
                     />
                 {(error.length > 0) && <Text style={styles.errorText}>
                     {error}

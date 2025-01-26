@@ -5,6 +5,7 @@ import {useEffect} from 'react';
 import RootBackground from '@/components/ui/root-background';
 import * as SystemUI from 'expo-system-ui';
 import { colorMap } from '@/constants/color-map';
+import { Montserrat_400Regular, Montserrat_600SemiBold, useFonts as useGoogleFonts} from '@expo-google-fonts/montserrat'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -16,18 +17,23 @@ colors.set('/home', 'white')
 
 export default function RootLayout() {
   // Começa a navegação somente se as fontes estiverem carregadas
-  const [loaded, error] = useFonts({
+  const [loadedCustomFonts, errorCustomFonts] = useFonts({
     'VisbyRoundCF-Regular': require('@assets/fonts/VisbyRoundCF-Regular.otf'),
     'VisbyRoundCF-Medium': require('@assets/fonts/VisbyRoundCF-Medium.otf'),
     'VisbyRoundCF-DemiBold': require('@assets/fonts/VisbyRoundCF-DemiBold.otf'),
     'VisbyRoundCF-Bold': require('@assets/fonts/VisbyRoundCF-Bold.otf'),
   });
 
+  const [loadedGoogleFonts, errorGoogleFonts] = useGoogleFonts({
+    Montserrat_400Regular,
+    Montserrat_600SemiBold
+  })
+
   useEffect(() => {
-    if (loaded || error) {
+    if ((loadedCustomFonts || loadedGoogleFonts) || errorCustomFonts || errorGoogleFonts) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [loadedCustomFonts, errorCustomFonts, loadedGoogleFonts, errorGoogleFonts]);
 
 
   //Muda a cor de fundo do sistema com base na cor da tela, útil pra quando o teclado subir
@@ -41,7 +47,7 @@ export default function RootLayout() {
   }, [color])
 
 
-  if (!loaded && !error) {
+  if (!(loadedCustomFonts && loadedGoogleFonts) && !errorCustomFonts && !errorGoogleFonts) {
     return null;
   }
 
@@ -50,7 +56,6 @@ export default function RootLayout() {
     <RootBackground>
     <Stack screenOptions={{
       headerShown: false,
-      statusBarAnimation: 'slide',
       animationTypeForReplace:'push',
       }}>
         <Stack.Screen name="index" />

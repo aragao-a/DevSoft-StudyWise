@@ -2,12 +2,14 @@ import { StyleSheet, View, ViewProps, StatusBar, Dimensions} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from './logo';
 import GobackButton from './go-back-button';
+  
 
 const windowHeight = Dimensions.get("window").height;
 
 export default function HomeBackground({children, ...rest}: ViewProps) {
+
     return (
-        <SafeAreaView style = {{height:windowHeight, backgroundColor:'white'}}>
+        <SafeAreaView style = {{justifyContent: 'flex-end', height:windowHeight, minHeight:700,backgroundColor:'white'}}>
             <StatusBar backgroundColor='white'/>
             <View style={styles.header}>
                 <View style={styles.headerSides}>

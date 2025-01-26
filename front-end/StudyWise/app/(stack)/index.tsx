@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, View, Text, StatusBar} from 'react-native';
+import { Pressable, StyleSheet, View, Text, Keyboard} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import IndexBackground from '@components/ui/index-background';
 import Logo from '@/components/ui/logo';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import LoginForm from '@/components/ui/login-form';
 import HandIcon from '@/assets/svg/hand-icon';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -33,11 +33,38 @@ export default function App() {
         };
     });
 
+    const opacity = useSharedValue(1);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+          'keyboardDidShow',
+          () => {
+            opacity.value = 0;
+          }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+          'keyboardDidHide',
+          () => {
+            opacity.value = 1;
+          }
+        );
+    
+        return () => {
+          keyboardDidHideListener.remove();
+          keyboardDidShowListener.remove();
+        };
+      }, []);
+
+    const animatedLogoStyle = useAnimatedStyle(() => {
+        return {
+            opacity: withTiming(opacity.value, { duration: 200 }),
+        };
+    });
+
     if(!firstTouch) {
         return (
         <Pressable style={styles.container} onPress={handleScreenTouch}>
             <IndexBackground>
-                <StatusBar backgroundColor='#0054C1'/>
                 <Animated.View style={[styles.container, beforeTouchStyle]}>
                     <SafeAreaView style={styles.container}>
                             <View style={styles.group}>
@@ -60,11 +87,12 @@ export default function App() {
     
     return (
         <IndexBackground>
-            <StatusBar backgroundColor='#0054C1'/>
             <Animated.View style={[styles.container, afterTouchStyle]}>
                 <SafeAreaView style={styles.container}>
                     <View style={styles.container}>
-                    <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
+                    <Animated.View style={[{flex:1}, animatedLogoStyle]}>
+                        <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
+                    </Animated.View>
                     <LoginForm/>
                     </View>
                 </SafeAreaView>

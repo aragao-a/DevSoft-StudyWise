@@ -1,32 +1,44 @@
-import { View, StyleSheet, TextInputProps } from "react-native";
+import { View, StyleSheet, TextInputProps, ViewProps } from "react-native";
 import {CustomInput} from "./custom-input";
 import { UseControllerProps } from "react-hook-form";
-import FrownIcon from "@/assets/svg/frown-icon";
-import SearchIcon from "@/assets/svg/search-icon";
+import  Animated, {AnimatedStyle} from "react-native-reanimated";
 
 type Props = {
     inputProps: TextInputProps,
-    formProps: UseControllerProps
+    formProps: UseControllerProps,
+    layoutProps: ViewProps,
+    animatedStyle?: AnimatedStyle,
 }
-export default function SearchBar({formProps, inputProps}: Props) {
+export default function SearchBar({formProps, inputProps, layoutProps, animatedStyle}: Props) {
     return (
-        <View style={styles.bar}>
-            <SearchIcon style={styles.icon}/>
-            <CustomInput formProps={formProps} inputProps={{...inputProps, style:styles.input}}/>
-        </View>
+        <Animated.View style={
+            inputProps.readOnly ? 
+                [[styles.bar
+                    , {backgroundColor: ' rgba(200, 200, 200, 1)', borderColor: 'rgba(230, 230, 230, 1)'}, layoutProps
+                    ]
+                    , animatedStyle
+                ]
+                : [[styles.bar, layoutProps], animatedStyle]}>
+            <View style={styles.group}>
+                {layoutProps.children}
+                <CustomInput formProps={formProps} inputProps={{...inputProps, style:styles.input}}/>
+            </View>
+        </Animated.View>
     )
 }
 
 const styles = StyleSheet.create({
     bar: {
-        marginTop: 35,
         alignSelf: 'center',
         width: '90%',
-        height:40,
         backgroundColor: 'rgba(230, 230, 230, 1)',
         borderRadius: 20,
-        paddingHorizontal: 15,
+        borderWidth:1,
+        borderColor: 'rgba(200, 200, 200, 1)',
+        paddingHorizontal: '5%',
         flexDirection:'row',
+        alignItems:'flex-start',
+        height:'auto'
     },
     input: {
         flex:1,
@@ -34,7 +46,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'VisbyRoundCF-Regular',
     },
-    icon: {
-        alignSelf:'center'
+    group: {
+        flexDirection:'row', 
+        alignItems:'center'
     }
 })

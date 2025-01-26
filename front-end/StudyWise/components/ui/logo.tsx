@@ -10,9 +10,6 @@ const findScale:scaleMap = new Map;
 findScale.set('1-1', 1.77);
 findScale.set('1-2', 5.3);
 
-function fitsScreen(imageHeight:number, containerSize?: ({width: number; height: number} | null)) {
-    return (containerSize?.height !== null  && containerSize?.height !== undefined && (containerSize?.height - imageHeight > 20))
-}
 type Props = ViewProps & {
     imageSize:number,
     imageVersion:string,
@@ -39,10 +36,9 @@ export default function Logo({imageSize, imageVersion, style, ...rest}: Props) {
     const {containerSize, onLayout} = useComponentSize();
 
     return (
-        <View style={style} onLayout= {onLayout}>
-            { fitsScreen(imageHeight, containerSize) && (
-            (version === 1 && <StudyWiseLogo1 height={imageHeight} width={imageWidth}/>) ||
-            (version === 2 && <StudyWiseLogo2 height={imageHeight} width={imageWidth}/>))}
+        <View style={style} onLayout= {onLayout}>{
+            (version === 1 && <StudyWiseLogo1 width={imageWidth}/>) ||
+            (version === 2 && <StudyWiseLogo2 width={imageWidth}/>)}
         </View>
     )
 }

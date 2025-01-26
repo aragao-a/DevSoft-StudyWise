@@ -1,5 +1,5 @@
 import * as React from "react";
-import Svg, { Rect, Defs, Pattern, Use, Image, SvgProps } from "react-native-svg";
+import Svg, { Rect, Defs, Pattern, Use, Image} from "react-native-svg";
 import { ISvgProps } from "@/constants/svg.types";
 
 const StudyWiseLogo1 = (props:ISvgProps) => (
