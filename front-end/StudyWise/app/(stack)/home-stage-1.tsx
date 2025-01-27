@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Quiz } from "@/constants/quiz-type";
 import QuizList from "@/components/ui/quiz-list";
 import SearchIcon from "@/assets/svg/search-icon";
+import CustomButton from "@/components/ui/custom-button";
 export default function Home() {
     const [searchResult, setSearchResult] = useState('')
     const [quizzes, setQuizzes] = useState<Quiz[]>([{id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, {id: '1', grade:1, field:'asdeem', name:'Plat'}, {id: '1', grade:1, field:'Biol', name:'Pl'}, {id: '1', grade:1, field:'a', name:'B'}, {id: '1', grade:1, field:'a', name:'b'}])
@@ -37,14 +38,14 @@ export default function Home() {
                 <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult}/>)}
             </View>
             <View style={styles.footer}>
-                <Pressable style={styles.buttonArea} onPress= {handleButtonPress}>
+                <CustomButton style={styles.buttonArea} onPress= {handleButtonPress}>
                     <View style={styles.createQuizButton}>
                         <Text style={styles.ButtonText}>
                             Novo Quiz!
                         </Text>
                     </View>
                     <PlusIcon/>
-                </Pressable>
+                </CustomButton>
                 <Pressable onPress= {handleProfileIconPress} >
                     <ProfileIcon style={styles.profileIcon}/>
                 </Pressable>

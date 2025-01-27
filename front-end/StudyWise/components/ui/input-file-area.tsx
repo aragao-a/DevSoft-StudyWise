@@ -1,5 +1,6 @@
 import { View, Pressable, Text, StyleSheet, GestureResponderEvent} from "react-native"
 import AddFileIcon from "@/assets/svg/add-file-icon"
+import CustomButton from "./custom-button";
 
 type EventHandler<T> = (event: T) => void;
 
@@ -9,17 +10,14 @@ export default function InputFileArea({handleAddButtonPress, hasInput}: {handleA
             <Pressable onPress= {handleAddButtonPress}>
                 <AddFileIcon opacity={hasInput ? 0.4 : 1}/>
             </Pressable>
-            <Pressable style={{flex:1, alignItems:'center'}} onPress= {handleAddButtonPress}>
-                <View 
-                    style={
+            <CustomButton style={
                         hasInput 
                             ? [styles.addFileButton, {backgroundColor:'rgba(255, 71, 112, 0.4)'}] 
-                            : styles.addFileButton}>
+                            : styles.addFileButton} onPress= {handleAddButtonPress}>
                 <Text style={styles.ButtonText}>
                     Anexar um arquivo PDF, JPG/PNG ou CSV
                 </Text>
-                </View>
-            </Pressable>
+            </CustomButton>
         </View>
     )
 }
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
         fontFamily: 'VisbyRoundCF-Bold',
     },
     addFileButton: {
-        height:"90%",
+        height:"40%",
         width: "60%",
         backgroundColor: 'rgba(255, 71, 112, 1)',
         borderRadius: 20,

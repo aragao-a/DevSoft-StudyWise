@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, Pressable, Dimensions} from "react-native";
+import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState } from "react";
 import questionsData from "@/assets/questions/questionsData.json";
 import HomeBackground from "@/components/ui/home-background";
@@ -6,12 +7,15 @@ import Rectangle4 from "@/assets/svg/rectangle-4";
 import Rectangle3 from "@/assets/svg/rectangle-3";
 import Rectangle2 from "@/assets/svg/rectangle-2";
 import Rectangle1 from "@/assets/svg/rectangle-1";
+import CustomButton from "@/components/ui/custom-button";
+import { useRouter } from "expo-router";
 
 const windoWidth = Dimensions.get("window").width;
 
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
-const Questions = () => {
+export default function Questions() {
+    const router = useRouter();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -21,10 +25,51 @@ const Questions = () => {
         return num < 10 ? `0${num}` : num.toString();
     };
 
-    const handleOptionPress = (option: string) => {
+    const progress1 = useSharedValue(0);
+    const progress2 = useSharedValue(0);
+    const progress3 = useSharedValue(0);
+    const progress4 = useSharedValue(0);
+
+    const animatedStyle1 = useAnimatedStyle(() => {
+        return {
+            backgroundColor: withTiming(interpolateColor(progress1.value,
+                [0, 1],
+                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:50})
+        }
+    })
+    const animatedStyle2 = useAnimatedStyle(() => {
+        return {
+            backgroundColor: withTiming(interpolateColor(progress2.value,
+                [0, 1],
+                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:50})
+        }
+    })
+    const animatedStyle3 = useAnimatedStyle(() => {
+        return {
+            backgroundColor: withTiming(interpolateColor(progress3.value,
+                [0, 1],
+                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:50})
+        }
+    })
+    const animatedStyle4 = useAnimatedStyle(() => {
+        return {
+            backgroundColor: withTiming(interpolateColor(progress4.value,
+                [0, 1],
+                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:50})
+        }
+    })
+    const animatedStyles = [animatedStyle1, animatedStyle2, animatedStyle3, animatedStyle4]
+    const progresses = [progress1, progress2, progress3, progress4]
+
+    const handleOptionPress = (option: string, index: number) => {
         const correctAnswer = questionsData[currentQuestionIndex].correctAnswer;
         setSelectedOption(option);
         setIsCorrect(option === correctAnswer);
+        progresses[index].value = 1;
 
 
         setTimeout(() => {
@@ -32,10 +77,11 @@ const Questions = () => {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
                 setSelectedOption(null);
                 setIsCorrect(null);
+                progresses[index].value = 0;
             } else {
-                console.log("Quiz finalizado!");
+                router.push('/home-stage-1')
             }
-        }, 1000);
+        }, 500);
     };
 
     const getColorForIndex = (baseIndex: number, offset: number) => {
@@ -82,17 +128,12 @@ const Questions = () => {
                     </View>
                     <View style={{flex:1, gap:'8%', paddingTop:'12%'}}>
                         {questionsData[currentQuestionIndex].options.map((option, index) => (
-                            <Pressable
+                            <CustomButton
                                 key={index}
                                 style={[
-                                    styles.alternativasSpace,
-                                    selectedOption === option && {
-                                        backgroundColor: isCorrect
-                                            ? "#4CAF50"
-                                            : "#F44336",
-                                    },
+                                    styles.alternativasSpace, animatedStyles[index]
                                 ]}
-                                onPress={() => handleOptionPress(option)}
+                                onPress={() => handleOptionPress(option, index)}
                                 disabled={selectedOption !== null}
                             >   
                                 <Text style={{position:"absolute", left:'5%', fontFamily:'VisbyRoundCF-Bold'}}>
@@ -100,7 +141,7 @@ const Questions = () => {
                                 </Text>
                                 <Text style={styles.alternativasText}>
                                     {option}</Text>
-                            </Pressable>
+                            </CustomButton>
                         ))}
                     </View>
                     </View>
@@ -109,8 +150,6 @@ const Questions = () => {
         </HomeBackground>
     );
 };
-
-export default Questions;
 
 const styles = StyleSheet.create({
     backgroundBloco: {

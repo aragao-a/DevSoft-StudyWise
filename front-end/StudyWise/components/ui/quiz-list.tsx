@@ -1,6 +1,7 @@
 import { View, StyleSheet, ScrollView, Text, Pressable} from "react-native"
 import { Quiz } from "@/constants/quiz-type"
 import { useRouter } from "expo-router"
+import CustomButton from "./custom-button";
 export default function QuizList({list, searchResult}: {list: Quiz[], searchResult:string}) {
     const router = useRouter();
     const handleButtonPress = () => {router.push('questions')};
@@ -16,8 +17,7 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                     (quiz.name.includes(searchResult) 
                         || quiz.field.includes(searchResult)) 
                     &&
-                    <Pressable key={index} onPress={handleButtonPress}>
-                        <View style={styles.quizButton}>
+                    <CustomButton key={index} onPress={handleButtonPress} style={styles.quizButton}>
                             <Text style={styles.ButtonText}>
                                 <Text style={{fontFamily:'VisbyRoundCF-Bold'}}>
                                     Quiz {index + 1}:
@@ -26,8 +26,7 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                             <Text style={[styles.ButtonText, {paddingLeft:10}]}>
                             <Text style={{fontFamily:'VisbyRoundCF-Bold', fontSize:18}}>•</Text> {quiz.field}
                             </Text>
-                        </View>
-                    </Pressable>
+                    </CustomButton>
             )})}
             </View>
         </ScrollView>

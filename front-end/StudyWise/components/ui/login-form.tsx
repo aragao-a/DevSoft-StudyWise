@@ -3,6 +3,7 @@ import CustomInput from './custom-input';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
+import CustomButton from './custom-button';
 
 const relativeSize = '90%';
 
@@ -69,14 +70,14 @@ export default function LoginForm() {
                 />
             </View>
             <View style={styles.loginButtonArea}>
-                <Pressable
+                <CustomButton
                     style={styles.loginButton}
                     onPress= {handleSubmit(handleLogin)}
                 >
                     <Text style={styles.baseText}>
                         Entrar
                     </Text>
-                </Pressable>
+                </CustomButton>
                 <Pressable onPress={handleSubmit(handleSignUpTextPress)}>
                     <Text style={styles.linkText}>
                     Cadastre-se

@@ -11,6 +11,7 @@ import SelectedFile from "@/components/ui/selected-file";
 import InputFileArea from "@/components/ui/input-file-area";
 import ContainerIcon from "@/assets/svg/container-icon";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import CustomButton from "@/components/ui/custom-button";
 
 
 export default function Home() {
@@ -132,7 +133,7 @@ export default function Home() {
                             : <SelectedFile fileName={selectedFile.name} cancelFunction={setSelectedFile}/>
                         }
                     </View>
-                    <Pressable
+                    <CustomButton
                         onPress={handleSubmitFile}
                         style={(hasInput || selectedFile) 
                             ? styles.createQuizButton: [styles.createQuizButton, {backgroundColor: 'rgba(0, 183, 201, 0.2)'}]} 
@@ -140,7 +141,7 @@ export default function Home() {
                         <Text style={styles.ButtonText}>
                             Gerar Quiz!
                         </Text>
-                    </Pressable>
+                    </CustomButton>
                 </View>
                 <Pressable onPress= {handleProfileIconPress} >
                     <ProfileIcon style={styles.profileIcon}/>
