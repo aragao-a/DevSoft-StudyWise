@@ -20,11 +20,6 @@ export default function Questions() {
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-    useEffect(() => {
-        // Resetar as alternativas sempre que o quiz começa
-        resetOptions();
-      }, []); 
-
     const formatNumber = (num: number) => { // formata os números menores que 10 para ter 0 a esuqerda
         return num < 10 ? `0${num}` : num.toString();
     };
