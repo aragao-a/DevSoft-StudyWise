@@ -6,7 +6,7 @@ import Rectangle4 from "@/assets/svg/rectangle-4";
 import Rectangle3 from "@/assets/svg/rectangle-3";
 import Rectangle2 from "@/assets/svg/rectangle-2";
 import Rectangle1 from "@/assets/svg/rectangle-1";
-import { addOption } from '@/assets/questions/quizStore'; // Importe a função
+import { addOption } from '@/assets/questions/quizStore';
 import{resetOptions} from '@/assets/questions/quizStore';
 import { useRouter } from "expo-router";
 
@@ -21,11 +21,11 @@ const Questions = () => {
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
     useEffect(() => {
-        // Resetar as alternativas sempre que o componente for montado (início do quiz)
+        // Resetar as alternativas sempre que o quiz começa
         resetOptions();
       }, []); 
 
-    const formatNumber = (num: number) => {
+    const formatNumber = (num: number) => { // formata os números menores que 10 para ter 0 a esuqerda
         return num < 10 ? `0${num}` : num.toString();
     };
 
@@ -33,8 +33,6 @@ const Questions = () => {
         const correctAnswer = questionsData[currentQuestionIndex].correctAnswer;
         setSelectedOption(option);
         setIsCorrect(option === correctAnswer);
-
-        // Adiciona a alternativa ao "selectedOptions"
         addOption(option);
 
         setTimeout(() => {
@@ -44,7 +42,6 @@ const Questions = () => {
             setIsCorrect(null);
         } else {
             console.log("Quiz finalizado!");
-            // Aqui você pode enviar as alternativas para a próxima página ou fazer algo com elas
             console.log("Alternativas Selecionadas:", selectedOption);
             router.push('/results')
 
@@ -127,7 +124,6 @@ return (
 
 export default Questions;
 
-// (Estilos permanecem os mesmos)
 const styles = StyleSheet.create({
     backgroundBloco: {
         position: "absolute",
