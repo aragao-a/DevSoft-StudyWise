@@ -1,0 +1,26 @@
+import { ISvgProps } from "@/constants/svg.types";
+import * as React from "react";
+import Svg, { G, Rect, Defs } from "react-native-svg";
+const Rectangle2 = (props:ISvgProps) => (
+  <Svg
+    width={359}
+    height={645}
+    viewBox="0 0 359 645"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <G filter="url(#filter0_d_6_198)">
+      <Rect
+        x={15.0125}
+        width={340}
+        height={631}
+        rx={20}
+        transform="rotate(1 15.0125 0)"
+        fill={props.color}
+      />
+    </G>
+    <Defs></Defs>
+  </Svg>
+);
+export default Rectangle2;

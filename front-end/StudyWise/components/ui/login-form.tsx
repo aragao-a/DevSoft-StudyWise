@@ -1,5 +1,5 @@
 import {Text, View, StyleSheet, TextInput, Pressable, TextInputProps} from 'react-native';
-import {CustomInput} from './custom-input';
+import CustomInput from './custom-input';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';

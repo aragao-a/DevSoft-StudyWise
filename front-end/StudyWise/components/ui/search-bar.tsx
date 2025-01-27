@@ -1,7 +1,8 @@
-import { View, StyleSheet, TextInputProps, ViewProps } from "react-native";
-import {CustomInput} from "./custom-input";
+import { View, StyleSheet, TextInputProps, ViewProps, TextInput } from "react-native";
+import CustomInput from "./custom-input";
 import { UseControllerProps } from "react-hook-form";
 import  Animated, {AnimatedStyle} from "react-native-reanimated";
+import { forwardRef } from "react";
 
 type Props = {
     inputProps: TextInputProps,
@@ -9,7 +10,7 @@ type Props = {
     layoutProps: ViewProps,
     animatedStyle?: AnimatedStyle,
 }
-export default function SearchBar({formProps, inputProps, layoutProps, animatedStyle}: Props) {
+const SearchBar = forwardRef<TextInput, Props>(({formProps, inputProps, layoutProps, animatedStyle}, ref) => {
     return (
         <Animated.View style={
             inputProps.readOnly ? 
@@ -21,12 +22,13 @@ export default function SearchBar({formProps, inputProps, layoutProps, animatedS
                 : [[styles.bar, layoutProps], animatedStyle]}>
             <View style={styles.group}>
                 {layoutProps.children}
-                <CustomInput formProps={formProps} inputProps={{...inputProps, style:styles.input}}/>
+                <CustomInput ref={ref} formProps={formProps} inputProps={{...inputProps, style:styles.input}}/>
             </View>
         </Animated.View>
     )
-}
+});
 
+export default SearchBar;
 const styles = StyleSheet.create({
     bar: {
         alignSelf: 'center',

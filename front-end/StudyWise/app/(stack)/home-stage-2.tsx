@@ -1,11 +1,11 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable} from "react-native";
+import { StyleSheet, View, Text, Pressable, TextInput, Keyboard} from "react-native";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import { useForm } from "react-hook-form";
 import GeminiLogo from "@/assets/svg/gemini-logo";
-import React, { useState} from "react";
+import React, { useState, useEffect, useRef} from "react";
 import * as DocumentPicker from 'expo-document-picker';
 import SelectedFile from "@/components/ui/selected-file";
 import InputFileArea from "@/components/ui/input-file-area";
@@ -70,6 +70,22 @@ export default function Home() {
         setHasInputFocus(false);
         logoOpacity.value = 1;
     };
+
+    const inputRef = useRef<TextInput>(null);
+
+    useEffect(() => {
+            const keyboardDidHideListener = Keyboard.addListener(
+              'keyboardDidHide',
+              () => {
+                inputRef.current?.blur();
+              }
+            );
+        
+            return () => {
+              keyboardDidHideListener.remove();
+            };
+          }, []);
+    
     return (
         <HomeBackground>
             <View style={styles.container}>
@@ -79,6 +95,7 @@ export default function Home() {
                         Descreva seu quiz:
                     </Text>
                     <SearchBar
+                    ref={inputRef}
                     animatedStyle={animatedStyleInput}
                     layoutProps={{children:<ContainerIcon/>}} 
                     formProps={{name: 'pesquisa', control}} 

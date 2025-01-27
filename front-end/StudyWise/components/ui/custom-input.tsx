@@ -18,4 +18,4 @@ const CustomInput = forwardRef<TextInput, Props> (({inputProps, formProps}, ref)
     )
 });
 
-export { CustomInput };
+export default CustomInput;

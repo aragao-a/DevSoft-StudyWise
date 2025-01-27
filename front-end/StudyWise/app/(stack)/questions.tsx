@@ -1,9 +1,15 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Dimensions} from "react-native";
 import React, { useState } from "react";
 import questionsData from "@/assets/questions/questionsData.json";
 import HomeBackground from "@/components/ui/home-background";
+import Rectangle4 from "@/assets/svg/rectangle-4";
+import Rectangle3 from "@/assets/svg/rectangle-3";
+import Rectangle2 from "@/assets/svg/rectangle-2";
+import Rectangle1 from "@/assets/svg/rectangle-1";
 
-const colorPalette = ["#FF4770", "#FF972C", "#009A56", "#51A5BF"];
+const windoWidth = Dimensions.get("window").width;
+
+const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
 const Questions = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -43,51 +49,62 @@ const Questions = () => {
 
     return (
         <HomeBackground>
-            <View style={[styles.backgroundBloco, { backgroundColor: backgroundBloco1Color }]}></View>
-            <View style={[styles.backgroundBloco2, { backgroundColor: backgroundBloco2Color }]}></View>
-            <View style={[styles.backgroundBloco3, { backgroundColor: backgroundBloco3Color }]}></View>
-            <View>
+            <View style={{flex:1, alignItems:'center', justifyContent:'space-around'}}>
                 <Text style={[styles.questionTitle, {color: blocoColor }]}>
                     PERGUNTA {questionsData[currentQuestionIndex].id}
                 </Text>
-            </View>
-            <View style={[styles.bloco, { backgroundColor: blocoColor }]}>
-                <View style={styles.questNum}>
-                    <Text style={[styles.numTitle, {color: blocoColor}]}>
-                        Quiz {questionsData[currentQuestionIndex].id}
-                    </Text>
-                    <Text style={styles.rightCardHeader}>
-                        {formatNumber(questionsData[currentQuestionIndex].id)}/
-                        {formatNumber(questionsData.length)}
-                    </Text>
-                </View>
-                <View style={styles.caixaPergunta}>
-                    <View style={[styles.bolaNum, {backgroundColor : blocoColor}]}>
-                        <Text style={styles.bolaNumTexto}>
-                            {formatNumber(questionsData[currentQuestionIndex].id)}
+                <View style={{width:windoWidth * 0.9, maxWidth:400, aspectRatio:0.6}}>
+                <Rectangle1 style={[styles.rectangle, {top:10, right:13}]} height="100%" width='100%' color={backgroundBloco3Color}/>
+                <Rectangle3 style={[styles.rectangle, {top: 8, right:13}]} height="100%" width='100%' color={backgroundBloco2Color}/>
+                <Rectangle2 style={[styles.rectangle, {top: 5, left:3}]} height="100%" width='100%' color={backgroundBloco1Color}/>
+                <Rectangle4 style={[styles.rectangle, {top: 0}]} height='100%' width='100%' color={blocoColor}/>
+                <View style={styles.questionContainer}>
+                    <View style={styles.questNum}>
+                        <View style={styles.numTitle}>
+                            <Text style={[styles.quizTitle, {color: blocoColor}]}>
+                                Quiz {questionsData[currentQuestionIndex].id}
+                            </Text>
+                        </View>
+                        <Text style={styles.rightCardHeader}>
+                            {formatNumber(questionsData[currentQuestionIndex].id)}/
+                            {formatNumber(questionsData.length)}
                         </Text>
                     </View>
-                    <Text style={styles.pergunta}>
-                        {questionsData[currentQuestionIndex].question}
-                    </Text>
+                    <View style={styles.caixaPergunta}>
+                        <View style={[styles.bolaNum, {backgroundColor : blocoColor}]}>
+                            <Text style={styles.bolaNumTexto}>
+                                {formatNumber(questionsData[currentQuestionIndex].id)}
+                            </Text>
+                        </View>
+                        <Text style={styles.pergunta}>
+                            {questionsData[currentQuestionIndex].question}
+                        </Text>
+                    </View>
+                    <View style={{flex:1, gap:'8%', paddingTop:'12%'}}>
+                        {questionsData[currentQuestionIndex].options.map((option, index) => (
+                            <Pressable
+                                key={index}
+                                style={[
+                                    styles.alternativasSpace,
+                                    selectedOption === option && {
+                                        backgroundColor: isCorrect
+                                            ? "#4CAF50"
+                                            : "#F44336",
+                                    },
+                                ]}
+                                onPress={() => handleOptionPress(option)}
+                                disabled={selectedOption !== null}
+                            >   
+                                <Text style={{position:"absolute", left:'5%', fontFamily:'VisbyRoundCF-Bold'}}>
+                                        {String.fromCharCode(index + 65)})
+                                </Text>
+                                <Text style={styles.alternativasText}>
+                                    {option}</Text>
+                            </Pressable>
+                        ))}
+                    </View>
+                    </View>
                 </View>
-                {questionsData[currentQuestionIndex].options.map((option) => (
-                    <Pressable
-                        key={option}
-                        style={[
-                            styles.alternativasSpace,
-                            selectedOption === option && {
-                                backgroundColor: isCorrect
-                                    ? "#4CAF50"
-                                    : "#F44336",
-                            },
-                        ]}
-                        onPress={() => handleOptionPress(option)}
-                        disabled={selectedOption !== null}
-                    >
-                        <Text style={styles.alternativasText}>{option}</Text>
-                    </Pressable>
-                ))}
             </View>
         </HomeBackground>
     );
@@ -105,7 +122,6 @@ const styles = StyleSheet.create({
         height: 631,
         width: 340,
         borderRadius: 20,
-        zIndex: -1,
         transform: [{ rotate: "-2deg" }],
     },
     backgroundBloco2: {
@@ -117,7 +133,6 @@ const styles = StyleSheet.create({
         height: 631,
         width: 340,
         borderRadius: 20,
-        zIndex: -1,
         transform: [{ rotate: "-1.5deg" }],
     },
     backgroundBloco3: {
@@ -129,15 +144,14 @@ const styles = StyleSheet.create({
         height: 631,
         width: 340,
         borderRadius: 20,
-        zIndex: -1,
         transform: [{ rotate: "2deg" }],
     },
     questionTitle: {
         fontSize: 15,
         color: "#FF4770",
         fontFamily: "VisbyRoundCF-Bold",
-        letterSpacing: 16,
         textAlign: "center",
+        letterSpacing:16,
         marginTop: 20,
     },
     bloco: {
@@ -152,42 +166,44 @@ const styles = StyleSheet.create({
         width: 340,
         borderRadius: 20,
     },
+    questionContainer: {
+        flex:1,
+        paddingHorizontal:'8%',
+        paddingTop:'7%',
+    },
     questNum: {
+        paddingHorizontal:'2%',
+        marginRight:'2%',
         justifyContent: "space-between",
+        alignItems:'center',
         flexDirection: "row",
-        flex: 1,
-        borderRadius: 10,
-        position: "absolute",
-        top: 25,
-        left: 20,
     },
     alternativasText: {
-        fontFamily: "VisbyRoundCF-Medium",
+        fontFamily: "VisbyRoundCF-Regular",
         color: "#3C3C3C",
-        fontSize: 18,
-        flexShrink: 1,
+        fontSize: 16,
     },
     alternativasSpace: {
+        flexDirection:'row',
+        alignSelf:'center',
+        alignItems:'center',
         justifyContent: "center",
-        alignItems: "center",
         backgroundColor: "white",
-        marginTop: 25,
-        marginLeft: 25,
-        marginRight: 25,
-        marginBottom: 10,
         borderRadius: 10,
-        padding: 8,
+        height:'14%',
+        marginRight:'2%',
+        width:'98%',
     },
     caixaPergunta: {
+        alignSelf:'center',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
-        padding: 80,
+        height:'30%',
+        width:'98%',
+        marginRight:'2%',
         borderRadius: 10,
         marginTop: 30,
-        marginEnd: 25,
-        marginStart: 25,
-        flexShrink: 1,
     },
     bolaNum: {
         flex: 1,
@@ -206,23 +222,24 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     pergunta: {
-        fontSize: 18,
+        marginHorizontal:'2%',
+        fontSize: 16,
         color: "#3C3C3C",
         fontFamily: "VisbyRoundCF-Medium",
-        letterSpacing: 5,
         textAlign: "center",
     },
     numTitle: {
-        fontSize: 16,
+        justifyContent:'center',
+        alignItems:'center',
+        height:35,
         backgroundColor: "white",
-        color: "#FF4770",
-        fontFamily: "VisbyRoundCF-SemiBold",
-        letterSpacing: 4,
-        marginRight: 120,
         borderRadius: 10,
-        padding: 8,
-        paddingHorizontal: 18,
-        flexShrink: 1,
+        width:105
+    },
+    quizTitle: {
+        fontFamily:'VisbyRoundCF-Bold',
+        letterSpacing: 4,
+        fontSize:16,
     },
     rightCardHeader: {
         fontSize: 18,
@@ -232,4 +249,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexShrink: 1,
     },
+    rectangle: {position: 'absolute'}
 });

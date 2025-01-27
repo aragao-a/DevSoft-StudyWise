@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet, ViewProps, TextInputProps} from "react-native";
-import {CustomInput} from "./custom-input";
+import CustomInput from "./custom-input";
 import { ControllerProps, UseControllerProps } from "react-hook-form";
 import { forwardRef } from "react";
 

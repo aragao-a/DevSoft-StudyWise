@@ -1,8 +1,12 @@
-import { View, StyleSheet, ScrollView, Text} from "react-native"
+import { View, StyleSheet, ScrollView, Text, Pressable} from "react-native"
 import { Quiz } from "@/constants/quiz-type"
+import { useRouter } from "expo-router"
 export default function QuizList({list, searchResult}: {list: Quiz[], searchResult:string}) {
+    const router = useRouter();
+    const handleButtonPress = () => {router.push('questions')};
     return (
         <ScrollView 
+            nestedScrollEnabled={true}
             bounces={false}
             overScrollMode="never" 
             style={styles.container}>
@@ -12,16 +16,18 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                     (quiz.name.includes(searchResult) 
                         || quiz.field.includes(searchResult)) 
                     &&
-                    <View key={index} style={styles.quizButton}>
-                        <Text style={styles.ButtonText}>
-                            <Text style={{fontFamily:'VisbyRoundCF-Bold'}}>
-                                Quiz {index + 1}:
-                            </Text> {quiz.name}
-                        </Text>
-                        <Text style={[styles.ButtonText, {paddingLeft:10}]}>
-                        <Text style={{fontFamily:'VisbyRoundCF-Bold', fontSize:18}}>•</Text> {quiz.field}
-                        </Text>
-                    </View>
+                    <Pressable key={index} onPress={handleButtonPress}>
+                        <View style={styles.quizButton}>
+                            <Text style={styles.ButtonText}>
+                                <Text style={{fontFamily:'VisbyRoundCF-Bold'}}>
+                                    Quiz {index + 1}:
+                                </Text> {quiz.name}
+                            </Text>
+                            <Text style={[styles.ButtonText, {paddingLeft:10}]}>
+                            <Text style={{fontFamily:'VisbyRoundCF-Bold', fontSize:18}}>•</Text> {quiz.field}
+                            </Text>
+                        </View>
+                    </Pressable>
             )})}
             </View>
         </ScrollView>
