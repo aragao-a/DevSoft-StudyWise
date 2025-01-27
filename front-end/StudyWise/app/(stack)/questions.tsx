@@ -78,7 +78,7 @@ export default function Questions() {
                 setIsCorrect(null);
                 progresses[index].value = 0;
             } else {
-                router.push('/home-stage-1')
+                router.back()
             }
         }, 500);
     };
