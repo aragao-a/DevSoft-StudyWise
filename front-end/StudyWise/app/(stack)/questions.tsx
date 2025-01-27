@@ -19,9 +19,13 @@ export default function Questions() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-    const [score, setScore] = useState(null);
 
-    const formatNumber = (num: number) => {  //função para fomatar numeros abaixo de 10
+    useEffect(() => {
+        // Resetar as alternativas sempre que o quiz começa
+        resetOptions();
+      }, []); 
+
+    const formatNumber = (num: number) => { // formata os números menores que 10 para ter 0 a esuqerda
         return num < 10 ? `0${num}` : num.toString();
     };
 
