@@ -3,61 +3,61 @@
     "id": 1,
     "question": "Qual o tipo de simetria apresentada pelos Platyhelminthes?",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "a"
+    "correctAnswer": 0
     
   },
   {
     "id": 2,
     "question": "Template 2",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "b"
+    "correctAnswer": 1
   },
   {
     "id": 3,
     "question": "Template 3",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "c"
+    "correctAnswer": 2
   },
   {
     "id": 4,
     "question": "Template 4",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "d"
+    "correctAnswer": 3
   },
   {
     "id": 5,
     "question": "Template 5",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "d"
+    "correctAnswer": 3
   },
   {
     "id": 6,
     "question": "Template 6",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "c"
+    "correctAnswer": 2
   },
   {
     "id": 7,
     "question": "Template 7",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "d"
+    "correctAnswer": 3
   },
   {
     "id": 8,
     "question": "Template 8",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "a"
+    "correctAnswer": 3
   },
   {
     "id": 9,
     "question": "Template 9",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "b"
+    "correctAnswer": 1
   },
   {
     "id": 10,
     "question": "Template 10",
     "options":[ "a", "b" , "c", "d"],
-    "correctAnswer": "b"
+    "correctAnswer": 1
   }
 ]

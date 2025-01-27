@@ -60,7 +60,6 @@ export default function App() {
             opacity: withTiming(opacity.value, { duration: 200 }),
         };
     });
-
     if(!firstTouch) {
         return (
         <Pressable style={styles.container} onPress={handleScreenTouch}>
@@ -86,6 +85,7 @@ export default function App() {
     }
     
     return (
+        <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <IndexBackground>
             <Animated.View style={[styles.container, afterTouchStyle]}>
                 <SafeAreaView style={styles.container}>
@@ -98,6 +98,7 @@ export default function App() {
                 </SafeAreaView>
             </Animated.View>
         </IndexBackground>
+        </Pressable>
     )
 }
 

@@ -17,8 +17,7 @@ const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 export default function Questions() {
     const router = useRouter();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [selectedOption, setSelectedOption] = useState<string | null>(null);
-    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
 
     const formatNumber = (num: number) => { // formata os números menores que 10 para ter 0 a esuqerda
         return num < 10 ? `0${num}` : num.toString();
@@ -33,54 +32,54 @@ export default function Questions() {
         return {
             backgroundColor: withTiming(interpolateColor(progress1.value,
                 [0, 1],
-                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:50})
+                ['white', (correctAnswer === 0) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:100})
         }
     })
     const animatedStyle2 = useAnimatedStyle(() => {
         return {
             backgroundColor: withTiming(interpolateColor(progress2.value,
                 [0, 1],
-                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:50})
+                ['white', (correctAnswer === 1) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:100})
         }
     })
     const animatedStyle3 = useAnimatedStyle(() => {
         return {
             backgroundColor: withTiming(interpolateColor(progress3.value,
                 [0, 1],
-                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:50})
+                ['white', (correctAnswer === 2) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:100})
         }
     })
     const animatedStyle4 = useAnimatedStyle(() => {
         return {
             backgroundColor: withTiming(interpolateColor(progress4.value,
                 [0, 1],
-                ['white', isCorrect ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:50})
+                ['white', (correctAnswer === 3) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
+                ), {duration:100})
         }
     })
     const animatedStyles = [animatedStyle1, animatedStyle2, animatedStyle3, animatedStyle4]
     const progresses = [progress1, progress2, progress3, progress4]
 
-    const handleOptionPress = (option: string, index: number) => {
+    const handleOptionPress = (index: number) => {
         const correctAnswer = questionsData[currentQuestionIndex].correctAnswer;
-        setSelectedOption(option);
-        setIsCorrect(option === correctAnswer);
+        setCorrectAnswer(correctAnswer);
         progresses[index].value = 1;
+        progresses[correctAnswer].value = 1;
 
 
         setTimeout(() => {
             if (currentQuestionIndex < questionsData.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
-                setSelectedOption(null);
-                setIsCorrect(null);
                 progresses[index].value = 0;
+                progresses[correctAnswer].value = 0;
+                setCorrectAnswer(-1);
             } else {
                 router.back()
             }
-        }, 500);
+        }, 1000);
     };
 
     const getColorForIndex = (baseIndex: number, offset: number) => {
@@ -132,8 +131,8 @@ export default function Questions() {
                                 style={[
                                     styles.alternativasSpace, animatedStyles[index]
                                 ]}
-                                onPress={() => handleOptionPress(option, index)}
-                                disabled={selectedOption !== null}
+                                onPress={() => handleOptionPress(index)}
+
                             >   
                                 <Text style={{position:"absolute", left:'5%', fontFamily:'VisbyRoundCF-Bold'}}>
                                         {String.fromCharCode(index + 65)})

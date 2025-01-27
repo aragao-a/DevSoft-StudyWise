@@ -65,11 +65,12 @@ export default function Home() {
         logoOpacity.value = 0;
     };
     const handleInputBlur = () => {
-        if(!hasInput) {
-            inputHeight.value = 40;
-        } 
-        setHasInputFocus(false);
+        inputHeight.value = 40;
         logoOpacity.value = 1;
+        setHasInputFocus(false);
+    };
+    const handleTouchInput = () => {
+        inputRef.current?.focus();
     };
 
     const inputRef = useRef<TextInput>(null);
@@ -95,6 +96,7 @@ export default function Home() {
                     <Text style={styles.baseText}>
                         Descreva seu quiz:
                     </Text>
+                    <Pressable onPressIn={handleTouchInput}>
                     <SearchBar
                     ref={inputRef}
                     animatedStyle={animatedStyleInput}
@@ -114,6 +116,7 @@ export default function Home() {
                         readOnly: selectedFile ? true: false,
                         multiline:true,
                     }}/>
+                    </Pressable>
                     <Animated.View style={[{flex:1}, animatedStyleGeminiLogo]}>
                         <Text style={styles.smallerText}>
                             Powered by:

@@ -78,7 +78,7 @@ export default function LoginForm() {
                         Entrar
                     </Text>
                 </CustomButton>
-                <Pressable onPress={handleSubmit(handleSignUpTextPress)}>
+                <Pressable onPress={handleSignUpTextPress}>
                     <Text style={styles.linkText}>
                     Cadastre-se
                     </Text>
