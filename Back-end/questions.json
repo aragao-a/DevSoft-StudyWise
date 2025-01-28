@@ -1,0 +1,112 @@
+[
+    {
+        "id": 1,
+        "question": "De acordo com o texto, o que é filogenia?",
+        "options": [
+            "A): Conjunto de mudanças que ocorrem em uma população ao longo do tempo.",
+            "B): Desenvolvimento evolutivo de um determinado organismo.",
+            "C): Vestígios de seres atualmente extintos.",
+            "D): Mesma origem, função igual ou diferente."
+        ],
+        "correct_answer": 1
+    },
+    {
+        "id": 2,
+        "question": "O que o neodarwinismo inclui como fatores evolutivos?",
+        "options": [
+            "A): Variabilidade e seleção natural.",
+            "B): Lei do uso e desuso e herança dos caracteres adquiridos.",
+            "C): Mutações, recombinação gênica e seleção natural.",
+            "D): Mesma função, origem diferente."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 3,
+        "question": "Qual a definição de conceito de evolução apresentada no texto?",
+        "options": [
+            "A): Desenvolvimento evolutivo de um determinado organismo.",
+            "B): Conjunto de mudanças que ocorrem em uma população ao longo do tempo.",
+            "C): Vestígios de seres atualmente extintos.",
+            "D): Mesma origem, função igual ou diferente."
+        ],
+        "correct_answer": 1
+    },
+    {
+        "id": 4,
+        "question": "O que são fósseis, segundo o texto?",
+        "options": [
+            "A): Órgãos com mesma origem, mas funções diferentes.",
+            "B): Órgãos com mesma função, mas origens diferentes.",
+            "C): Vestígios de seres atualmente extintos.",
+            "D): Desenvolvimento evolutivo de um determinado organismo."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 5,
+        "question": "O que caracteriza os órgãos homólogos?",
+        "options": [
+            "A): Mesma função, origem diferente.",
+            "B): Mesma origem, função igual ou diferente.",
+            "C): Sem função num grupo de seres vivos, mas com função num grupo relacionado.",
+            "D): Vestígios de seres atualmente extintos."
+        ],
+        "correct_answer": 1
+    },
+    {
+        "id": 6,
+        "question": "Qual é um exemplo de órgão vestigial, de acordo com o texto?",
+        "options": [
+            "A): Asa do morcego.",
+            "B): Pata do cavalo.",
+            "C): Apêndice cecal.",
+            "D): Asa da ave."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 7,
+        "question": "O que o Darwinismo considera como fatores evolutivos?",
+        "options": [
+            "A): Mutações, recombinação gênica e seleção natural.",
+            "B): Lei do uso e desuso e herança dos caracteres adquiridos.",
+            "C): Variabilidade e seleção natural.",
+            "D):  Aumento de complexidade."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 8,
+        "question": "Qual o significado de irradiação adaptativa, de acordo com o texto?",
+        "options": [
+            "A): É característica dos órgãos análogos.",
+            "B): É característica dos órgãos homólogos.",
+            "C): É característica do Lamarckismo.",
+            "D): É característica do Neodarwinismo."
+        ],
+        "correct_answer": 1
+    },
+    {
+        "id": 9,
+        "question": "O que caracteriza os órgãos análogos?",
+        "options": [
+            "A): Mesma origem, função igual ou diferente.",
+            "B): Mesma função, origem diferente.",
+            "C): Sem função num grupo de seres vivos, mas com função num grupo relacionado.",
+            "D): Vestígios de seres atualmente extintos."
+        ],
+        "correct_answer": 1
+    },
+    {
+        "id": 10,
+        "question": "Segundo o texto, a evolução implica necessariamente em aumento de complexidade?",
+        "options": [
+            "A): Sim, sempre.",
+            "B): Não, necessariamente.",
+            "C): Apenas no Neodarwinismo.",
+            "D): Apenas no Lamarckismo."
+        ],
+        "correct_answer": 1
+    }
+]

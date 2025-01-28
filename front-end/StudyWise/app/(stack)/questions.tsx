@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text, Pressable, Dimensions} from "react-native";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
-import React, { useState } from "react";
-import questionsData from "@/assets/questions/questionsData.json";
+import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
 import Rectangle4 from "@/assets/svg/rectangle-4";
 import Rectangle3 from "@/assets/svg/rectangle-3";
@@ -18,8 +17,24 @@ export default function Questions() {
     const router = useRouter();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
+    const [questionsData, setQuestionsData] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const formatNumber = (num: number) => { // formata os números menores que 10 para ter 0 a esuqerda
+    useEffect(() => {
+        fetch("http://localhost:5000/questions.json")
+            .then(response => response.json())
+            .then(data => {
+                setQuestionsData(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching questions data:", error);
+                setLoading(false);
+            });
+    }, []);
+
+    // Function to format numbers with leading zeros
+    const formatNumber = (num: number) => {
         return num < 10 ? `0${num}` : num.toString();
     };
 
@@ -91,6 +106,13 @@ export default function Questions() {
     const backgroundBloco2Color = getColorForIndex(currentQuestionIndex, 2);
     const backgroundBloco3Color = getColorForIndex(currentQuestionIndex, 3);
 
+    if (loading) {
+    
+        <Text>
+            Ajuda Marcus!!
+        </Text>
+    }
+    else {
     return (
         <HomeBackground>
             <View style={{flex:1, alignItems:'center', justifyContent:'space-around'}}>
@@ -125,7 +147,7 @@ export default function Questions() {
                         </Text>
                     </View>
                     <View style={{flex:1, gap:'8%', paddingTop:'12%'}}>
-                        {questionsData[currentQuestionIndex].options.map((option, index) => (
+                        {questionsData[currentQuestionIndex].options.map((option: string, index: number) => (
                             <CustomButton
                                 key={index}
                                 style={[
@@ -147,6 +169,7 @@ export default function Questions() {
             </View>
         </HomeBackground>
     );
+    }
 };
 
 const styles = StyleSheet.create({
