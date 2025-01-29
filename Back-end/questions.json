@@ -1,112 +1,112 @@
 [
     {
         "id": 1,
-        "question": "De acordo com a imagem, o que caracteriza o Neodarwinismo?",
+        "question": "De acordo com o texto, o que é filogenia?",
         "options": [
-            "A): Variabilidade e seleção natural",
-            "B): Lei do uso e desuso e herança dos caracteres adquiridos",
-            "C): Mutações, recombinação gênica e seleção natural",
-            "D): Vestígios de seres atualmente extintos"
+            "O conjunto de mudanças que ocorrem em uma população ao longo do tempo.",
+            "O desenvolvimento evolutivo de um determinado organismo.",
+            "Vestígios de seres atualmente extintos.",
+            "Mesma função, origem diferente."
         ],
-        "correct_answer": 2
+        "correct_answer": 1
     },
     {
         "id": 2,
-        "question": "O que é filogenia, segundo a imagem?",
-        "options": [
-            "A): Conjunto de mudanças que ocorrem em uma população ao longo do tempo",
-            "B): Desenvolvimento evolutivo de um determinado organismo",
-            "C): Vestígios de seres atualmente extintos",
-            "D): Mesma função, origem diferente"
-        ],
-        "correct_answer": 1
-    },
-    {
-        "id": 3,
         "question": "Qual conceito é definido como um conjunto de mudanças que ocorrem em uma população ao longo do tempo?",
         "options": [
-            "A): Filogenia",
-            "B): Conceito de Evolução",
-            "C): Lamarckismo",
-            "D): Órgãos Análogos"
-        ],
-        "correct_answer": 1
-    },
-    {
-        "id": 4,
-        "question": "A imagem afirma que a evolução implica necessariamente em aumento de complexidade?",
-        "options": [
-            "A): Sim, a evolução sempre resulta em maior complexidade.",
-            "B): Não, a evolução não significa necessariamente aumento de complexidade.",
-            "C): Somente no Neodarwinismo a complexidade aumenta.",
-            "D):  A complexidade só aumenta no Lamarckismo."
-        ],
-        "correct_answer": 1
-    },
-    {
-        "id": 5,
-        "question": "O que são fósseis, de acordo com a imagem?",
-        "options": [
-            "A): Órgãos com mesma origem, mas funções diferentes.",
-            "B): Vestígios de seres atualmente extintos.",
-            "C): Órgãos com mesma função, mas origens diferentes.",
-            "D): O desenvolvimento evolutivo de um determinado organismo."
-        ],
-        "correct_answer": 1
-    },
-    {
-        "id": 6,
-        "question": "Quais são os exemplos de órgãos vestigiais citados na imagem?",
-        "options": [
-            "A): Braço do homem, pata do cavalo, asa do morcego",
-            "B): Asa da ave e asa da mosca",
-            "C): Apêndice cecal e dente do siso",
-            "D): Ossos, dentes e conchas"
+            "Filogenia",
+            "Lamarckismo",
+            "Conceito de Evolução",
+            "Neodarwinismo"
         ],
         "correct_answer": 2
     },
     {
-        "id": 7,
-        "question": "O que caracteriza os órgãos homólogos, segundo a imagem?",
+        "id": 3,
+        "question": "Quais são os três pilares do Neodarwinismo?",
         "options": [
-            "A): Mesma função, origem diferente",
-            "B): Mesma origem, função igual ou diferente",
-            "C): Sem função em um grupo de seres vivos, mas com função em grupo relacionado",
-            "D): Vestígios de seres atualmente extintos"
+            "Variabilidade e seleção natural",
+            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
+            "Mutações, recombinação gênica e seleção natural.",
+            "Mesma origem, função igual ou diferente."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 4,
+        "question": "O que caracteriza o Darwinismo?",
+        "options": [
+            "Mutações, recombinação gênica e seleção natural.",
+            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
+            "Variabilidade e seleção natural.",
+            "Mesma função, origem diferente."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 5,
+        "question": "O Lamarckismo inclui qual conceito?",
+        "options": [
+            "Variabilidade e seleção natural",
+            "Mutações, recombinação gênica e seleção natural.",
+            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
+            "Mesma origem, função igual ou diferente."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 6,
+        "question": "O que são fósseis, segundo o texto?",
+        "options": [
+            "Órgãos com mesma origem e função igual ou diferente.",
+            "Vestígios de seres atualmente extintos.",
+            "Órgãos com mesma função e origem diferente.",
+            "Órgãos sem função em um grupo de seres vivos, mas com função em grupo relacionado."
         ],
         "correct_answer": 1
     },
     {
-        "id": 8,
-        "question": "Qual o conceito que envolve a lei do uso e desuso e a herança dos caracteres adquiridos?",
+        "id": 7,
+        "question": "A paleontologia estuda o quê?",
         "options": [
-            "A): Neodarwinismo",
-            "B): Darwinismo",
-            "C): Lamarckismo",
-            "D): Filogenia"
+            "A origem dos órgãos homólogos.",
+            "A evolução de um determinado organismo.",
+            "Fósseis.",
+            "A convergência adaptativa."
+        ],
+        "correct_answer": 2
+    },
+    {
+        "id": 8,
+        "question": "O que são órgãos vestigiais?",
+        "options": [
+            "Órgãos com mesma origem e função igual ou diferente.",
+            "Órgãos com mesma função e origem diferente.",
+            "Órgãos sem função em um grupo de seres vivos, mas com função em grupo relacionado.",
+            "Vestígios de seres atualmente extintos."
         ],
         "correct_answer": 2
     },
     {
         "id": 9,
-        "question": "O que caracteriza os órgãos análogos, de acordo com a imagem?",
+        "question": "Qual é um exemplo de órgão vestigial, de acordo com o texto?",
         "options": [
-            "A): Mesma origem, função igual ou diferente",
-            "B): Mesma função, origem diferente",
-            "C): Sem função em um grupo de seres vivos, mas com função em grupo relacionado",
-            "D): Vestígios de seres atualmente extintos"
+            "Asa do morcego.",
+            "Asa da mosca.",
+            "Pata do cavalo.",
+            "Apêndice cecal."
         ],
-        "correct_answer": 1
+        "correct_answer": 3
     },
     {
         "id": 10,
-        "question": "De acordo com a imagem, o que o Darwinismo considera como fatores evolutivos?",
+        "question": "O que caracteriza os órgãos homólogos?",
         "options": [
-            "A): Mutações, recombinação gênica e seleção natural",
-            "B): Lei do uso e desuso e herança dos caracteres adquiridos",
-            "C): Variabilidade e seleção natural",
-            "D): Apêndice cecal e dente do siso"
+            "Mesma função, origem diferente.",
+            "Mesma origem, função igual ou diferente.",
+            "Sem função em um grupo de seres vivos, mas com função em grupo relacionado.",
+            "Vestígios de seres atualmente extintos."
         ],
-        "correct_answer": 2
+        "correct_answer": 1
     }
 ]

@@ -20,7 +20,7 @@ def to_markdown(text):
   text = text.replace('•', '  *')
   return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
-GOOGLE_API_KEY='AIzaSyBE3WdBNhe415m9vPTrjAPPEjqXlk3PAqc'
+GOOGLE_API_KEY=''
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -64,10 +64,10 @@ if "True" in Validade_1.text and "True" in Validade_3.text and  "True" in Valida
                 "id": 1
                 "question": "Texto da pergunta.",
                 "options": [
-                    "A): Opção A",
-                    "B): Opção B",
-                    "C): Opção C",
-                    "D): Opção D"
+                    "Opção 0",
+                    "Opção 1",
+                    "Opção 2",
+                    "Opção 3"
                 ],
                 "correct_answer": index referente às opções, varia de 0 a 3.
                 }
