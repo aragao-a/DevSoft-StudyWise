@@ -1,112 +1,112 @@
 [
     {
         "id": 1,
-        "question": "De acordo com o texto, o que é filogenia?",
+        "question": "O que é filogenia?",
         "options": [
-            "O conjunto de mudanças que ocorrem em uma população ao longo do tempo.",
-            "O desenvolvimento evolutivo de um determinado organismo.",
-            "Vestígios de seres atualmente extintos.",
-            "Mesma função, origem diferente."
+            "Mudanças em populações",
+            "Desenvolvimento evolutivo",
+            "Vestígios de seres extintos",
+            "Adaptação a diferentes meios"
         ],
         "correct_answer": 1
     },
     {
         "id": 2,
-        "question": "Qual conceito é definido como um conjunto de mudanças que ocorrem em uma população ao longo do tempo?",
+        "question": "O que define o conceito de evolução?",
         "options": [
-            "Filogenia",
-            "Lamarckismo",
-            "Conceito de Evolução",
-            "Neodarwinismo"
+            "Aumento de complexidade",
+            "Mudanças em populações",
+            "Herança de caracteres",
+            "Uso e desuso de órgãos"
         ],
-        "correct_answer": 2
+        "correct_answer": 1
     },
     {
         "id": 3,
-        "question": "Quais são os três pilares do Neodarwinismo?",
+        "question": "O Darwinismo se baseia em quê?",
         "options": [
-            "Variabilidade e seleção natural",
-            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
-            "Mutações, recombinação gênica e seleção natural.",
-            "Mesma origem, função igual ou diferente."
+            "Mutações e recombinação",
+            "Lei do uso e desuso",
+            "Variabilidade e seleção",
+            "Aumento de complexidade"
         ],
         "correct_answer": 2
     },
     {
         "id": 4,
-        "question": "O que caracteriza o Darwinismo?",
+        "question": "O Lamarckismo inclui qual conceito?",
         "options": [
-            "Mutações, recombinação gênica e seleção natural.",
-            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
-            "Variabilidade e seleção natural.",
-            "Mesma função, origem diferente."
+            "Seleção natural",
+            "Recombinação gênica",
+            "Herança de caracteres",
+            "Irradiação adaptativa"
         ],
         "correct_answer": 2
     },
     {
         "id": 5,
-        "question": "O Lamarckismo inclui qual conceito?",
+        "question": "O que são fósseis?",
         "options": [
-            "Variabilidade e seleção natural",
-            "Mutações, recombinação gênica e seleção natural.",
-            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
-            "Mesma origem, função igual ou diferente."
+            "Órgãos vestigiais",
+            "Órgãos análogos",
+            "Seres vivos extintos",
+            "Vestígios de seres extintos"
         ],
-        "correct_answer": 2
+        "correct_answer": 3
     },
     {
         "id": 6,
-        "question": "O que são fósseis, segundo o texto?",
+        "question": "O que caracteriza órgãos homólogos?",
         "options": [
-            "Órgãos com mesma origem e função igual ou diferente.",
-            "Vestígios de seres atualmente extintos.",
-            "Órgãos com mesma função e origem diferente.",
-            "Órgãos sem função em um grupo de seres vivos, mas com função em grupo relacionado."
+            "Mesma função, origem diferente",
+            "Mesma origem, função igual ou diferente",
+            "Sem função em um grupo",
+            "Aumento de complexidade"
         ],
         "correct_answer": 1
     },
     {
         "id": 7,
-        "question": "A paleontologia estuda o quê?",
+        "question": "O que caracteriza órgãos análogos?",
         "options": [
-            "A origem dos órgãos homólogos.",
-            "A evolução de um determinado organismo.",
-            "Fósseis.",
-            "A convergência adaptativa."
+            "Mesma origem, funções diferentes",
+            "Mesma função, origem diferente",
+            "Sem função em um grupo",
+            "Vestígios de seres extintos"
         ],
-        "correct_answer": 2
+        "correct_answer": 1
     },
     {
         "id": 8,
-        "question": "O que são órgãos vestigiais?",
+        "question": "O neodarwinismo considera o quê?",
         "options": [
-            "Órgãos com mesma origem e função igual ou diferente.",
-            "Órgãos com mesma função e origem diferente.",
-            "Órgãos sem função em um grupo de seres vivos, mas com função em grupo relacionado.",
-            "Vestígios de seres atualmente extintos."
+            "Variabilidade e seleção natural",
+            "Lei do uso e desuso",
+            "Mutações e recombinação gênica",
+            "Convergência adaptativa"
         ],
         "correct_answer": 2
     },
     {
         "id": 9,
-        "question": "Qual é um exemplo de órgão vestigial, de acordo com o texto?",
+        "question": "Qual exemplo de órgão vestigial?",
         "options": [
-            "Asa do morcego.",
-            "Asa da mosca.",
-            "Pata do cavalo.",
-            "Apêndice cecal."
+            "Asa do morcego",
+            "Pata do cavalo",
+            "Apêndice cecal",
+            "Asa da mosca"
         ],
-        "correct_answer": 3
+        "correct_answer": 2
     },
     {
         "id": 10,
-        "question": "O que caracteriza os órgãos homólogos?",
+        "question": "Evolução implica em quê?",
         "options": [
-            "Mesma função, origem diferente.",
-            "Mesma origem, função igual ou diferente.",
-            "Sem função em um grupo de seres vivos, mas com função em grupo relacionado.",
-            "Vestígios de seres atualmente extintos."
+            "Aumento de complexidade",
+            "Apenas seleção natural",
+            "Somente mutações",
+            "Não implica em aumento de complexidade"
         ],
-        "correct_answer": 1
+        "correct_answer": 3
     }
 ]
