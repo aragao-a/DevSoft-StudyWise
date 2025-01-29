@@ -21,7 +21,7 @@ export default function Questions() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:5000/questions.json")
+        fetch("http://192.168.15.2:5000/questions.json")
             .then(response => response.json())
             .then(data => {
                 setQuestionsData(data);
@@ -79,7 +79,7 @@ export default function Questions() {
     const progresses = [progress1, progress2, progress3, progress4]
 
     const handleOptionPress = (index: number) => {
-        const correctAnswer = questionsData[currentQuestionIndex].correctAnswer;
+        const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
         setCorrectAnswer(correctAnswer);
         progresses[index].value = 1;
         progresses[correctAnswer].value = 1;
