@@ -1,5 +1,6 @@
 import pathlib
 import textwrap
+import json
 
 import google.generativeai as genai
 
@@ -11,19 +12,21 @@ from IPython.core.display import HTML
 
 dependencies = [
     "grpcio==1.67.1"  # Se der timeout, reduzir o grpcio para essa versão
+    # npm install express
+    # pip install -q -U google-generativeai
 ]
 
 def to_markdown(text):
   text = text.replace('•', '  *')
   return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
-GOOGLE_API_KEY='AIzaSyB6Up-EDbZa3wwT-ti0cWDnGzh3GRqQELc'
+GOOGLE_API_KEY=''
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-img = Image('Back-end/assets/bg1.png')
+img = Image('Back-end/assets/mapa-mental-evidencias-da-evolucao-biologica-biologia.jpg')
 img2 = Image('Back-end/assets/Mico_azul1.jpeg')
 
 Validade_1 = model.generate_content(["""Avalie o conteúdo fornecido e determine se ele possui informações suficientes e estruturadas para 
@@ -42,7 +45,7 @@ Validade_3 = model.generate_content(["""Verifique se o conteúdo fornecido é l�
                                      Se ele contiver apenas elementos desorganizados, sem conexão ou significado claro, Retorne False, caso 
                                      contrário retorne True.""", img], stream=True)
 Validade_3.resolve()
-print(Validade_3.text)
+print(Validade_3.text) 
 
 valid_response = False
 
@@ -54,27 +57,23 @@ if "True" in Validade_1.text and "True" in Validade_3.text and  "True" in Valida
 
             Forneça quatro opções de resposta (A, B, C, D) que sejam plausíveis e estejam claramente conectadas ao conteúdo.
             Destaque qual é a resposta correta entre as opções.
-            Valide se a pergunta pode ser respondida diretamente com as informações fornecidas.
-            Apresente o resultado no formato JSON estruturado conforme o modelo abaixo:
+            Apresente o resultado no formato JSON estruturado conforme o modelo abaixo, e gere 10 questões:
 
-            {
-            "questions": [
+            [
                 {
+                "id": 1
                 "question": "Texto da pergunta.",
-                "options": {
-                    "A": "Opção A",
-                    "B": "Opção B",
-                    "C": "Opção C",
-                    "D": "Opção D"
-                },
-                "correct_answer": "Letra da resposta correta (A, B, C ou D)",
-                "validation": "Explicação de como a pergunta pode ser respondida com base no conteúdo fornecido."
+                "options": [
+                    "Opção 0",
+                    "Opção 1",
+                    "Opção 2",
+                    "Opção 3"
+                ],
+                "correct_answer": index referente às opções, varia de 0 a 3.
                 }
-                // Repetir estrutura para cada pergunta gerada.
-            ],
-            "validation_status": "ok" // Ou "insufficient_content" caso o conteúdo não permita a criação de perguntas relevantes.
-            }
-""", img], stream=True)
+            ] // Repetir estrutura para cada pergunta gerada incrementando o valor de id. NÃO inclua mais nenhum campo do que os solicitados.
+            Valide se a pergunta pode ser respondida diretamente com as informações fornecidas, mas não inclua isso no JSON gerado.""", img], stream=True)
+    
     response.resolve()
     valid_response = True
 else:
@@ -82,4 +81,13 @@ else:
     valid_response = False
 
 if valid_response == True:
-    print(response.text)
+    
+    cleaned_text = response.text.strip('```json\n').strip('\n```')
+
+    data = json.loads(cleaned_text)
+    formatted_json = json.dumps(data, indent=4, ensure_ascii=False)
+
+    with open('Back-end/questions.json', 'w', encoding='utf-8') as json_file:
+
+        json_file.write(formatted_json)
+    
