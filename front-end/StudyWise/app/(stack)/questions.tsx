@@ -127,57 +127,58 @@ export default function Questions() {
     else {
     return (
         <HomeBackground>
-            <View style={{flex:1, alignItems:'center', justifyContent:'space-around'}}>
                 <Text style={[styles.questionTitle, {color: blocoColor }]}>
                     PERGUNTA {questionsData[currentQuestionIndex].id}
                 </Text>
+            <View style={{flex:1, alignItems:'center', marginTop: 20}}>
                 <View style={{width:windoWidth * 0.9, maxWidth:400, aspectRatio:0.6}}>
                 <Rectangle1 style={[styles.rectangle, {top:10, right:13}]} height="100%" width='100%' color={backgroundBloco3Color}/>
                 <Rectangle3 style={[styles.rectangle, {top: 8, right:13}]} height="100%" width='100%' color={backgroundBloco2Color}/>
                 <Rectangle2 style={[styles.rectangle, {top: 5, left:3}]} height="100%" width='100%' color={backgroundBloco1Color}/>
                 <Rectangle4 style={[styles.rectangle, {top: 0}]} height='100%' width='100%' color={blocoColor}/>
-                <View style={styles.questionContainer}>
-                    <View style={styles.questNum}>
-                        <View style={styles.numTitle}>
-                            <Text style={[styles.quizTitle, {color: blocoColor}]}>
-                                Quiz {questionsData[currentQuestionIndex].id}
-                            </Text>
-                        </View>
-                        <Text style={styles.rightCardHeader}>
-                            {formatNumber(questionsData[currentQuestionIndex].id)}/
-                            {formatNumber(questionsData.length)}
-                        </Text>
-                    </View>
-                    <View style={styles.caixaPergunta}>
-                        <View style={[styles.bolaNum, {backgroundColor : blocoColor}]}>
-                            <Text style={styles.bolaNumTexto}>
-                                {formatNumber(questionsData[currentQuestionIndex].id)}
-                            </Text>
-                        </View>
-                        <Text style={styles.pergunta}>
-                            {questionsData[currentQuestionIndex].question}
-                        </Text>
-                    </View>
-                    <View style={{flex:1, gap:'8%', paddingTop:'12%'}}>
-                        {questionsData[currentQuestionIndex].options.map((option: string, index: number) => (
-                            <CustomButton
-                                key={index}
-                                style={[
-                                    styles.alternativasSpace, animatedStyles[index]
-                                ]}
-                                onPress={() => handleOptionPress(index)}
-
-                            >   
-                                <Text style={{position:"absolute", left:'5%', fontFamily:'VisbyRoundCF-Bold'}}>
-                                        {String.fromCharCode(index + 65)})
+                    <View style={styles.questionContainer}>
+                        <View style={styles.questNum}>
+                            <View style={styles.numTitle}>
+                                <Text style={[styles.quizTitle, {color: blocoColor}]}>
+                                    Quiz {questionsData[currentQuestionIndex].id}
                                 </Text>
-                                <Text style={styles.alternativasText}>
-                                    {option}</Text>
-                            </CustomButton>
-                        ))}
+                            </View>
+                            <Text style={styles.rightCardHeader}>
+                                {formatNumber(questionsData[currentQuestionIndex].id)}/
+                                {formatNumber(questionsData.length)}
+                            </Text>
+                        </View>
+                        <View style={styles.caixaPergunta}>
+                            <View style={[styles.bolaNum, {backgroundColor : blocoColor}]}>
+                                <Text style={styles.bolaNumTexto}>
+                                    {formatNumber(questionsData[currentQuestionIndex].id)}
+                                </Text>
+                            </View>
+                            <Text style={styles.pergunta}>
+                                {questionsData[currentQuestionIndex].question}
+                            </Text>
+                        </View>
+                        <View style={{flex:1, gap:'8%', paddingTop:'12%'}}>
+                            {questionsData[currentQuestionIndex].options.map((option: string, index: number) => (
+                                <CustomButton
+                                    key={index}
+                                    style={[
+                                        styles.alternativasSpace, animatedStyles[index]
+                                    ]}
+                                    onPress={() => handleOptionPress(index)}
+
+                                >   
+                                    <Text style={{position:"absolute", left:'3%', top: '18%', fontFamily:'VisbyRoundCF-Bold'}}>
+                                            {String.fromCharCode(index + 65)})
+                                    </Text>
+                                    <Text style={styles.alternativasText}>
+                                        {option}
+                                    </Text>
+                                </CustomButton>
+                            ))}
+                        </View>
+                        </View>
                     </View>
-                    </View>
-                </View>
             </View>
         </HomeBackground>
     );
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     questionContainer: {
-        flex:1,
+        flex: 1,
         paddingHorizontal:'8%',
         paddingTop:'7%',
     },
@@ -251,23 +252,30 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     alternativasText: {
-        fontFamily: "VisbyRoundCF-Regular",
+        textAlign: 'center',
+        fontFamily: "VisbyRoundCF-Medium",
         color: "#3C3C3C",
         fontSize: 16,
+        marginRight: '2%',
+        padding: 8,
+        paddingRight: 25,
+        paddingLeft: 25
     },
     alternativasSpace: {
-        flexDirection:'row',
         alignSelf:'center',
-        alignItems:'center',
         justifyContent: "center",
+        alignItems: "center",
         backgroundColor: "white",
-        borderRadius: 10,
-        height:'14%',
-        marginRight:'2%',
+        height:'auto',
         width:'98%',
+        marginRight:'2%',
+        borderRadius: 10,
+        paddingTop: 4,
+        paddingBottom: 4
     },
     caixaPergunta: {
         alignSelf:'center',
+        padding: 25,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
@@ -276,6 +284,12 @@ const styles = StyleSheet.create({
         marginRight:'2%',
         borderRadius: 10,
         marginTop: 30,
+    },
+    pergunta: {
+        fontSize: 16,
+        color: "#3C3C3C",
+        fontFamily: "VisbyRoundCF-Medium",
+        textAlign: "center",
     },
     bolaNum: {
         flex: 1,
@@ -291,13 +305,6 @@ const styles = StyleSheet.create({
         fontSize: 19,
         color: "white",
         fontFamily: "VisbyRoundCF-Bold",
-        textAlign: "center",
-    },
-    pergunta: {
-        marginHorizontal:'2%',
-        fontSize: 16,
-        color: "#3C3C3C",
-        fontFamily: "VisbyRoundCF-Medium",
         textAlign: "center",
     },
     numTitle: {

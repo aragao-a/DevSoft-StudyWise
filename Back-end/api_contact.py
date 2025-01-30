@@ -14,6 +14,7 @@ dependencies = [
     "grpcio==1.67.1"  # Se der timeout, reduzir o grpcio para essa versão
     # npm install express
     # pip install -q -U google-generativeai
+    # npm install cors
 ]
 
 def to_markdown(text):
@@ -62,8 +63,8 @@ if "True" in Validade_1.text and "True" in Validade_3.text and  "True" in Valida
             [
                 {
                 "id": 1
-                "question": "Texto da pergunta.",
-                "options": [
+                "question": "Texto da pergunta. Deve ter no MÁXIMO 15 palavras",
+                "options": "Texto das alternativas. Devem ter no MÁXIMO 8 palavras" [
                     "Opção 0",
                     "Opção 1",
                     "Opção 2",

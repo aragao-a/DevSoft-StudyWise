@@ -11,7 +11,7 @@ export default function HomeBackground({children, ...rest}: ViewProps) {
 
     return (
         <ScrollView style={{height:windowHeight}} keyboardShouldPersistTaps="handled">
-        <View style = {{justifyContent: 'flex-end', height:windowWidth * 1.8 < windowHeight ? windowHeight: windowWidth * 1.8,backgroundColor:'white'}}>
+        <View style = {{justifyContent: 'flex-end', height:windowWidth * 1.8 < windowHeight ? windowHeight: windowWidth * 1.8, backgroundColor:'white'}}>
             <StatusBar backgroundColor='white'/>
             <View style={styles.header}>
                 <View style={styles.headerSides}>
