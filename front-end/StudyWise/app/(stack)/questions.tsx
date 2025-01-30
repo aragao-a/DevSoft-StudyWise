@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable, Dimensions} from "react-native";
+import { StyleSheet, View, Text, Pressable, Dimensions } from "react-native";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
@@ -22,7 +22,7 @@ export default function Questions() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://{ip}:5000/questions.json")
+        fetch("http://192.168.10.62:5000/questions.json")
             .then(response => response.json())
             .then(data => {
                 setQuestionsData(data);
@@ -34,7 +34,6 @@ export default function Questions() {
             });
     }, []);
 
-    // Function to format numbers with leading zeros
     const formatNumber = (num: number) => {
         return num < 10 ? `0${num}` : num.toString();
     };
@@ -48,36 +47,36 @@ export default function Questions() {
         return {
             backgroundColor: withTiming(interpolateColor(progress1.value,
                 [0, 1],
-                ['white', (correctAnswer === 0) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:100})
+                ['white', (correctAnswer === 0) ? 'rgba(115, 191, 67, 1)' : 'rgba(239, 62, 54, 1)']
+            ), { duration: 100 })
         }
-    })
+    });
     const animatedStyle2 = useAnimatedStyle(() => {
         return {
             backgroundColor: withTiming(interpolateColor(progress2.value,
                 [0, 1],
-                ['white', (correctAnswer === 1) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:100})
+                ['white', (correctAnswer === 1) ? 'rgba(115, 191, 67, 1)' : 'rgba(239, 62, 54, 1)']
+            ), { duration: 100 })
         }
-    })
+    });
     const animatedStyle3 = useAnimatedStyle(() => {
         return {
             backgroundColor: withTiming(interpolateColor(progress3.value,
                 [0, 1],
-                ['white', (correctAnswer === 2) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:100})
+                ['white', (correctAnswer === 2) ? 'rgba(115, 191, 67, 1)' : 'rgba(239, 62, 54, 1)']
+            ), { duration: 100 })
         }
-    })
+    });
     const animatedStyle4 = useAnimatedStyle(() => {
         return {
             backgroundColor: withTiming(interpolateColor(progress4.value,
                 [0, 1],
-                ['white', (correctAnswer === 3) ? 'rgba(115, 191, 67, 1)': 'rgba(239, 62, 54, 1)']
-                ), {duration:100})
+                ['white', (correctAnswer === 3) ? 'rgba(115, 191, 67, 1)' : 'rgba(239, 62, 54, 1)']
+            ), { duration: 100 })
         }
-    })
-    const animatedStyles = [animatedStyle1, animatedStyle2, animatedStyle3, animatedStyle4]
-    const progresses = [progress1, progress2, progress3, progress4]
+    });
+    const animatedStyles = [animatedStyle1, animatedStyle2, animatedStyle3, animatedStyle4];
+    const progresses = [progress1, progress2, progress3, progress4];
 
     const handleOptionPress = (index: number) => {
         const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
@@ -94,10 +93,10 @@ export default function Questions() {
                     progresses[correctAnswer].value = 0;
                     setCorrectAnswer(-1);
                 } else {
-                    // Só chama o router.push depois que o estado foi atualizado
                     router.push({
                         pathname: "/results",
-                        params: { answers: JSON.stringify(updatedAnswers), 
+                        params: {
+                            answers: JSON.stringify(updatedAnswers),
                             correctAnswers: JSON.stringify(questionsData.map(q => q.correct_answer)),
                             validations: JSON.stringify(questionsData.map(q => q.validation))
                         }
@@ -105,9 +104,9 @@ export default function Questions() {
                 }
             }, 1000);
 
-            return updatedAnswers; // Retorna o novo estado atualizado
-    });
-};
+            return updatedAnswers;
+        });
+    };
 
     const getColorForIndex = (baseIndex: number, offset: number) => {
         return colorPalette[(baseIndex + offset) % colorPalette.length];
@@ -119,57 +118,67 @@ export default function Questions() {
     const backgroundBloco3Color = getColorForIndex(currentQuestionIndex, 3);
 
     if (loading) {
-    
-        <Text>
-            Ajuda Marcus!!
-        </Text>
+        return (
+            <View style={styles.loadingContainer}>
+                <Text>Loading...</Text>
+            </View>
+        );
     }
-    else {
+
+    if (!questionsData.length) {
+        return (
+            <View style={styles.loadingContainer}>
+                <Text>No questions available.</Text>
+            </View>
+        );
+    }
+
+    const currentQuestion = questionsData[currentQuestionIndex];
+
     return (
         <HomeBackground>
-                <Text style={[styles.questionTitle, {color: blocoColor }]}>
-                    PERGUNTA {questionsData[currentQuestionIndex].id}
-                </Text>
-            <View style={{flex:1, alignItems:'center', marginTop: 20}}>
-                <View style={{width:windoWidth * 0.9, maxWidth:400, aspectRatio:0.6}}>
-                <Rectangle1 style={[styles.rectangle, {top:10, right:13}]} height="100%" width='100%' color={backgroundBloco3Color}/>
-                <Rectangle3 style={[styles.rectangle, {top: 8, right:13}]} height="100%" width='100%' color={backgroundBloco2Color}/>
-                <Rectangle2 style={[styles.rectangle, {top: 5, left:3}]} height="100%" width='100%' color={backgroundBloco1Color}/>
-                <Rectangle4 style={[styles.rectangle, {top: 0}]} height='100%' width='100%' color={blocoColor}/>
+            <Text style={[styles.questionTitle, { color: blocoColor }]}>
+                PERGUNTA {currentQuestion.id}
+            </Text>
+            <View style={{ flex: 1, alignItems: 'center', marginTop: 20 }}>
+                <View style={{ width: windoWidth * 0.9, maxWidth: 400, aspectRatio: 0.6 }}>
+                    <Rectangle1 style={[styles.rectangle, { top: 10, right: 13 }]} height="100%" width='100%' color={backgroundBloco3Color} />
+                    <Rectangle3 style={[styles.rectangle, { top: 8, right: 13 }]} height="100%" width='100%' color={backgroundBloco2Color} />
+                    <Rectangle2 style={[styles.rectangle, { top: 5, left: 3 }]} height="100%" width='100%' color={backgroundBloco1Color} />
+                    <Rectangle4 style={[styles.rectangle, { top: 0 }]} height='100%' width='100%' color={blocoColor} />
                     <View style={styles.questionContainer}>
                         <View style={styles.questNum}>
                             <View style={styles.numTitle}>
-                                <Text style={[styles.quizTitle, {color: blocoColor}]}>
-                                    Quiz {questionsData[currentQuestionIndex].id}
+                                <Text style={[styles.quizTitle, { color: blocoColor }]}>
+                                    Quiz {currentQuestion.id}
                                 </Text>
                             </View>
                             <Text style={styles.rightCardHeader}>
-                                {formatNumber(questionsData[currentQuestionIndex].id)}/
+                                {formatNumber(currentQuestion.id)}/
                                 {formatNumber(questionsData.length)}
                             </Text>
                         </View>
                         <View style={styles.caixaPergunta}>
-                            <View style={[styles.bolaNum, {backgroundColor : blocoColor}]}>
+                            <View style={[styles.bolaNum, { backgroundColor: blocoColor }]}>
                                 <Text style={styles.bolaNumTexto}>
-                                    {formatNumber(questionsData[currentQuestionIndex].id)}
+                                    {formatNumber(currentQuestion.id)}
                                 </Text>
                             </View>
                             <Text style={styles.pergunta}>
-                                {questionsData[currentQuestionIndex].question}
+                                {currentQuestion.question}
                             </Text>
                         </View>
-                        <View style={{flex:1, gap:'8%', paddingTop:'12%'}}>
-                            {questionsData[currentQuestionIndex].options.map((option: string, index: number) => (
+                        <View style={{ flex: 1, gap: '8%', paddingTop: '12%' }}>
+                            {currentQuestion.options.map((option: string, index: number) => (
                                 <CustomButton
                                     key={index}
                                     style={[
                                         styles.alternativasSpace, animatedStyles[index]
                                     ]}
                                     onPress={() => handleOptionPress(index)}
-
-                                >   
-                                    <Text style={{position:"absolute", left:'3%', top: '18%', fontFamily:'VisbyRoundCF-Bold'}}>
-                                            {String.fromCharCode(index + 65)})
+                                >
+                                    <Text style={{ position: "absolute", left: '3%', top: '18%', fontFamily: 'VisbyRoundCF-Bold' }}>
+                                        {String.fromCharCode(index + 65)})
                                     </Text>
                                     <Text style={styles.alternativasText}>
                                         {option}
@@ -177,15 +186,19 @@ export default function Questions() {
                                 </CustomButton>
                             ))}
                         </View>
-                        </View>
                     </View>
+                </View>
             </View>
         </HomeBackground>
     );
-    }
-};
+}
 
 const styles = StyleSheet.create({
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     backgroundBloco: {
         position: "absolute",
         marginTop: 160,
@@ -224,7 +237,7 @@ const styles = StyleSheet.create({
         color: "#FF4770",
         fontFamily: "VisbyRoundCF-Bold",
         textAlign: "center",
-        letterSpacing:16,
+        letterSpacing: 16,
         marginTop: 20,
     },
     bloco: {
@@ -241,14 +254,14 @@ const styles = StyleSheet.create({
     },
     questionContainer: {
         flex: 1,
-        paddingHorizontal:'8%',
-        paddingTop:'7%',
+        paddingHorizontal: '8%',
+        paddingTop: '7%',
     },
     questNum: {
-        paddingHorizontal:'2%',
-        marginRight:'2%',
+        paddingHorizontal: '2%',
+        marginRight: '2%',
         justifyContent: "space-between",
-        alignItems:'center',
+        alignItems: 'center',
         flexDirection: "row",
     },
     alternativasText: {
@@ -262,26 +275,26 @@ const styles = StyleSheet.create({
         paddingLeft: 25
     },
     alternativasSpace: {
-        alignSelf:'center',
+        alignSelf: 'center',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
-        height:'auto',
-        width:'98%',
-        marginRight:'2%',
+        height: 'auto',
+        width: '98%',
+        marginRight: '2%',
         borderRadius: 10,
         paddingTop: 4,
         paddingBottom: 4
     },
     caixaPergunta: {
-        alignSelf:'center',
+        alignSelf: 'center',
         padding: 25,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
-        height:'30%',
-        width:'98%',
-        marginRight:'2%',
+        height: '30%',
+        width: '98%',
+        marginRight: '2%',
         borderRadius: 10,
         marginTop: 30,
     },
@@ -308,17 +321,17 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     numTitle: {
-        justifyContent:'center',
-        alignItems:'center',
-        height:35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 35,
         backgroundColor: "white",
         borderRadius: 10,
-        width:105
+        width: 105
     },
     quizTitle: {
-        fontFamily:'VisbyRoundCF-Bold',
+        fontFamily: 'VisbyRoundCF-Bold',
         letterSpacing: 4,
-        fontSize:16,
+        fontSize: 16,
     },
     rightCardHeader: {
         fontSize: 18,
@@ -328,5 +341,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexShrink: 1,
     },
-    rectangle: {position: 'absolute'}
+    rectangle: { position: 'absolute' }
 });
