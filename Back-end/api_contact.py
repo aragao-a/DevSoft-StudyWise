@@ -71,6 +71,7 @@ if "True" in Validade_1.text and "True" in Validade_3.text and  "True" in Valida
                     "Opção 3"
                 ],
                 "correct_answer": index referente às opções, varia de 0 a 3.
+                "validation": "Uma breve explicação com base no conteúdo."
                 }
             ] // Repetir estrutura para cada pergunta gerada incrementando o valor de id. NÃO inclua mais nenhum campo do que os solicitados.
             Valide se a pergunta pode ser respondida diretamente com as informações fornecidas, mas não inclua isso no JSON gerado.""", img], stream=True)

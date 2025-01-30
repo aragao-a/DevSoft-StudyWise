@@ -1,112 +1,122 @@
 [
     {
         "id": 1,
-        "question": "O que é filogenia?",
+        "question": "De acordo com o texto, o que é filogenia?",
         "options": [
-            "Mudanças em populações",
-            "Desenvolvimento evolutivo",
-            "Vestígios de seres extintos",
-            "Adaptação a diferentes meios"
+            "O conjunto de mudanças que ocorrem em uma população ao longo do tempo.",
+            "O desenvolvimento evolutivo de um determinado organismo.",
+            "Vestígios de seres atualmente extintos.",
+            "Mesma função, origem diferente."
         ],
-        "correct_answer": 1
+        "correct_answer": 1,
+        "validation": "A definição de filogenia está explicitamente descrita no texto."
     },
     {
         "id": 2,
-        "question": "O que define o conceito de evolução?",
+        "question": "O que o neodarwinismo inclui como fatores evolutivos?",
         "options": [
-            "Aumento de complexidade",
-            "Mudanças em populações",
-            "Herança de caracteres",
-            "Uso e desuso de órgãos"
+            "Variabilidade e seleção natural.",
+            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
+            "Mutações, recombinação gênica e seleção natural.",
+            "Mesma origem, função igual ou diferente."
         ],
-        "correct_answer": 1
+        "correct_answer": 2,
+        "validation": "O texto lista explicitamente os componentes do Neodarwinismo."
     },
     {
         "id": 3,
-        "question": "O Darwinismo se baseia em quê?",
+        "question": "Quais são os exemplos de órgãos homólogos citados?",
         "options": [
-            "Mutações e recombinação",
-            "Lei do uso e desuso",
-            "Variabilidade e seleção",
-            "Aumento de complexidade"
+            "Asa da ave e asa da mosca.",
+            "Apêndice cecal e dente do siso.",
+            "Braço do homem, pata do cavalo e asa do morcego.",
+            "Ossos, dentes e conchas."
         ],
-        "correct_answer": 2
+        "correct_answer": 2,
+        "validation": "A imagem fornece exemplos claros de órgãos homólogos."
     },
     {
         "id": 4,
-        "question": "O Lamarckismo inclui qual conceito?",
+        "question": "O que são fósseis, segundo o texto?",
         "options": [
-            "Seleção natural",
-            "Recombinação gênica",
-            "Herança de caracteres",
-            "Irradiação adaptativa"
+            "Órgãos com mesma função, mas origem diferente.",
+            "Vestígios de seres atualmente extintos.",
+            "O desenvolvimento evolutivo de um determinado organismo.",
+            "Mutações, recombinação gênica e seleção natural."
         ],
-        "correct_answer": 2
+        "correct_answer": 1,
+        "validation": "A definição de fósseis é claramente apresentada."
     },
     {
         "id": 5,
-        "question": "O que são fósseis?",
+        "question": "O que o darwinismo considera como fatores evolutivos?",
         "options": [
-            "Órgãos vestigiais",
-            "Órgãos análogos",
-            "Seres vivos extintos",
-            "Vestígios de seres extintos"
+            "Mutações, recombinação gênica e seleção natural.",
+            "Lei do uso e desuso, herança dos caracteres adquiridos e tendência ao aumento de complexidade.",
+            "Variabilidade e seleção natural.",
+            "Mesma origem, função igual ou diferente."
         ],
-        "correct_answer": 3
+        "correct_answer": 2,
+        "validation": "A imagem indica claramente os fatores do Darwinismo."
     },
     {
         "id": 6,
-        "question": "O que caracteriza órgãos homólogos?",
+        "question": "O que caracteriza os órgãos análogos?",
         "options": [
-            "Mesma função, origem diferente",
-            "Mesma origem, função igual ou diferente",
-            "Sem função em um grupo",
-            "Aumento de complexidade"
+            "Mesma origem, função igual ou diferente.",
+            "Mesma função, origem diferente.",
+            "Sem função num grupo de seres vivos, mas com função num grupo relacionado.",
+            "Vestígios de seres atualmente extintos."
         ],
-        "correct_answer": 1
+        "correct_answer": 1,
+        "validation": "A descrição dos órgãos análogos é direta."
     },
     {
         "id": 7,
-        "question": "O que caracteriza órgãos análogos?",
+        "question": "A evolução, segundo o texto, significa necessariamente aumento de complexidade?",
         "options": [
-            "Mesma origem, funções diferentes",
-            "Mesma função, origem diferente",
-            "Sem função em um grupo",
-            "Vestígios de seres extintos"
+            "Sim.",
+            "Não.",
+            "Depende do organismo.",
+            "Somente em alguns casos."
         ],
-        "correct_answer": 1
+        "correct_answer": 1,
+        "validation": "O texto afirma explicitamente que a evolução não significa necessariamente aumento de complexidade."
     },
     {
         "id": 8,
-        "question": "O neodarwinismo considera o quê?",
+        "question": "Cite um exemplo de órgão vestigial mencionado no texto.",
         "options": [
-            "Variabilidade e seleção natural",
-            "Lei do uso e desuso",
-            "Mutações e recombinação gênica",
-            "Convergência adaptativa"
+            "Braço do homem.",
+            "Asa da mosca.",
+            "Apêndice cecal.",
+            "Pata do cavalo."
         ],
-        "correct_answer": 2
+        "correct_answer": 2,
+        "validation": "O apêndice cecal é explicitamente citado como exemplo."
     },
     {
         "id": 9,
-        "question": "Qual exemplo de órgão vestigial?",
+        "question": "Qual o conceito de evolução apresentado no texto?",
         "options": [
-            "Asa do morcego",
-            "Pata do cavalo",
-            "Apêndice cecal",
-            "Asa da mosca"
+            "O desenvolvimento evolutivo de um determinado organismo.",
+            "Conjunto de mudanças que ocorrem em uma população ao longo do tempo.",
+            "Vestígios de seres atualmente extintos.",
+            "Mesma função, origem diferente."
         ],
-        "correct_answer": 2
+        "correct_answer": 1,
+        "validation": "O conceito de evolução está definido no início do texto."
     },
     {
         "id": 10,
-        "question": "Evolução implica em quê?",
+        "question": "Qual a área de estudo relacionada ao estudo de fósseis?",
         "options": [
-            "Aumento de complexidade",
-            "Apenas seleção natural",
-            "Somente mutações",
-            "Não implica em aumento de complexidade"
+            "Filogenia.",
+            "Neodarwinismo.",
+            "Paleontologia.",
+            "Lamarckismo."
         ],
-        "correct_answer": 3
+        "correct_answer": 2,
+        "validation": "O texto liga diretamente a paleontologia ao estudo de fósseis."
     }
 ]
