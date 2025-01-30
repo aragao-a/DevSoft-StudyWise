@@ -18,6 +18,7 @@ export default function Questions() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
     const [questionsData, setQuestionsData] = useState<any[]>([]);
+    const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -83,19 +84,30 @@ export default function Questions() {
         setCorrectAnswer(correctAnswer);
         progresses[index].value = 1;
         progresses[correctAnswer].value = 1;
+        setSelectedAnswers(prevAnswers => {
+            const updatedAnswers = [...prevAnswers, index];
 
+            setTimeout(() => {
+                if (currentQuestionIndex < questionsData.length - 1) {
+                    setCurrentQuestionIndex(currentQuestionIndex + 1);
+                    progresses[index].value = 0;
+                    progresses[correctAnswer].value = 0;
+                    setCorrectAnswer(-1);
+                } else {
+                    // Só chama o router.push depois que o estado foi atualizado
+                    router.push({
+                        pathname: "/results",
+                        params: { answers: JSON.stringify(updatedAnswers), 
+                            correctAnswers: JSON.stringify(questionsData.map(q => q.correct_answer)),
+                            validations: JSON.stringify(questionsData.map(q => q.validation))
+                        }
+                    });
+                }
+            }, 1000);
 
-        setTimeout(() => {
-            if (currentQuestionIndex < questionsData.length - 1) {
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
-                progresses[index].value = 0;
-                progresses[correctAnswer].value = 0;
-                setCorrectAnswer(-1);
-            } else {
-                router.back()
-            }
-        }, 1000);
-    };
+            return updatedAnswers; // Retorna o novo estado atualizado
+    });
+};
 
     const getColorForIndex = (baseIndex: number, offset: number) => {
         return colorPalette[(baseIndex + offset) % colorPalette.length];
