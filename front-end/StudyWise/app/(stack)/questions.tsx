@@ -22,7 +22,7 @@ export default function Questions() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://192.168.10.62:5000/questions.json")
+        fetch("http://{ip}:5000/questions.json")
             .then(response => response.json())
             .then(data => {
                 setQuestionsData(data);

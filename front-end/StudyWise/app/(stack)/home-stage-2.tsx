@@ -59,7 +59,7 @@ export default function Home() {
 
             formData.append("file", file as any); // 'as any' resolve erro de tipagem no TS
 
-            const response = await fetch("http://192.168.10.62:5000/upload", {
+            const response = await fetch("http://{ip}:5000/upload", {
                 method: "POST",
                 body: formData,
                 headers: {
