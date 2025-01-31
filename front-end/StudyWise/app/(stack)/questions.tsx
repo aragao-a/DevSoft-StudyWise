@@ -129,8 +129,8 @@ export default function Questions() {
         );
     }
 
-    const currentQuestion = questionsData[currentQuestionIndex];
-
+const currentQuestion = questionsData[currentQuestionIndex];
+  
     if (!questionsData.length) {
         return (
             <View style={styles.loadingContainer}>
@@ -138,7 +138,7 @@ export default function Questions() {
             </View>
         );
     }
-
+  
     return (
         <HomeBackground>
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
@@ -180,8 +180,7 @@ export default function Questions() {
                                     style={[
                                         styles.alternativasSpace, animatedStyles[index]
                                     ]}
-                                    onPress={() => handleOptionPress(index)}
-                                >   
+                                    onPress={() => handleOptionPress(index)}>   
                                     <View style={{paddingLeft: '5%'}}>
                                         <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
                                             {String.fromCharCode(index + 65)})
@@ -345,5 +344,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexShrink: 1,
     },
-    rectangle: { position: 'absolute'}
+rectangle: { position: 'absolute'}
 });
