@@ -61,7 +61,7 @@ export default function Home() {
 
             formData.append("file", file as any); // 'as any' resolve erro de tipagem no TS
 
-            const response = await fetch("http:/{ip}/upload", {
+            const response = await fetch("http://{ip}:5000/upload", {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -206,63 +206,63 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
     },
     group: {
-        flex:1, 
-        justifyContent:'space-around'
+        flex: 1,
+        justifyContent: 'space-around'
     },
     baseText: {
-        alignSelf:'center',
+        alignSelf: 'center',
         fontSize: 20,
         color: '#0054C1',
         fontFamily: 'VisbyRoundCF-Bold',
     },
     smallerText: {
-        alignSelf:'center',
+        alignSelf: 'center',
         fontSize: 11,
         fontFamily: 'Montserrat_600SemiBold',
     },
     inputTextArea: {
-        minHeight:100,
-        height:'50%',
-        justifyContent:'center',
-        gap:15,
-        alignItems:'center',
+        minHeight: 100,
+        height: '50%',
+        justifyContent: 'center',
+        gap: 15,
+        alignItems: 'center',
     },
     addFileArea: {
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonsArea: {
-        flex:1,
+        flex: 1,
         gap: 10,
     },
     createQuizButton: {
-        alignSelf:'center',
-        height:'18%',
-        width:'40%',
+        alignSelf: 'center',
+        height: '18%',
+        width: '40%',
         backgroundColor: 'rgba(0, 183, 201, 1)',
         borderRadius: 20,
         justifyContent: 'center',
     },
     ButtonText: {
-        paddingRight:'5%',
-        paddingLeft:'5%',
-        alignSelf:'center',
+        paddingRight: '5%',
+        paddingLeft: '5%',
+        alignSelf: 'center',
         fontSize: 18,
         color: 'white',
-        textAlign:'center',
+        textAlign: 'center',
         fontFamily: 'VisbyRoundCF-Bold',
     },
     footer: {
-        height:'50%',
-        minHeight:200,
-        gap:15,
-        justifyContent:'space-between',
-        alignItems:'stretch', 
+        height: '50%',
+        minHeight: 200,
+        gap: 15,
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
     },
-    profileIcon:{
-        alignSelf:'flex-end', 
-        marginRight:20, 
-        marginBottom:10,
+    profileIcon: {
+        alignSelf: 'flex-end',
+        marginRight: 20,
+        marginBottom: 10,
     },
-})
+});

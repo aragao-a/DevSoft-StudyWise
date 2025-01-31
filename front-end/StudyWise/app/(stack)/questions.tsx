@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Dimensions, ScrollView } from "react-native";
+import { StyleSheet, View, Text, Pressable, Dimensions } from "react-native";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
@@ -138,7 +138,6 @@ export default function Questions() {
             </View>
         );
     }
-
 
     return (
         <HomeBackground>
