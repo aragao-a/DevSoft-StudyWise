@@ -1,122 +1,74 @@
 [
   {
     "id": 1,
-    "question": "Mudança de estado físico sem alterar a composição?",
+    "question": "Qual característica define células vegetais?",
     "options": [
-      "Reação química",
-      "Transformação física",
-      "Transformação nuclear",
-      "Reação de decomposição"
+      "Parede celular de quitina",
+      "Presença de parede celular",
+      "Ausência de cloroplastos",
+      "Respiração anaeróbica"
     ],
     "correct_answer": 1,
-    "validation": "Transformações físicas alteram apenas a forma ou o estado físico da matéria, sem mudar sua composição química."
+    "validation": "A imagem indica que células vegetais possuem parede celular."
   },
   {
     "id": 2,
-    "question": "Qual processo NÃO é uma transformação física?",
+    "question": "O que são Fanerógamas?",
     "options": [
-      "Fusão do gelo",
-      "Evaporação da água",
-      "Queima de madeira",
-      "Solidificação do ferro"
+      "Plantas avasculares",
+      "Plantas com estruturas reprodutivas escondidas",
+      "Plantas com estruturas reprodutivas aparentes",
+      "Apenas briófitas"
     ],
     "correct_answer": 2,
-    "validation": "A queima de madeira é uma reação química, pois altera a composição da matéria."
+    "validation": "A imagem define Fanerógamas como plantas com estruturas reprodutivas aparentes."
   },
   {
     "id": 3,
-    "question": "Qual fenômeno representa uma mudança de estado físico?",
+    "question": "Qual a fase dominante em Briófitas?",
     "options": [
-      "Ferrugem em um prego",
-      "Digestão de alimentos",
-      "Ebulição da água",
-      "Queima de papel"
+      "Esporófito",
+      "Gametófito",
+      "Meiose",
+      "Mitose"
     ],
-    "correct_answer": 2,
-    "validation": "A ebulição da água é a passagem do estado líquido para o gasoso, uma transformação física."
+    "correct_answer": 1,
+    "validation": "A imagem indica que a fase dominante em Briófitas é o gametófito."
   },
   {
     "id": 4,
-    "question": "Dissolver açúcar em água é?",
+    "question": "Gimnospermas são vasculares ou avasculares?",
     "options": [
-      "Reação química",
-      "Transformação física",
-      "Transformação nuclear",
-      "Reação de síntese"
+      "Avasculares e sem sementes",
+      "Vasculares e com sementes",
+      "Avasculares com sementes",
+      "Vasculares e sem sementes"
     ],
     "correct_answer": 1,
-    "validation": "O açúcar se dissolve na água, mas sua composição química não se altera; é uma transformação física."
+    "validation": "A imagem especifica que Gimnospermas são vasculares com sementes."
   },
   {
     "id": 5,
-    "question": "Cortar um papel é um exemplo de:",
+    "question": "O que caracteriza as Pteridófitas?",
     "options": [
-      "Reação química",
-      "Transformação física",
-      "Transmutação",
-      "Reação nuclear"
+      "Avasculares com sementes",
+      "Vasculares e com sementes",
+      "Avasculares e sem sementes",
+      "Vasculares e sem sementes"
     ],
-    "correct_answer": 1,
-    "validation": "Cortar o papel altera sua forma, mas não sua composição química; é uma transformação física."
+    "correct_answer": 3,
+    "validation": "A imagem descreve Pteridófitas como vasculares e sem sementes."
   },
   {
     "id": 6,
-    "question": "Que transformação física ocorre ao congelar água?",
+    "question": "Angiospermas são caracterizadas por:",
     "options": [
-      "Fusão",
-      "Evaporação",
-      "Sublimação",
-      "Solidificação"
-    ],
-    "correct_answer": 3,
-    "validation": "A água passa do estado líquido (água) para o estado sólido (gelo), um processo chamado solidificação."
-  },
-  {
-    "id": 7,
-    "question": "Qual o nome da transformação de líquido para gás?",
-    "options": [
-      "Solidificação",
-      "Fusão",
-      "Evaporação",
-      "Sublimação"
-    ],
-    "correct_answer": 2,
-    "validation": "A passagem do estado líquido para o gasoso é chamada de evaporação."
-  },
-  {
-    "id": 8,
-    "question": "Amassar um pedaço de alumínio é uma:",
-    "options": [
-      "Reação química",
-      "Transformação física",
-      "Transformação nuclear",
-      "Reação exotérmica"
+      "Serem avasculares",
+      "Possuírem flores e frutos",
+      "Não apresentarem sementes",
+      "Apresentarem folhas aciculadas"
     ],
     "correct_answer": 1,
-    "validation": "Amassar o alumínio altera sua forma, mas não sua composição química; é uma transformação física."
-  },
-  {
-    "id": 9,
-    "question": "Derreter chocolate é uma mudança de:",
-    "options": [
-      "Composição química",
-      "Estado físico",
-      "Massa",
-      "Densidade"
-    ],
-    "correct_answer": 1,
-    "validation": "Derreter chocolate altera apenas o estado físico (sólido para líquido), sem mudar sua composição."
-  },
-  {
-    "id": 10,
-    "question": "Que fator permanece constante numa transformação física?",
-    "options": [
-      "Forma",
-      "Volume",
-      "Composição química",
-      "Temperatura"
-    ],
-    "correct_answer": 2,
-    "validation": "Em transformações físicas, a composição química da matéria permanece inalterada."
+    "validation": "A imagem mostra que Angiospermas são vasculares e possuem flores e frutos."
   }
 ]

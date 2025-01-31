@@ -10,7 +10,7 @@ const Rectangle3 = (props:ISvgProps) => (
     <G filter="url(#filter0_d_6_192)">
       <Rect
         x='-0.1%'
-        y='1.5%'
+        y='2.5%'
         width='95%' 
         height='95%'
         rx={20}

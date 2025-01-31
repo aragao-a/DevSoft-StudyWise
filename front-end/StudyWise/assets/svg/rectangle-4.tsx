@@ -8,7 +8,7 @@ const Rectangle4 = (props:ISvgProps) => (
     {...props}
   >
     <G filter="url(#filter0_d_6_117)">
-      <Rect width='95%' height='95%' rx={20} x='2.5%' fill={props.color}/>
+      <Rect width='95%' height='95%' rx={20} x='2.5%' y='1%' fill={props.color}/>
     </G>
     <Defs></Defs>
   </Svg>

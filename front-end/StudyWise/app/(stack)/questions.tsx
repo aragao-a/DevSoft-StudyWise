@@ -21,6 +21,7 @@ export default function Questions() {
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
     const [questionsData, setQuestionsData] = useState<any[]>([]);
     const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
+    const [alreadySelected, setAlreadySelected] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -81,33 +82,37 @@ export default function Questions() {
     const progresses = [progress1, progress2, progress3, progress4];
 
     const handleOptionPress = (index: number) => {
-        const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
-        setCorrectAnswer(correctAnswer);
-        progresses[index].value = 1;
-        progresses[correctAnswer].value = 1;
-        setSelectedAnswers(prevAnswers => {
-            const updatedAnswers = [...prevAnswers, index];
+        if(!alreadySelected) {
+            const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
+            setCorrectAnswer(correctAnswer);
+            progresses[index].value = 1;
+            progresses[correctAnswer].value = 1;
+            setAlreadySelected(true);
+            setSelectedAnswers(prevAnswers => {
+                const updatedAnswers = [...prevAnswers, index];
 
-            setTimeout(() => {
-                if (currentQuestionIndex < questionsData.length - 1) {
-                    setCurrentQuestionIndex(currentQuestionIndex + 1);
-                    progresses[index].value = 0;
-                    progresses[correctAnswer].value = 0;
-                    setCorrectAnswer(-1);
-                } else {
-                    router.push({
-                        pathname: "/results",
-                        params: {
-                            answers: JSON.stringify(updatedAnswers),
-                            correctAnswers: JSON.stringify(questionsData.map(q => q.correct_answer)),
-                            validations: JSON.stringify(questionsData.map(q => q.validation))
-                        }
-                    });
-                }
-            }, 1000);
+                setTimeout(() => {
+                    if (currentQuestionIndex < questionsData.length - 1) {
+                        setCurrentQuestionIndex(currentQuestionIndex + 1);
+                        progresses[index].value = 0;
+                        progresses[correctAnswer].value = 0;
+                        setCorrectAnswer(-1);
+                        setAlreadySelected(false);
+                    } else {
+                        router.replace({
+                            pathname: "/results",
+                            params: {
+                                answers: JSON.stringify(updatedAnswers),
+                                correctAnswers: JSON.stringify(questionsData.map(q => q.correct_answer)),
+                                validations: JSON.stringify(questionsData.map(q => q.validation))
+                            }
+                        });
+                    }
+                }, 1000);
 
-            return updatedAnswers;
-        });
+                return updatedAnswers;
+            });
+        }
     };
 
     const getColorForIndex = (baseIndex: number, offset: number) => {
@@ -259,7 +264,7 @@ const styles = StyleSheet.create({
     },
     questionContainer: {
         paddingHorizontal: '8%',
-        paddingTop: '7%',
+        paddingTop: '10%',
     },
     questNum: {
         paddingHorizontal: '2%',
