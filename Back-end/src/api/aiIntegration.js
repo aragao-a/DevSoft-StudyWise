@@ -9,6 +9,7 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 const promptKey_Validation = "validate_image";
 const promptKey_Questions = "generate_questions";
+const promptKey_TextQuiz = "generate_text_quiz";
 
 // Polyfill para fetch e Headers no Node.js
 if (!globalThis.fetch) {
@@ -91,4 +92,33 @@ export const generateQuestions = async (imageBase64, mimeType) => {
       console.error("Erro na geração do quiz:", error.message);
       return null;
   }
+};
+
+// Função para gerar um quiz baseado em texto
+export const textBasedQuiz = async (text_quiz) => {
+    try {
+        const prompts = loadPrompts();
+        if (!prompts || !prompts[promptKey_TextQuiz]) {
+            throw new Error(`Prompt "${promptKey_TextQuiz}" não encontrado.`);
+        }
+
+        const prompt = prompts[promptKey_TextQuiz];
+
+        // Monta o payload com o texto fornecido
+        const result = await model.generateContent([
+            prompt,
+            {
+                text: text_quiz,
+            },
+        ]);
+
+        if (result && result.response) {
+            return result.response.text();
+        } else {
+            throw new Error("Resposta inválida da API.");
+        }
+    } catch (error) {
+        console.error("Erro na geração do quiz:", error.message);
+        return null;
+    }
 };

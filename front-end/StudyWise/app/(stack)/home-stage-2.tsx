@@ -17,6 +17,7 @@ export default function Home() {
     const [hasInput, setHasInput] = useState(false);
     const [selectedFile, setSelectedFile] = useState<DocumentPicker.DocumentPickerAsset | null>(null);
     const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
+    const [textInput, setTextInput] = useState(""); // Estado para armazenar o texto digitado
     const router = useRouter();
 
     const pickFile = async () => {
@@ -41,31 +42,46 @@ export default function Home() {
         }
     };
 
-    const handleSubmitFile = async () => {
-        if (!selectedFile) {
-            Alert.alert("Erro", "Nenhum arquivo selecionado.");
+    const handleGenerateQuiz = async () => {
+        if (!textInput && !selectedFile) {
+            Alert.alert("Erro", "Nenhum texto ou arquivo enviado.");
             return;
         }
 
         setIsLoading(true); // Inicia o carregamento
 
         try {
-            const formData = new FormData();
-            const file = {
-                uri: selectedFile.uri,
-                name: selectedFile.name,
-                type: selectedFile.mimeType || "application/octet-stream",
-            };
+            let response;
+            if (textInput) {
+                // Envia o texto para a rota /text-quiz
+                response = await fetch("http://{ip}:5000/text-quiz", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ text: textInput }),
+                });
+            } else if (selectedFile) {
+                // Envia o arquivo para a rota /upload (mantido para compatibilidade)
+                const formData = new FormData();
+                const file = {
+                    uri: selectedFile.uri,
+                    name: selectedFile.name,
+                    type: selectedFile.mimeType || "application/octet-stream",
+                };
+                formData.append("file", file as any);
+                response = await fetch("http://{ip}:5000/upload", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+            }
 
-            formData.append("file", file as any); // 'as any' resolve erro de tipagem no TS
-
-            const response = await fetch("http://{ip}:5000/upload", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            if (!response) {
+                throw new Error("Nenhuma resposta do servidor.");
+            }
 
             const result = await response.json();
             console.log("Resposta do servidor:", result);
@@ -73,7 +89,7 @@ export default function Home() {
             if (response.ok) {
                 router.push('/questions'); // Navega para a tela de perguntas após sucesso
             } else {
-                Alert.alert("Erro", result.message || "Erro ao enviar arquivo.");
+                Alert.alert("Erro", result.message || "Erro ao gerar o quiz.");
             }
         } catch (error) {
             console.log("Erro na requisição:", error);
@@ -144,6 +160,7 @@ export default function Home() {
                                 formProps={{ name: 'pesquisa', control }}
                                 inputProps={{
                                     onChangeText: (text) => {
+                                        setTextInput(text); // Atualiza o estado do texto
                                         if (text && !hasInput) {
                                             setHasInput(true);
                                         }
@@ -177,7 +194,7 @@ export default function Home() {
                             }
                         </View>
                         <CustomButton
-                            onPress={handleSubmitFile}
+                            onPress={handleGenerateQuiz} // Chama a nova função
                             disabled={isLoading || (!hasInput && !selectedFile)} // Desabilita o botão durante o carregamento
                             style={(hasInput || selectedFile)
                                 ? styles.createQuizButton : [styles.createQuizButton, { backgroundColor: 'rgba(0, 183, 201, 0.2)' }]}

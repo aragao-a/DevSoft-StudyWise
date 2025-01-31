@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "question": "Qual o nome do episódio?",
+    "options": [
+      "O Reino de Fogo",
+      "O Elemento Surpresa",
+      "A Princesa que Desejava a Morte",
+      "O Mágico Fantasma"
+    ],
+    "correct_answer": 2,
+    "validation": "Este é o título correto do terceiro episódio da quarta temporada de Hora de Aventura."
+  },
+  {
+    "id": 2,
+    "question": "Quem é o principal antagonista do episódio?",
+    "options": [
+      "O Rei Gelado",
+      "A Princesa Jujuba",
+      "A Princesa Caroço",
+      "A Rainha das Cobras"
+    ],
+    "correct_answer": 2,
+    "validation": "A Princesa Caroço é a antagonista principal,  tentando usar a espada mágica para seus próprios fins."
+  },
+  {
+    "id": 3,
+    "question": "Qual item mágico é central na trama?",
+    "options": [
+      "A Coroa de Fogo",
+      "O Cajado de Gelo",
+      "A Espada de Cura",
+      "A Espada do Desejo"
+    ],
+    "correct_answer": 3,
+    "validation": "A trama gira em torno da Espada do Desejo e seu poder."
+  },
+  {
+    "id": 4,
+    "question": "Quem tenta roubar a espada?",
+    "options": [
+      "Jake",
+      "Finn",
+      "Princesa Caroço",
+      "BMO"
+    ],
+    "correct_answer": 2,
+    "validation": "A Princesa Caroço é a personagem que tenta roubar e controlar a espada."
+  },
+  {
+    "id": 5,
+    "question": "Qual a consequência do desejo de Finn?",
+    "options": [
+      "Ele se torna imortal",
+      "Ele perde seus poderes",
+      "Ele ganha um novo poder",
+      "Ele muda a história"
+    ],
+    "correct_answer": 3,
+    "validation": "O desejo de Finn altera significativamente a realidade."
+  },
+  {
+    "id": 6,
+    "question": "Qual a motivação da Princesa Caroço?",
+    "options": [
+      "Conquistar Ooo",
+      "Vingar sua família",
+      "Obter poder",
+      "Proteger os inocentes"
+    ],
+    "correct_answer": 2,
+    "validation": "O desejo de poder é a principal motivação da Princesa Caroço."
+  },
+  {
+    "id": 7,
+    "question": "O que acontece no final do episódio com a espada?",
+    "options": [
+      "É destruída",
+      "É guardada pela princesa Jujuba",
+      "É roubada novamente",
+      "É dada a Finn"
+    ],
+    "correct_answer": 0,
+    "validation": "A espada é destruída para evitar que caia nas mãos erradas."
+  },
+  {
+    "id": 8,
+    "question": "Qual personagem sofre com as consequências diretas do desejo?",
+    "options": [
+      "Jake",
+      "Finn",
+      "Princesa Jujuba",
+      "Rei Gelado"
+    ],
+    "correct_answer": 1,
+    "validation": "Finn é quem tem que lidar diretamente com as mudanças causadas por seu desejo."
+  },
+  {
+    "id": 9,
+    "question": "O episódio possui elementos de qual gênero?",
+    "options": [
+      "Comédia romântica",
+      "Ficção científica",
+      "Fantasia",
+      "Terror"
+    ],
+    "correct_answer": 2,
+    "validation": "O episódio é claramente dentro do gênero de fantasia, com magia e criaturas sobrenaturais."
+  },
+  {
+    "id": 10,
+    "question": "Qual o tema principal do episódio?",
+    "options": [
+      "Amizade",
+      "Responsabilidade",
+      "Poder",
+      "Amor"
+    ],
+    "correct_answer": 2,
+    "validation": "O episódio gira em torno do poder da espada do desejo e suas consequências."
+  }
+]

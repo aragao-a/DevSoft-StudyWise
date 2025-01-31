@@ -4,7 +4,7 @@ import cors from "cors";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import multer from "multer";
-import { validateContent, generateQuestions } from "./src/api/aiIntegration.js";
+import { validateContent, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,6 +12,7 @@ const __dirname = dirname(__filename);
 const app = express();
 app.use(cors());
 app.use(express.json()); // Para processar JSON no request body
+
 
 const PORT = process.env.PORT || 5000;
 const UPLOADS_DIR = path.join(__dirname, "uploads");
@@ -92,7 +93,43 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     }
   });
 
+// Rota para gerar quiz baseado em texto
+app.post("/text-quiz", async (req, res) => {
+  try {
+      const { text } = req.body; // Recebe o texto do corpo da requisição
+
+      if (!text) {
+          return res.status(400).json({ message: "Nenhum texto enviado." });
+      }
+
+      console.log("Texto recebido:", text);
+
+      // Gerar o quiz com base no texto
+      const generatedQuiz = await textBasedQuiz(text);
+
+      if (!generatedQuiz) {
+          return res.status(500).json({ message: "Erro na geração do quiz." });
+      }
+
+      // Extrair o JSON da string Markdown (se necessário)
+      const quizData = typeof generatedQuiz === "string" ? extractJsonFromMarkdown(generatedQuiz) : generatedQuiz;
+
+      if (!quizData) {
+          return res.status(500).json({ message: "Erro ao processar o quiz gerado." });
+      }
+
+      // Salvar as perguntas no questions.json
+      fs.writeFileSync(QUESTIONS_FILE, JSON.stringify(quizData, null, 2));
+
+      console.log("Quiz atualizado com sucesso!");
+      res.status(200).json({ message: "Quiz gerado com sucesso!", quiz: quizData });
+  } catch (error) {
+      console.error("Erro no processamento do texto:", error);
+      res.status(500).json({ message: "Erro no processamento do texto." });
+  }
+});
+
 // Iniciar o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+app.listen(5000, "0.0.0.0", () => {
+  console.log("Servidor rodando em http://0.0.0.0:5000");
 });
