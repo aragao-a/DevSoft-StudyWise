@@ -185,7 +185,7 @@ export default function Home() {
                                 ? styles.createQuizButton : [styles.createQuizButton, { backgroundColor: 'rgba(0, 183, 201, 0.2)' }]}
                         >
                             <Text style={styles.ButtonText}>
-                                {isLoading ? "Enviando..." : "Gerar Quiz!"}
+                                {isLoading ? "Gerando Quiz..." : "Gerar Quiz!"}
                             </Text>
                         </CustomButton>
                     </View>

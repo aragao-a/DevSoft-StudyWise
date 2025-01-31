@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "question": "Qual característica define as células vegetais?",
+    "options": [
+      "Presença de parede celular de celulose.",
+      "Ausência de cloroplastos.",
+      "Incapacidade de realizar fotossíntese.",
+      "Ser unicelular."
+    ],
+    "correct_answer": 0,
+    "validation": "O diagrama mostra a parede celular e a celulose como características da célula vegetal."
+  },
+  {
+    "id": 2,
+    "question": "O que caracteriza as plantas avasculares?",
+    "options": [
+      "Presença de tecidos condutores de seiva.",
+      "Ausência de tecidos condutores de seiva.",
+      "Produção de sementes.",
+      "Flores e frutos."
+    ],
+    "correct_answer": 1,
+    "validation": "O diagrama indica que plantas avasculares não possuem tecidos condutores de seiva."
+  },
+  {
+    "id": 3,
+    "question": "Quais plantas são consideradas fanerógamas?",
+    "options": [
+      "Briófitas.",
+      "Pteridófitas.",
+      "Gimnospermas e Angiospermas.",
+      "Apenas Briófitas."
+    ],
+    "correct_answer": 2,
+    "validation": "O esquema mostra que Gimnospermas e Angiospermas são fanerógamas."
+  },
+  {
+    "id": 4,
+    "question": "Onde ocorre a produção de gametas femininos?",
+    "options": [
+      "No anterídio.",
+      "No arquegônio.",
+      "Nas flores.",
+      "Nos frutos."
+    ],
+    "correct_answer": 1,
+    "validation": "O diagrama indica que o arquegônio é o órgão sexual feminino e produz gametas."
+  },
+  {
+    "id": 5,
+    "question": "O que caracteriza as gimnospermas?",
+    "options": [
+      "Sementes dentro de frutos.",
+      "Sementes nuas (sem fruto).",
+      "Ausência de sementes.",
+      "São avasculares."
+    ],
+    "correct_answer": 1,
+    "validation": "A imagem descreve as gimnospermas como plantas vasculares com sementes nuas."
+  },
+  {
+    "id": 6,
+    "question": "Qual a fase dominante em briófitas?",
+    "options": [
+      "Esporófito.",
+      "Gametófito.",
+      "Não possui fase dominante.",
+      "Alternância de gerações."
+    ],
+    "correct_answer": 1,
+    "validation": "O diagrama indica que a fase dominante em briófitas é o gametófito."
+  },
+  {
+    "id": 7,
+    "question": "Qual estrutura reprodutiva é característica de criptógamas?",
+    "options": [
+      "Flores.",
+      "Frutos.",
+      "Estruturas reprodutivas aparentes.",
+      "Estruturas reprodutivas escondidas."
+    ],
+    "correct_answer": 3,
+    "validation": "O diagrama mostra que as criptógamas possuem estruturas reprodutivas escondidas."
+  },
+  {
+    "id": 8,
+    "question": "As pteridófitas são vasculares ou avasculares?",
+    "options": [
+      "Avasculares.",
+      "Vasculares.",
+      "Tanto vasculares quanto avasculares.",
+      "Depende da espécie."
+    ],
+    "correct_answer": 1,
+    "validation": "O esquema mostra as pteridófitas como plantas vasculares."
+  },
+  {
+    "id": 9,
+    "question": "Qual estrutura reprodutiva é característica de angiospermas?",
+    "options": [
+      "Cones.",
+      "Soros.",
+      "Flores.",
+      "Não possuem estruturas reprodutivas."
+    ],
+    "correct_answer": 2,
+    "validation": "O diagrama mostra flores como estruturas reprodutivas de angiospermas."
+  },
+  {
+    "id": 10,
+    "question": "O que define o Reino Plantae?",
+    "options": [
+      "Seres unicelulares, heterotróficos e anaeróbicos.",
+      "Seres eucariontes, pluricelulares, autotróficos e aeróbicos.",
+      "Seres procariontes, pluricelulares, autotróficos e aeróbicos.",
+      "Seres eucariontes, unicelulares, heterotróficos e anaeróbicos."
+    ],
+    "correct_answer": 1,
+    "validation": "O diagrama apresenta as características do Reino Plantae como eucariontes, pluricelulares, autotróficos e aeróbicos."
+  }
+]
