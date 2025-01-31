@@ -1,122 +1,122 @@
 [
   {
     "id": 1,
-    "question": "Qual característica define as células vegetais?",
+    "question": "Qual o nome do episódio?",
     "options": [
-      "Presença de parede celular de celulose.",
-      "Ausência de cloroplastos.",
-      "Incapacidade de realizar fotossíntese.",
-      "Ser unicelular."
+      "O Reino de Fogo",
+      "O Elemento Surpresa",
+      "A Princesa que Desejava a Morte",
+      "O Mágico Fantasma"
     ],
-    "correct_answer": 0,
-    "validation": "O diagrama mostra a parede celular e a celulose como características da célula vegetal."
+    "correct_answer": 2,
+    "validation": "Este é o título correto do terceiro episódio da quarta temporada de Hora de Aventura."
   },
   {
     "id": 2,
-    "question": "O que caracteriza as plantas avasculares?",
+    "question": "Quem é o principal antagonista do episódio?",
     "options": [
-      "Presença de tecidos condutores de seiva.",
-      "Ausência de tecidos condutores de seiva.",
-      "Produção de sementes.",
-      "Flores e frutos."
+      "O Rei Gelado",
+      "A Princesa Jujuba",
+      "A Princesa Caroço",
+      "A Rainha das Cobras"
     ],
-    "correct_answer": 1,
-    "validation": "O diagrama indica que plantas avasculares não possuem tecidos condutores de seiva."
+    "correct_answer": 2,
+    "validation": "A Princesa Caroço é a antagonista principal,  tentando usar a espada mágica para seus próprios fins."
   },
   {
     "id": 3,
-    "question": "Quais plantas são consideradas fanerógamas?",
+    "question": "Qual item mágico é central na trama?",
     "options": [
-      "Briófitas.",
-      "Pteridófitas.",
-      "Gimnospermas e Angiospermas.",
-      "Apenas Briófitas."
+      "A Coroa de Fogo",
+      "O Cajado de Gelo",
+      "A Espada de Cura",
+      "A Espada do Desejo"
     ],
-    "correct_answer": 2,
-    "validation": "O esquema mostra que Gimnospermas e Angiospermas são fanerógamas."
+    "correct_answer": 3,
+    "validation": "A trama gira em torno da Espada do Desejo e seu poder."
   },
   {
     "id": 4,
-    "question": "Onde ocorre a produção de gametas femininos?",
+    "question": "Quem tenta roubar a espada?",
     "options": [
-      "No anterídio.",
-      "No arquegônio.",
-      "Nas flores.",
-      "Nos frutos."
+      "Jake",
+      "Finn",
+      "Princesa Caroço",
+      "BMO"
     ],
-    "correct_answer": 1,
-    "validation": "O diagrama indica que o arquegônio é o órgão sexual feminino e produz gametas."
+    "correct_answer": 2,
+    "validation": "A Princesa Caroço é a personagem que tenta roubar e controlar a espada."
   },
   {
     "id": 5,
-    "question": "O que caracteriza as gimnospermas?",
+    "question": "Qual a consequência do desejo de Finn?",
     "options": [
-      "Sementes dentro de frutos.",
-      "Sementes nuas (sem fruto).",
-      "Ausência de sementes.",
-      "São avasculares."
+      "Ele se torna imortal",
+      "Ele perde seus poderes",
+      "Ele ganha um novo poder",
+      "Ele muda a história"
     ],
-    "correct_answer": 1,
-    "validation": "A imagem descreve as gimnospermas como plantas vasculares com sementes nuas."
+    "correct_answer": 3,
+    "validation": "O desejo de Finn altera significativamente a realidade."
   },
   {
     "id": 6,
-    "question": "Qual a fase dominante em briófitas?",
+    "question": "Qual a motivação da Princesa Caroço?",
     "options": [
-      "Esporófito.",
-      "Gametófito.",
-      "Não possui fase dominante.",
-      "Alternância de gerações."
+      "Conquistar Ooo",
+      "Vingar sua família",
+      "Obter poder",
+      "Proteger os inocentes"
     ],
-    "correct_answer": 1,
-    "validation": "O diagrama indica que a fase dominante em briófitas é o gametófito."
+    "correct_answer": 2,
+    "validation": "O desejo de poder é a principal motivação da Princesa Caroço."
   },
   {
     "id": 7,
-    "question": "Qual estrutura reprodutiva é característica de criptógamas?",
+    "question": "O que acontece no final do episódio com a espada?",
     "options": [
-      "Flores.",
-      "Frutos.",
-      "Estruturas reprodutivas aparentes.",
-      "Estruturas reprodutivas escondidas."
+      "É destruída",
+      "É guardada pela princesa Jujuba",
+      "É roubada novamente",
+      "É dada a Finn"
     ],
-    "correct_answer": 3,
-    "validation": "O diagrama mostra que as criptógamas possuem estruturas reprodutivas escondidas."
+    "correct_answer": 0,
+    "validation": "A espada é destruída para evitar que caia nas mãos erradas."
   },
   {
     "id": 8,
-    "question": "As pteridófitas são vasculares ou avasculares?",
+    "question": "Qual personagem sofre com as consequências diretas do desejo?",
     "options": [
-      "Avasculares.",
-      "Vasculares.",
-      "Tanto vasculares quanto avasculares.",
-      "Depende da espécie."
+      "Jake",
+      "Finn",
+      "Princesa Jujuba",
+      "Rei Gelado"
     ],
     "correct_answer": 1,
-    "validation": "O esquema mostra as pteridófitas como plantas vasculares."
+    "validation": "Finn é quem tem que lidar diretamente com as mudanças causadas por seu desejo."
   },
   {
     "id": 9,
-    "question": "Qual estrutura reprodutiva é característica de angiospermas?",
+    "question": "O episódio possui elementos de qual gênero?",
     "options": [
-      "Cones.",
-      "Soros.",
-      "Flores.",
-      "Não possuem estruturas reprodutivas."
+      "Comédia romântica",
+      "Ficção científica",
+      "Fantasia",
+      "Terror"
     ],
     "correct_answer": 2,
-    "validation": "O diagrama mostra flores como estruturas reprodutivas de angiospermas."
+    "validation": "O episódio é claramente dentro do gênero de fantasia, com magia e criaturas sobrenaturais."
   },
   {
     "id": 10,
-    "question": "O que define o Reino Plantae?",
+    "question": "Qual o tema principal do episódio?",
     "options": [
-      "Seres unicelulares, heterotróficos e anaeróbicos.",
-      "Seres eucariontes, pluricelulares, autotróficos e aeróbicos.",
-      "Seres procariontes, pluricelulares, autotróficos e aeróbicos.",
-      "Seres eucariontes, unicelulares, heterotróficos e anaeróbicos."
+      "Amizade",
+      "Responsabilidade",
+      "Poder",
+      "Amor"
     ],
-    "correct_answer": 1,
-    "validation": "O diagrama apresenta as características do Reino Plantae como eucariontes, pluricelulares, autotróficos e aeróbicos."
+    "correct_answer": 2,
+    "validation": "O episódio gira em torno do poder da espada do desejo e suas consequências."
   }
 ]
