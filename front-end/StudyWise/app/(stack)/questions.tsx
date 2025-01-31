@@ -144,13 +144,14 @@ const currentQuestion = questionsData[currentQuestionIndex];
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
                 PERGUNTA {currentQuestion.id}
             </Text>
-              <View style={{alignSelf: 'center', width:windoWidth * 0.9, marginTop: 20, height: containerSize ? containerSize.height: 'auto'}}>
+            
+            <View style={{height:containerSize ? containerSize.height * 1.05: 'auto', alignSelf: 'center', alignItems:'center', marginTop: 20}}>
+                    <Rectangle1 style={[styles.rectangle]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={backgroundBloco3Color} />
+                    <Rectangle3 style={[styles.rectangle]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={backgroundBloco2Color} />
+                    <Rectangle2 style={[styles.rectangle]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={backgroundBloco1Color} />
+                    <Rectangle4 style={[styles.rectangle, { top: 0 }]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={blocoColor} />
                 <View style={{maxWidth: 400}} onLayout={onLayout}>
-                    <Rectangle1 style={[styles.rectangle]} height={containerSize ? containerSize.height:'100%'} width='100%' color={backgroundBloco3Color} />
-                    <Rectangle3 style={[styles.rectangle]} height={containerSize ? containerSize.height: '100%'} width='98%' color={backgroundBloco2Color} />
-                    <Rectangle2 style={[styles.rectangle]} height={containerSize ? containerSize.height: '100%'} width='100%' color={backgroundBloco1Color} />
-                    <Rectangle4 style={[styles.rectangle, { top: 0 }]} height={containerSize ? containerSize.height: '100%'} width='100%' color={blocoColor} />
-                 <View style={styles.questionContainer}>
+                    <View style={styles.questionContainer}>
                         <View style={styles.questNum}>
                             <View style={styles.numTitle}>
                                 <Text style={[styles.quizTitle, { color: blocoColor }]}>
@@ -172,7 +173,7 @@ const currentQuestion = questionsData[currentQuestionIndex];
                                 {currentQuestion.question}
                             </Text>
                         </View>
-                            <View style={{gap: '6%', paddingBottom:'10%', minHeight: windowHeight * 0.45, justifyContent:'center'}}>
+                        <View style={{gap: '20', paddingVertical:20, minHeight: windowHeight * 0.45, justifyContent:'center'}}>
                             {currentQuestion.options.map((option: string, index: number) => (
                                 <CustomButton
                                     key={index}

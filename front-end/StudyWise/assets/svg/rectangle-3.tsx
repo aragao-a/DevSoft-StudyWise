@@ -9,10 +9,10 @@ const Rectangle3 = (props:ISvgProps) => (
   >
     <G filter="url(#filter0_d_6_192)">
       <Rect
-        x='-0.1%'
+        x="1.5%"
         y='1.5%'
-        width='95%' 
-        height='95%'
+        width="85%" 
+        height="95%"
         rx={20}
         transform="rotate(-1.7 4 8.90015)"
         fill={props.color}
