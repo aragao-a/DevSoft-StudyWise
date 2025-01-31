@@ -1,7 +1,7 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable} from "react-native";
+import { StyleSheet, View, Text, Pressable, Dimensions} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
@@ -11,6 +11,9 @@ import { Quiz } from "@/constants/quiz-type";
 import QuizList from "@/components/ui/quiz-list";
 import SearchIcon from "@/assets/svg/search-icon";
 import CustomButton from "@/components/ui/custom-button";
+
+const windowWidth = Dimensions.get('window').width;
+
 export default function Home() {
     const [searchResult, setSearchResult] = useState('')
     const [quizzes, setQuizzes] = useState<Quiz[]>([{id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, {id: '1', grade:1, field:'asdeem', name:'Plat'}, {id: '1', grade:1, field:'Biol', name:'Pl'}, {id: '1', grade:1, field:'a', name:'B'}, {id: '1', grade:1, field:'a', name:'b'}])
@@ -56,7 +59,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        flex:1, 
+        height:windowWidth * 1, 
         justifyContent: 'center',
         gap:'5%',
         backgroundColor: 'white',
@@ -72,7 +75,8 @@ const styles = StyleSheet.create({
     },
     buttonArea: {
         alignItems:'center', 
-        gap:10},
+        gap:10
+    },
     createQuizButton: {
         height:60,
         width: '80%',
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         fontFamily: 'VisbyRoundCF-Bold',
     },
     footer: {
-        height:'25%', 
+        height: windowWidth * 0.5, 
         alignItems:'stretch', 
         justifyContent:'space-around',
         paddingTop:'5%'
