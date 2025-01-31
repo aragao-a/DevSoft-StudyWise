@@ -129,8 +129,8 @@ export default function Questions() {
         );
     }
 
-    const currentQuestion = questionsData[currentQuestionIndex];
-
+const currentQuestion = questionsData[currentQuestionIndex];
+  
     if (!questionsData.length) {
         return (
             <View style={styles.loadingContainer}>
@@ -138,20 +138,19 @@ export default function Questions() {
             </View>
         );
     }
-
+  
     return (
         <HomeBackground>
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
                 PERGUNTA {currentQuestion.id}
             </Text>
-            
-            <View style={{alignSelf: 'center', width:windoWidth * 0.9, marginTop: 20, height: containerSize ? containerSize.height: 'auto'}}>
+              <View style={{alignSelf: 'center', width:windoWidth * 0.9, marginTop: 20, height: containerSize ? containerSize.height: 'auto'}}>
                 <View style={{maxWidth: 400}} onLayout={onLayout}>
                     <Rectangle1 style={[styles.rectangle]} height={containerSize ? containerSize.height:'100%'} width='100%' color={backgroundBloco3Color} />
                     <Rectangle3 style={[styles.rectangle]} height={containerSize ? containerSize.height: '100%'} width='98%' color={backgroundBloco2Color} />
                     <Rectangle2 style={[styles.rectangle]} height={containerSize ? containerSize.height: '100%'} width='100%' color={backgroundBloco1Color} />
                     <Rectangle4 style={[styles.rectangle, { top: 0 }]} height={containerSize ? containerSize.height: '100%'} width='100%' color={blocoColor} />
-                    <View style={styles.questionContainer}>
+                 <View style={styles.questionContainer}>
                         <View style={styles.questNum}>
                             <View style={styles.numTitle}>
                                 <Text style={[styles.quizTitle, { color: blocoColor }]}>
@@ -173,15 +172,14 @@ export default function Questions() {
                                 {currentQuestion.question}
                             </Text>
                         </View>
-                        <View style={{gap: '6%', paddingBottom:'10%', minHeight: windowHeight * 0.45, justifyContent:'center'}}>
+                            <View style={{gap: '6%', paddingBottom:'10%', minHeight: windowHeight * 0.45, justifyContent:'center'}}>
                             {currentQuestion.options.map((option: string, index: number) => (
                                 <CustomButton
                                     key={index}
                                     style={[
                                         styles.alternativasSpace, animatedStyles[index]
                                     ]}
-                                    onPress={() => handleOptionPress(index)}
-                                >   
+                                    onPress={() => handleOptionPress(index)}>   
                                     <View style={{paddingLeft: '5%'}}>
                                         <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
                                             {String.fromCharCode(index + 65)})
@@ -345,5 +343,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexShrink: 1,
     },
-    rectangle: { position: 'absolute'}
+rectangle: { position: 'absolute'}
 });

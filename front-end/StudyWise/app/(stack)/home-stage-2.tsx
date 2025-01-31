@@ -14,7 +14,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-na
 import CustomButton from "@/components/ui/custom-button";
 
 const windowWidth = Dimensions.get('window').width;
-
+  
 export default function Home() {
     const [hasInput, setHasInput] = useState(false);
     const [selectedFile, setSelectedFile] = useState<DocumentPicker.DocumentPickerAsset | null>(null);
