@@ -16,7 +16,12 @@ const windowWidth = Dimensions.get('window').width;
 
 export default function Home() {
     const [searchResult, setSearchResult] = useState('')
-    const [quizzes, setQuizzes] = useState<Quiz[]>([{id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, {id: '1', grade:1, field:'asdeem', name:'Plat'}, {id: '1', grade:1, field:'Biol', name:'Pl'}, {id: '1', grade:1, field:'a', name:'B'}, {id: '1', grade:1, field:'a', name:'b'}])
+    const [quizzes, setQuizzes] = useState<Quiz[]>([
+        {id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, 
+        {id: '1', grade:1, field:'Química', name:'Transformações físicas'}, 
+        {id: '1', grade:1, field:'Física', name:'Leis de Newton'}, 
+        {id: '1', grade:1, field:'Biologia', name:'Evolução'}, 
+        {id: '1', grade:1, field:'Lógica', name:'Lógica Aristotélica'}])
     const router = useRouter();
     const handleButtonPress = () => {router.push('/home-stage-2')};
     const handleProfileIconPress = () => {router.push('/profile')};

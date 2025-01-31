@@ -1,122 +1,122 @@
 [
   {
     "id": 1,
-    "question": "Qual o nome do episódio?",
+    "question": "Mudança de estado físico sem alterar a composição?",
     "options": [
-      "O Reino de Fogo",
-      "O Elemento Surpresa",
-      "A Princesa que Desejava a Morte",
-      "O Mágico Fantasma"
+      "Reação química",
+      "Transformação física",
+      "Transformação nuclear",
+      "Reação de decomposição"
     ],
-    "correct_answer": 2,
-    "validation": "Este é o título correto do terceiro episódio da quarta temporada de Hora de Aventura."
+    "correct_answer": 1,
+    "validation": "Transformações físicas alteram apenas a forma ou o estado físico da matéria, sem mudar sua composição química."
   },
   {
     "id": 2,
-    "question": "Quem é o principal antagonista do episódio?",
+    "question": "Qual processo NÃO é uma transformação física?",
     "options": [
-      "O Rei Gelado",
-      "A Princesa Jujuba",
-      "A Princesa Caroço",
-      "A Rainha das Cobras"
+      "Fusão do gelo",
+      "Evaporação da água",
+      "Queima de madeira",
+      "Solidificação do ferro"
     ],
     "correct_answer": 2,
-    "validation": "A Princesa Caroço é a antagonista principal,  tentando usar a espada mágica para seus próprios fins."
+    "validation": "A queima de madeira é uma reação química, pois altera a composição da matéria."
   },
   {
     "id": 3,
-    "question": "Qual item mágico é central na trama?",
+    "question": "Qual fenômeno representa uma mudança de estado físico?",
     "options": [
-      "A Coroa de Fogo",
-      "O Cajado de Gelo",
-      "A Espada de Cura",
-      "A Espada do Desejo"
+      "Ferrugem em um prego",
+      "Digestão de alimentos",
+      "Ebulição da água",
+      "Queima de papel"
     ],
-    "correct_answer": 3,
-    "validation": "A trama gira em torno da Espada do Desejo e seu poder."
+    "correct_answer": 2,
+    "validation": "A ebulição da água é a passagem do estado líquido para o gasoso, uma transformação física."
   },
   {
     "id": 4,
-    "question": "Quem tenta roubar a espada?",
+    "question": "Dissolver açúcar em água é?",
     "options": [
-      "Jake",
-      "Finn",
-      "Princesa Caroço",
-      "BMO"
+      "Reação química",
+      "Transformação física",
+      "Transformação nuclear",
+      "Reação de síntese"
     ],
-    "correct_answer": 2,
-    "validation": "A Princesa Caroço é a personagem que tenta roubar e controlar a espada."
+    "correct_answer": 1,
+    "validation": "O açúcar se dissolve na água, mas sua composição química não se altera; é uma transformação física."
   },
   {
     "id": 5,
-    "question": "Qual a consequência do desejo de Finn?",
+    "question": "Cortar um papel é um exemplo de:",
     "options": [
-      "Ele se torna imortal",
-      "Ele perde seus poderes",
-      "Ele ganha um novo poder",
-      "Ele muda a história"
+      "Reação química",
+      "Transformação física",
+      "Transmutação",
+      "Reação nuclear"
     ],
-    "correct_answer": 3,
-    "validation": "O desejo de Finn altera significativamente a realidade."
+    "correct_answer": 1,
+    "validation": "Cortar o papel altera sua forma, mas não sua composição química; é uma transformação física."
   },
   {
     "id": 6,
-    "question": "Qual a motivação da Princesa Caroço?",
+    "question": "Que transformação física ocorre ao congelar água?",
     "options": [
-      "Conquistar Ooo",
-      "Vingar sua família",
-      "Obter poder",
-      "Proteger os inocentes"
+      "Fusão",
+      "Evaporação",
+      "Sublimação",
+      "Solidificação"
     ],
-    "correct_answer": 2,
-    "validation": "O desejo de poder é a principal motivação da Princesa Caroço."
+    "correct_answer": 3,
+    "validation": "A água passa do estado líquido (água) para o estado sólido (gelo), um processo chamado solidificação."
   },
   {
     "id": 7,
-    "question": "O que acontece no final do episódio com a espada?",
+    "question": "Qual o nome da transformação de líquido para gás?",
     "options": [
-      "É destruída",
-      "É guardada pela princesa Jujuba",
-      "É roubada novamente",
-      "É dada a Finn"
+      "Solidificação",
+      "Fusão",
+      "Evaporação",
+      "Sublimação"
     ],
-    "correct_answer": 0,
-    "validation": "A espada é destruída para evitar que caia nas mãos erradas."
+    "correct_answer": 2,
+    "validation": "A passagem do estado líquido para o gasoso é chamada de evaporação."
   },
   {
     "id": 8,
-    "question": "Qual personagem sofre com as consequências diretas do desejo?",
+    "question": "Amassar um pedaço de alumínio é uma:",
     "options": [
-      "Jake",
-      "Finn",
-      "Princesa Jujuba",
-      "Rei Gelado"
+      "Reação química",
+      "Transformação física",
+      "Transformação nuclear",
+      "Reação exotérmica"
     ],
     "correct_answer": 1,
-    "validation": "Finn é quem tem que lidar diretamente com as mudanças causadas por seu desejo."
+    "validation": "Amassar o alumínio altera sua forma, mas não sua composição química; é uma transformação física."
   },
   {
     "id": 9,
-    "question": "O episódio possui elementos de qual gênero?",
+    "question": "Derreter chocolate é uma mudança de:",
     "options": [
-      "Comédia romântica",
-      "Ficção científica",
-      "Fantasia",
-      "Terror"
+      "Composição química",
+      "Estado físico",
+      "Massa",
+      "Densidade"
     ],
-    "correct_answer": 2,
-    "validation": "O episódio é claramente dentro do gênero de fantasia, com magia e criaturas sobrenaturais."
+    "correct_answer": 1,
+    "validation": "Derreter chocolate altera apenas o estado físico (sólido para líquido), sem mudar sua composição."
   },
   {
     "id": 10,
-    "question": "Qual o tema principal do episódio?",
+    "question": "Que fator permanece constante numa transformação física?",
     "options": [
-      "Amizade",
-      "Responsabilidade",
-      "Poder",
-      "Amor"
+      "Forma",
+      "Volume",
+      "Composição química",
+      "Temperatura"
     ],
     "correct_answer": 2,
-    "validation": "O episódio gira em torno do poder da espada do desejo e suas consequências."
+    "validation": "Em transformações físicas, a composição química da matéria permanece inalterada."
   }
 ]
