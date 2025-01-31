@@ -2,6 +2,8 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import ResultsBackground from "@/components/ui/results-background";
+import Correct from "@/assets/svg/Correct";
+import Wrong from "@/assets/svg/Wrong";
 
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
@@ -17,7 +19,7 @@ export default function Results() {
 
     return (
         <ResultsBackground>
-            <View >
+            <View style={styles.QuizTitle} >
                 <Text style={styles.resultText}>DESEMPENHO</Text>
                 <Text style={styles.quizNumberText}>Quiz 1</Text>
             </View>
@@ -28,8 +30,8 @@ export default function Results() {
                     const boxColor = colorPalette[index % colorPalette.length]; // Alterna cores
                     const ballColor = colorPalette[index % colorPalette.length]; // Cor da bola
                     const iconSource = isCorrect 
-                        ? require("@/assets/images/Correct.png")
-                        : require("@/assets/images/Wrong.png");
+                        ? Correct
+                        : Wrong
 
                     return (
                         <View 
@@ -45,11 +47,13 @@ export default function Results() {
                         
                             
                             
+                            <View style= {styles.validationBox}>
+                                <Text style={styles.validationText}>
+                                    {validationsArray[index]}
+                                </Text>
+                            </View>
                             
-                            <Text style={styles.validationText}>
-                                Explicação: {validationsArray[index]}
-                            </Text>
-                            <Image source={iconSource} style={styles.icon} />
+                            {isCorrect ? <Correct style={styles.icon} /> : <Wrong style={styles.icon} />}
                         </View>
                     );
                 })}
@@ -59,7 +63,11 @@ export default function Results() {
 }
 
 const styles = StyleSheet.create({
+    QuizTitle:{
+      marginTop:12,
+    },
     ballNum:{
+        marginRight: 15,
         backgroundColor: 'white',
         borderRadius: 100,
         justifyContent: "center",
@@ -83,21 +91,20 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     questionContainer: {
-        justifyContent: "space-around",
-        paddingHorizontal:'2%',
-        padding: 80,
-        marginVertical: 10,
-        marginHorizontal: 30,
+        justifyContent: "space-between",
+        paddingHorizontal: '5%',
+        marginVertical: 15,
+        marginHorizontal: 35,
         borderRadius: 20,
     
     },
-
     questionHeader:{
-        justifyContent: "space-between",
+        marginVertical:20,
+        alignItems: "center",
         flexDirection: "row",
     },
     questionText: {
-        fontSize: 16,
+        fontSize: 15,
         color: "white",
         fontFamily: "VisbyRoundCF-Bold",
         textAlign: "center",
@@ -108,15 +115,17 @@ const styles = StyleSheet.create({
         fontFamily: "VisbyRoundCF-Bold",
         textAlign: "center",
     },
+
+    validationBox:{
+        marginBottom:40,
+    },
     validationText:{
-        fontSize: 16,
+        fontSize: 15,
         color: "white",
-        fontFamily: "VisbyRoundCF-Bold",
+        fontFamily: "VisbyRoundCF-Regular",
         textAlign: "center"
     },
     icon: {
-        width: 60,
-        height: 60, 
         position: "absolute",
         bottom: -25,
         right: -25,

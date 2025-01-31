@@ -1,7 +1,7 @@
 import { StyleSheet, View, ViewProps, StatusBar, Dimensions, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from './logo';
-import GobackButton from './go-back-button';
+import HomeButton from './go-home-button';
   
 
 const windowHeight = Dimensions.get("window").height;
@@ -15,7 +15,7 @@ export default function ResultsBackground({children, ...rest}: ViewProps) {
             <StatusBar backgroundColor='white'/>
             <View style={styles.header}>
                 <View style={styles.headerSides}>
-                    <GobackButton/>
+                    <HomeButton/>
                 </View>
                 <View style={styles.container}>
                 <Logo style={styles.logo} imageSize={0.05} imageVersion="1-2"/>
