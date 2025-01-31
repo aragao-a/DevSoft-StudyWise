@@ -1,17 +1,15 @@
-import { Pressable, View} from "react-native"
+import { Pressable, View, ViewProps} from "react-native"
 import { useRouter } from "expo-router";
-import { usePathname } from "expo-router";
 import ArrowBack from "@/assets/svg/arrow-back";
 
-export default function GobackButton() {
+export default function GobackButton(props:ViewProps) {
     const router = useRouter();
     
-    const pathName = usePathname();
     const handlePress = () => {
         router.back();
     }
     return (
-        <View style={{aspectRatio:1}}>
+        <View {...props}>
             <Pressable onPress={handlePress}>
                 <ArrowBack/>
             </Pressable>

@@ -1,7 +1,7 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, Alert } from "react-native";
+import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, Alert, Dimensions} from "react-native";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import { useForm } from "react-hook-form";
 import GeminiLogo from "@/assets/svg/gemini-logo";
@@ -13,6 +13,8 @@ import ContainerIcon from "@/assets/svg/container-icon";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import CustomButton from "@/components/ui/custom-button";
 
+const windowWidth = Dimensions.get('window').width;
+  
 export default function Home() {
     const [hasInput, setHasInput] = useState(false);
     const [selectedFile, setSelectedFile] = useState<DocumentPicker.DocumentPickerAsset | null>(null);
@@ -200,7 +202,7 @@ export default function Home() {
                                 ? styles.createQuizButton : [styles.createQuizButton, { backgroundColor: 'rgba(0, 183, 201, 0.2)' }]}
                         >
                             <Text style={styles.ButtonText}>
-                                {isLoading ? "Enviando..." : "Gerar Quiz!"}
+                                {isLoading ? "Gerando Quiz..." : "Gerar Quiz!"}
                             </Text>
                         </CustomButton>
                     </View>
@@ -213,10 +215,12 @@ export default function Home() {
     );
 }
 
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'space-between',
+        height: windowWidth * 1.75,
+        minHeight:600,
+        justifyContent:'space-between',
     },
     group: {
         flex: 1,

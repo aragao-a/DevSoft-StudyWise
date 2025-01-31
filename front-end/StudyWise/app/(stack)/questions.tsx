@@ -8,8 +8,10 @@ import Rectangle2 from "@/assets/svg/rectangle-2";
 import Rectangle1 from "@/assets/svg/rectangle-1";
 import CustomButton from "@/components/ui/custom-button";
 import { useRouter } from "expo-router";
+import useComponentSize from "@/hooks/use-component-size";
 
 const windoWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
@@ -117,6 +119,8 @@ export default function Questions() {
     const backgroundBloco2Color = getColorForIndex(currentQuestionIndex, 2);
     const backgroundBloco3Color = getColorForIndex(currentQuestionIndex, 3);
 
+    const{containerSize, onLayout} = useComponentSize();
+
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
@@ -125,6 +129,8 @@ export default function Questions() {
         );
     }
 
+const currentQuestion = questionsData[currentQuestionIndex];
+  
     if (!questionsData.length) {
         return (
             <View style={styles.loadingContainer}>
@@ -132,20 +138,19 @@ export default function Questions() {
             </View>
         );
     }
-
-    const currentQuestion = questionsData[currentQuestionIndex];
-
+  
     return (
         <HomeBackground>
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
                 PERGUNTA {currentQuestion.id}
             </Text>
-            <View style={{ flex: 1, alignItems: 'center', marginTop: 20 }}>
-                <View style={{ width: windoWidth * 0.9, maxWidth: 400, aspectRatio: 0.6 }}>
-                    <Rectangle1 style={[styles.rectangle, { top: 10, right: 13 }]} height="100%" width='100%' color={backgroundBloco3Color} />
-                    <Rectangle3 style={[styles.rectangle, { top: 8, right: 13 }]} height="100%" width='100%' color={backgroundBloco2Color} />
-                    <Rectangle2 style={[styles.rectangle, { top: 5, left: 3 }]} height="100%" width='100%' color={backgroundBloco1Color} />
-                    <Rectangle4 style={[styles.rectangle, { top: 0 }]} height='100%' width='100%' color={blocoColor} />
+            
+            <View style={{height:containerSize ? containerSize.height * 1.05: 'auto', alignSelf: 'center', alignItems:'center', marginTop: 20}}>
+                    <Rectangle1 style={[styles.rectangle]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={backgroundBloco3Color} />
+                    <Rectangle3 style={[styles.rectangle]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={backgroundBloco2Color} />
+                    <Rectangle2 style={[styles.rectangle]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={backgroundBloco1Color} />
+                    <Rectangle4 style={[styles.rectangle, { top: 0 }]} height={containerSize ? containerSize.height * 1.05: 0} width='100%' color={blocoColor} />
+                <View style={{maxWidth: 400}} onLayout={onLayout}>
                     <View style={styles.questionContainer}>
                         <View style={styles.questNum}>
                             <View style={styles.numTitle}>
@@ -168,21 +173,24 @@ export default function Questions() {
                                 {currentQuestion.question}
                             </Text>
                         </View>
-                        <View style={{ flex: 1, gap: '8%', paddingTop: '12%' }}>
+                        <View style={{gap: '20', paddingVertical:20, minHeight: windowHeight * 0.45, justifyContent:'center'}}>
                             {currentQuestion.options.map((option: string, index: number) => (
                                 <CustomButton
                                     key={index}
                                     style={[
                                         styles.alternativasSpace, animatedStyles[index]
                                     ]}
-                                    onPress={() => handleOptionPress(index)}
-                                >
-                                    <Text style={{ position: "absolute", left: '3%', top: '18%', fontFamily: 'VisbyRoundCF-Bold' }}>
-                                        {String.fromCharCode(index + 65)})
-                                    </Text>
+                                    onPress={() => handleOptionPress(index)}>   
+                                    <View style={{paddingLeft: '5%'}}>
+                                        <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
+                                            {String.fromCharCode(index + 65)})
+                                        </Text>
+                                    </View>
+                                    <View style={{flex:1}}>
                                     <Text style={styles.alternativasText}>
                                         {option}
                                     </Text>
+                                    </View>
                                 </CustomButton>
                             ))}
                         </View>
@@ -238,7 +246,6 @@ const styles = StyleSheet.create({
         fontFamily: "VisbyRoundCF-Bold",
         textAlign: "center",
         letterSpacing: 16,
-        marginTop: 20,
     },
     bloco: {
         justifyContent: "center",
@@ -247,13 +254,11 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         marginRight: 20,
         marginBottom: 100,
-        flex: 1,
         height: 631,
         width: 340,
         borderRadius: 20,
     },
     questionContainer: {
-        flex: 1,
         paddingHorizontal: '8%',
         paddingTop: '7%',
     },
@@ -275,24 +280,22 @@ const styles = StyleSheet.create({
         paddingLeft: 25
     },
     alternativasSpace: {
+        flexDirection: 'row',
         alignSelf: 'center',
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         backgroundColor: "white",
-        height: 'auto',
         width: '98%',
         marginRight: '2%',
         borderRadius: 10,
-        paddingTop: 4,
-        paddingBottom: 4
     },
     caixaPergunta: {
         alignSelf: 'center',
-        padding: 25,
+        paddingVertical:60,
+        paddingHorizontal:25,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
-        height: '30%',
         width: '98%',
         marginRight: '2%',
         borderRadius: 10,
@@ -305,7 +308,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     bolaNum: {
-        flex: 1,
         borderRadius: 100,
         justifyContent: "center",
         width: 40,
@@ -313,6 +315,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 10,
         left: 10,
+        zIndex:1
     },
     bolaNumTexto: {
         fontSize: 19,
@@ -341,5 +344,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexShrink: 1,
     },
-    rectangle: { position: 'absolute' }
+rectangle: { position: 'absolute'}
 });
