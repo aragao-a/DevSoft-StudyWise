@@ -29,6 +29,7 @@ export default function Results() {
                     const isCorrect = answer === correctAnswersArray[index];
                     const boxColor = colorPalette[index % colorPalette.length]; // Alterna cores
                     const ballColor = colorPalette[index % colorPalette.length]; // Cor da bola
+                    const correctAnswer = correctAnswersArray[index];
                     const iconSource = isCorrect 
                         ? Correct
                         : Wrong
@@ -42,7 +43,7 @@ export default function Results() {
                                 <View style={[styles.ballNum]}> 
                                     <Text style={[styles.ballNumText, { color: ballColor }]}>{formatNumber(index + 1)}</Text>
                                 </View>
-                                <Text style={styles.questionText}>Alternativa correta: {String.fromCharCode(65 + answer)}</Text>
+                                <Text style={styles.questionText}>Alternativa correta: {String.fromCharCode(65 + correctAnswer)}</Text>
                             </View>
                         
                             
