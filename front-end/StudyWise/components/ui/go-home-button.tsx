@@ -8,7 +8,7 @@ export default function GobackButton() {
     
     const pathName = usePathname();
     const handlePress = () => {
-        router.push('/home-stage-1');
+        router.back();
     }
     return (
         <View style={{aspectRatio:1}}>
