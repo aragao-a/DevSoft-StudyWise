@@ -12,10 +12,10 @@ class User {
     return result;
   }
 
-  static async findByUsername(username) {
+  static async findByEmail(username) {
     const query = `
       SELECT * FROM users
-      WHERE username = ?;
+      WHERE email = ?;
     `;
     const user = await db.get(query, [username]);
     return user;

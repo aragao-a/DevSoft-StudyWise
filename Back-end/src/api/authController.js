@@ -6,9 +6,9 @@ export const register = async (req, res) => {
 
   try {
     // Verifica se o usuário já existe
-    const existingUser = await User.findByUsername(username);
+    const existingUser = await User.findByEmail(email);
     if (existingUser) {
-      return res.status(400).json({ message: "Usuário já existe." });
+      return res.status(400).json({ message: "Email já em uso." });
     }
 
     // Cria hash da senha
@@ -26,13 +26,13 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     // Verifica se o usuário existe
-    const user = await User.findByUsername(username);
+    const user = await User.findByEmail(email);
     if (!user) {
-      return res.status(400).json({ message: "Usuário não encontrado." });
+      return res.status(400).json({ message: "Email não encontrado." });
     }
 
     // Valida a senha
@@ -41,7 +41,15 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Senha incorreta." });
     }
 
-    res.status(200).json({ message: "Login bem-sucedido!", user });
+    // Retorna apenas informações não sensíveis
+    const userResponse = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      created_at: user.created_at,
+    };
+
+    res.status(200).json({ message: "Login bem-sucedido!", userResponse });
   } catch (error) {
     console.error("Erro no login:", error);
     res.status(500).json({ message: "Erro no login." });
