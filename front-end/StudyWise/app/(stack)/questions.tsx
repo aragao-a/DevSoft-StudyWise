@@ -16,6 +16,7 @@ const windowHeight = Dimensions.get("window").height;
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
 export default function Questions() {
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
@@ -25,7 +26,7 @@ export default function Questions() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://{ip}:5000/questions.json")
+        fetch(`${API_URL}/questions.json`)
             .then(response => response.json())
             .then(data => {
                 setQuestionsData(data);

@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import { validateContent, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
 import { dirname } from 'path';
+import localtunnel from 'localtunnel'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,6 +19,15 @@ const PORT = process.env.PORT || 5000;
 const UPLOADS_DIR = path.join(__dirname, "uploads");
 const QUESTIONS_FILE = path.join(__dirname, "questions.json");
 
+
+// Função para atualizar o .env do frontend
+const updateFrontendEnv = (tunnelUrl) => {
+  const frontendEnvPath = path.join(__dirname, '../front-end/StudyWise/.env');
+  const envContent = `EXPO_PUBLIC_API_URL=${tunnelUrl}`;
+
+  fs.writeFileSync(frontendEnvPath, envContent);
+  console.log(`Frontend .env atualizado com a URL: ${tunnelUrl}`);
+};
 
 // Configuração do multer para armazenar os arquivos recebidos na pasta 'uploads'
 const storage = multer.diskStorage({
@@ -130,6 +140,25 @@ app.post("/text-quiz", async (req, res) => {
 });
 
 // Iniciar o servidor
-app.listen(5000, "0.0.0.0", () => {
-  console.log("Servidor rodando em http://0.0.0.0:5000");
-});
+(async () => {
+  try {
+      // Inicia o servidor
+      app.listen(PORT, "0.0.0.0", () => {
+          console.log(`Servidor rodando em http://localhost:${PORT}`);
+      });
+
+      // Inicia o LocalTunnel
+      const tunnel = await localtunnel({ port: PORT });
+      console.log(`LocalTunnel URL: ${tunnel.url}`);
+
+      // Atualiza o .env do frontend
+      updateFrontendEnv(tunnel.url);
+
+      // Fecha o túnel ao encerrar o servidor
+      tunnel.on('close', () => {
+          console.log('Túnel fechado.');
+      });
+  } catch (error) {
+      console.error("Erro ao iniciar o LocalTunnel:", error);
+  }
+})();
