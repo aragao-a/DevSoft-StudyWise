@@ -22,6 +22,7 @@ export default function Home() {
     const [textInput, setTextInput] = useState(""); // Estado para armazenar o texto digitado
     const router = useRouter();
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
+    const userID = 1;
 
     const pickFile = async () => {
         try {
@@ -62,7 +63,7 @@ export default function Home() {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ text: textInput }),
+                    body: JSON.stringify({ text: textInput, userId: userID }),
                 });
             } else if (selectedFile) {
                 // Envia o arquivo para a rota /upload (mantido para compatibilidade)
@@ -73,6 +74,7 @@ export default function Home() {
                     type: selectedFile.mimeType || "application/octet-stream",
                 };
                 formData.append("file", file as any);
+                formData.append("userId", userID.toString());
                 response = await fetch(`${API_URL}/upload`, {
                     method: "POST",
                     body: formData,
