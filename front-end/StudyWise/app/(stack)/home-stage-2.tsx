@@ -21,6 +21,8 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
     const [textInput, setTextInput] = useState(""); // Estado para armazenar o texto digitado
     const router = useRouter();
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
+    const userID = 1;
 
     const pickFile = async () => {
         try {
@@ -56,12 +58,12 @@ export default function Home() {
             let response;
             if (textInput) {
                 // Envia o texto para a rota /text-quiz
-                response = await fetch("http://{ip}:5000/text-quiz", {
+                response = await fetch(`${API_URL}/text-quiz`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ text: textInput }),
+                    body: JSON.stringify({ text: textInput, userId: userID }),
                 });
             } else if (selectedFile) {
                 // Envia o arquivo para a rota /upload (mantido para compatibilidade)
@@ -72,7 +74,8 @@ export default function Home() {
                     type: selectedFile.mimeType || "application/octet-stream",
                 };
                 formData.append("file", file as any);
-                response = await fetch("http://{ip}:5000/upload", {
+                formData.append("userId", userID.toString());
+                response = await fetch(`${API_URL}/upload`, {
                     method: "POST",
                     body: formData,
                     headers: {

@@ -16,6 +16,7 @@ const windowHeight = Dimensions.get("window").height;
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
 export default function Questions() {
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
@@ -23,12 +24,15 @@ export default function Questions() {
     const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
     const [alreadySelected, setAlreadySelected] = useState(false);
     const [loading, setLoading] = useState(true);
+    const userID = 1;
 
     useEffect(() => {
-        fetch("http://{ip}:5000/questions.json")
+        fetch(`${API_URL}/questions.json/${userID}`)
             .then(response => response.json())
             .then(data => {
-                setQuestionsData(data);
+                // Acessa apenas quiz_data do primeiro quiz
+                const quizData = data.quizzes[0]?.quiz_data || [];
+                setQuestionsData(quizData);
                 setLoading(false);
             })
             .catch(error => {
@@ -36,6 +40,7 @@ export default function Questions() {
                 setLoading(false);
             });
     }, []);
+    
 
     const formatNumber = (num: number) => {
         return num < 10 ? `0${num}` : num.toString();

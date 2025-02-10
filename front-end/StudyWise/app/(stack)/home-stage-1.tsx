@@ -12,9 +12,11 @@ import QuizList from "@/components/ui/quiz-list";
 import SearchIcon from "@/assets/svg/search-icon";
 import CustomButton from "@/components/ui/custom-button";
 
+
 const windowWidth = Dimensions.get('window').width;
 
 export default function Home() {
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
     const [quizzes, setQuizzes] = useState<Quiz[]>([
         {id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, 

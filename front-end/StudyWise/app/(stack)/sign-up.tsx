@@ -11,6 +11,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 export default function Signup() {
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
     const {control, handleSubmit, formState: { errors }} = useForm();
 
