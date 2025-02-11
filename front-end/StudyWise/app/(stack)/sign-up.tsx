@@ -1,13 +1,9 @@
 import HomeBackground from "@/components/ui/home-background";
-import { View, Text, TextInput, StyleSheet, Pressable, Dimensions} from "react-native";
-import {SignUpField} from "@/components/ui/sign-up-field";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import { View, Text, TextInput, StyleSheet, Pressable, Dimensions, Alert} from "react-native";
+import { SignUpField } from "@/components/ui/sign-up-field";
 import { useRouter} from "expo-router";
 import { useForm } from "react-hook-form";
 import { useRef} from "react";
-
-
-const windowHeight = Dimensions.get('window').height;
 
 
 export default function Signup() {
@@ -15,118 +11,110 @@ export default function Signup() {
     const router = useRouter();
     const {control, handleSubmit, formState: { errors }} = useForm();
 
-    const handleSignUp = () => {
-        router.replace('./home-stage-1');
+    const handleSignUp = async (data:{}) => {
+        try {
+            const response = await fetch(`${API_URL}/register`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+        
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message); 
+            }
+        
+            const responseData = await response.json();
+            console.log(responseData.message);
+            router.back();
+        } catch (error:unknown) {
+            if(error instanceof Error) {
+                Alert.alert("Erro", error.message);
+            }
+        }
     };
 
     const emailRef = useRef<TextInput>(null);
-    const dateOfBirthRef = useRef<TextInput>(null);
     const passwordRef = useRef<TextInput>(null);
 
 
     return (
-        <KeyboardAwareScrollView style={styles.container}>
-            <HomeBackground>
-                <View style={styles.body}>
-                    <Text style={styles.baseText}> Cadastro</Text>
-                    <View style={styles.signUpForm}>
-                        <SignUpField
-                            error={errors.nomeCadastro?.message?.toString()}
-                            groupProps={{}}
-                            formProps={{
-                                name:'nomeCadastro', 
-                                control,
-                                rules: {
-                                    required: 'Nome é obrigatório',
-                                }}} 
-                            fieldDescription='Nome' 
-                            inputProps={{
-                                placeholder:"Digite seu nome completo",
-                                onSubmitEditing: () => emailRef.current?.focus(),
-                                submitBehavior: 'submit',
-                            }}
-                        />
-                        <SignUpField
-                            error={errors.emailCadastro?.message?.toString()}
-                            ref={emailRef}
-                            groupProps={{}}
-                            formProps={{
-                                name:'emailCadastro', 
-                                control,
-                                rules: {
-                                    required: 'E-mail é obrigatório',
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-                                        message: 'E-mail inválido'
-                                    }
-                                }}} 
-                            fieldDescription='E-mail' 
-                            inputProps={{
-                                placeholder:"Digite seu E-mail",
-                                onSubmitEditing: () => dateOfBirthRef.current?.focus(),
-                                submitBehavior: 'submit',
-                            }}
-                        />
-                        <SignUpField
-                            error={errors.dataDeNascimentoCadastro?.message?.toString()}
-                            ref={dateOfBirthRef}
-                            groupProps={{}}
-                            formProps={{
-                                name:'dataDeNascimentoCadastro', 
-                                control,
-                                rules:{
-                                    required: 'Data de nascimento é obrigatória',
-                                    pattern: {
-                                        value: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
-                                        message: 'Data de nascimento inválida'
-                                    }
-                                }}} 
-                            fieldDescription='Data de Nascimento' 
-                            inputProps={{
-                                placeholder:"dd/mm/aa",
-                                onSubmitEditing: () => passwordRef.current?.focus(),
-                                submitBehavior: 'submit',
-                            }}
-                        />
-                        <SignUpField
-                            error={errors.senhaCadastro?.message?.toString()}
-                            ref={passwordRef}
-                            groupProps={{}}
-                            formProps={{
-                                name:'senhaCadastro', 
-                                control,
-                                rules:{
-                                    required: 'Senha é obrigatória',
-                                    pattern: {
-                                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                                        message: 'Senha inválida'
-                                    }
-                                }}} 
-                            fieldDescription='Senha' 
-                            inputProps={{
-                                secureTextEntry: true,
-                                placeholder:"Digite uma senha de 8 dígitos",
-                            }}
-                        />
-                        <Pressable style={styles.signUpButton} onPress={handleSubmit(handleSignUp)}>
-                            <Text style={styles.ButtonText}>
-                                Cadastrar-se
-                            </Text>
-                        </Pressable>
-                    </View>
+        <HomeBackground>
+            <View style={styles.body}>
+                <Text style={styles.baseText}> Cadastro</Text>
+                <View style={styles.signUpForm}>
+                    <SignUpField
+                        error={errors.username?.message?.toString()}
+                        groupProps={{}}
+                        formProps={{
+                            name:'username', 
+                            control,
+                            rules: {
+                                required: 'Nome é obrigatório',
+                            }}} 
+                        fieldDescription='Nome' 
+                        inputProps={{
+                            placeholder:"Digite seu nome completo",
+                            onSubmitEditing: () => emailRef.current?.focus(),
+                            submitBehavior: 'submit',
+                        }}
+                    />
+                    <SignUpField
+                        error={errors.email?.message?.toString()}
+                        ref={emailRef}
+                        groupProps={{}}
+                        formProps={{
+                            name:'email', 
+                            control,
+                            rules: {
+                                required: 'E-mail é obrigatório',
+                                pattern: {
+                                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                                    message: 'E-mail inválido'
+                                }
+                            }}} 
+                        fieldDescription='E-mail' 
+                        inputProps={{
+                            placeholder:"Digite seu E-mail",
+                            onSubmitEditing: () => passwordRef.current?.focus(),
+                            submitBehavior: 'submit',
+                        }}
+                    />
+                    <SignUpField
+                        error={errors.password?.message?.toString()}
+                        ref={passwordRef}
+                        groupProps={{}}
+                        formProps={{
+                            name:'password', 
+                            control,
+                            rules:{
+                                required: 'Senha é obrigatória',
+                                pattern: {
+                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                                    message: 'Senha inválida'
+                                }
+                            }}} 
+                        fieldDescription='Senha' 
+                        inputProps={{
+                            secureTextEntry: true,
+                            placeholder:"Digite uma senha de 8 dígitos",
+                        }}
+                    />
+                    <Pressable style={styles.signUpButton} onPress={handleSubmit(handleSignUp)}>
+                        <Text style={styles.ButtonText}>
+                            Cadastrar-se
+                        </Text>
+                    </Pressable>
                 </View>
-            </HomeBackground>
-        </KeyboardAwareScrollView>
+            </View>
+        </HomeBackground>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        height:windowHeight, 
-        backgroundColor: 'white',
-    },
     body: {
-        flex:1,
         alignItems: 'stretch',
     },
     baseText: {
@@ -138,9 +126,8 @@ const styles = StyleSheet.create({
         paddingRight: 15,
     },
     signUpForm: {
-        flex:1,
         alignItems:'center',
-        paddingBottom:100,
+        paddingBottom:50,
     },
     signUpButton: {
         marginTop: 50,

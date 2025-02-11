@@ -1,16 +1,13 @@
-import { StyleSheet, View, Text, Pressable, Dimensions } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
-import Rectangle4 from "@/assets/svg/rectangle-4";
-import Rectangle3 from "@/assets/svg/rectangle-3";
-import Rectangle2 from "@/assets/svg/rectangle-2";
-import Rectangle1 from "@/assets/svg/rectangle-1";
 import CustomButton from "@/components/ui/custom-button";
 import { useRouter } from "expo-router";
-import useComponentSize from "@/hooks/use-component-size";
+import MaskedView from '@react-native-masked-view/masked-view';
+import FadedEdges from "@/components/ui/faded-edges";
+import { getUserID } from "@/utils/authentication";
 
-const windoWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
@@ -24,10 +21,10 @@ export default function Questions() {
     const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
     const [alreadySelected, setAlreadySelected] = useState(false);
     const [loading, setLoading] = useState(true);
-    const userID = 1;
 
     useEffect(() => {
-        fetch(`${API_URL}/questions.json/${userID}`)
+        getUserID()
+            .then(userID => fetch(`${API_URL}/questions.json/${Number(userID)}`))
             .then(response => response.json())
             .then(data => {
                 // Acessa apenas quiz_data do primeiro quiz
@@ -40,7 +37,6 @@ export default function Questions() {
                 setLoading(false);
             });
     }, []);
-    
 
     const formatNumber = (num: number) => {
         return num < 10 ? `0${num}` : num.toString();
@@ -129,8 +125,6 @@ export default function Questions() {
     const backgroundBloco2Color = getColorForIndex(currentQuestionIndex, 2);
     const backgroundBloco3Color = getColorForIndex(currentQuestionIndex, 3);
 
-    const{containerSize, onLayout} = useComponentSize();
-
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
@@ -154,55 +148,61 @@ const currentQuestion = questionsData[currentQuestionIndex];
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
                 PERGUNTA {currentQuestion.id}
             </Text>
-              <View style={{alignSelf: 'center', width:windoWidth * 0.9, marginTop: 20, height: containerSize ? containerSize.height: 'auto'}}>
-                <View style={{maxWidth: 400}} onLayout={onLayout}>
-                    <Rectangle1 style={[styles.rectangle]} height={containerSize ? containerSize.height:'100%'} width='100%' color={backgroundBloco3Color} />
-                    <Rectangle3 style={[styles.rectangle]} height={containerSize ? containerSize.height: '100%'} width='98%' color={backgroundBloco2Color} />
-                    <Rectangle2 style={[styles.rectangle]} height={containerSize ? containerSize.height: '100%'} width='100%' color={backgroundBloco1Color} />
-                    <Rectangle4 style={[styles.rectangle, { top: 0 }]} height={containerSize ? containerSize.height: '100%'} width='100%' color={blocoColor} />
-                 <View style={styles.questionContainer}>
-                        <View style={styles.questNum}>
-                            <View style={styles.numTitle}>
-                                <Text style={[styles.quizTitle, { color: blocoColor }]}>
-                                    Quiz {currentQuestion.id}
-                                </Text>
-                            </View>
-                            <Text style={styles.rightCardHeader}>
-                                {formatNumber(currentQuestion.id)}/
-                                {formatNumber(questionsData.length)}
-                            </Text>
-                        </View>
-                        <View style={styles.caixaPergunta}>
-                            <View style={[styles.bolaNum, { backgroundColor: blocoColor }]}>
-                                <Text style={styles.bolaNumTexto}>
-                                    {formatNumber(currentQuestion.id)}
-                                </Text>
-                            </View>
-                            <Text style={styles.pergunta}>
-                                {currentQuestion.question}
-                            </Text>
-                        </View>
-                            <View style={{gap: '6%', paddingBottom:'10%', minHeight: windowHeight * 0.45, justifyContent:'center'}}>
-                            {currentQuestion.options.map((option: string, index: number) => (
-                                <CustomButton
-                                    key={index}
-                                    style={[
-                                        styles.alternativasSpace, animatedStyles[index]
-                                    ]}
-                                    onPress={() => handleOptionPress(index)}>   
-                                    <View style={{paddingLeft: '5%'}}>
-                                        <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
-                                            {String.fromCharCode(index + 65)})
+            <View style={{flex:1, justifyContent:'center', alignItems:'center', marginTop:20}}>
+            <View style={{width:'85%', height:windowHeight * 0.75, overflow:'visible', maxWidth:600}}>
+                <View style={{backgroundColor:backgroundBloco3Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:10, left:-7,  transform:[{rotate:'-1deg'}]}}/>
+                    <View style={{backgroundColor:backgroundBloco2Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}}/>
+                    <View style={{backgroundColor:backgroundBloco1Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:3, right:-5,  transform:[{rotate:'1deg'}]}}/>
+                    <View style={{backgroundColor:blocoColor, borderRadius:20, flex:1, paddingVertical:5}}>
+                        <MaskedView style={{flex:1}} maskElement={<FadedEdges></FadedEdges>}>
+                        <ScrollView style={{flex:1}}>
+                                <View style={[styles.questionContainer]}>
+                                    <View style={styles.questNum}>
+                                        <View style={styles.numTitle}>
+                                            <Text style={[styles.quizTitle, { color: blocoColor }]}>
+                                                Quiz {currentQuestion.id}
+                                            </Text>
+                                        </View>
+                                        <Text style={styles.rightCardHeader}>
+                                            {formatNumber(currentQuestion.id)}/
+                                            
+                                            {formatNumber(questionsData.length)}
                                         </Text>
                                     </View>
-                                    <View style={{flex:1}}>
-                                    <Text style={styles.alternativasText}>
-                                        {option}
-                                    </Text>
+                                    <View style={styles.caixaPergunta}>
+                                        <View style={[styles.bolaNum, { backgroundColor: blocoColor }]}>
+                                            <Text style={styles.bolaNumTexto}>
+                                                {formatNumber(currentQuestion.id)}
+                                            </Text>
+                                        </View>
+                                        <Text style={styles.pergunta}>
+                                            {currentQuestion.question}
+                                        </Text>
                                     </View>
-                                </CustomButton>
-                            ))}
-                        </View>
+                                        <View style={{gap: 15, marginTop:20}}>
+                                        {currentQuestion.options.map((option: string, index: number) => (
+                                            <CustomButton
+                                                key={index}
+                                                style={[
+                                                    styles.alternativasSpace, animatedStyles[index]
+                                                ]}
+                                                onPress={() => handleOptionPress(index)}>   
+                                                <View style={{paddingLeft: '5%'}}>
+                                                    <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
+                                                        {String.fromCharCode(index + 65)})
+                                                    </Text>
+                                                </View>
+                                                <View style={{flex:1}}>
+                                                <Text style={styles.alternativasText}>
+                                                    {option}
+                                                </Text>
+                                                </View>
+                                            </CustomButton>
+                                        ))}
+                                    </View>
+                                </View>
+                        </ScrollView>
+                        </MaskedView>
                     </View>
                 </View>
             </View>
@@ -216,39 +216,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    backgroundBloco: {
-        position: "absolute",
-        marginTop: 160,
-        marginLeft: 35,
-        marginRight: 20,
-        marginBottom: 100,
-        height: 631,
-        width: 340,
-        borderRadius: 20,
-        transform: [{ rotate: "-2deg" }],
-    },
-    backgroundBloco2: {
-        position: "absolute",
-        marginTop: 160,
-        marginLeft: 35,
-        marginRight: 20,
-        marginBottom: 100,
-        height: 631,
-        width: 340,
-        borderRadius: 20,
-        transform: [{ rotate: "-1.5deg" }],
-    },
-    backgroundBloco3: {
-        position: "absolute",
-        marginTop: 160,
-        marginLeft: 35,
-        marginRight: 20,
-        marginBottom: 100,
-        height: 631,
-        width: 340,
-        borderRadius: 20,
-        transform: [{ rotate: "2deg" }],
-    },
     questionTitle: {
         fontSize: 15,
         color: "#FF4770",
@@ -256,20 +223,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         letterSpacing: 16,
     },
-    bloco: {
-        justifyContent: "center",
-        position: "absolute",
-        marginTop: 150,
-        marginLeft: 35,
-        marginRight: 20,
-        marginBottom: 100,
-        height: 631,
-        width: 340,
-        borderRadius: 20,
-    },
     questionContainer: {
-        paddingHorizontal: '8%',
-        paddingTop: '10%',
+        paddingBottom:45,
+        paddingTop:45,
+        paddingHorizontal: '6%',
     },
     questNum: {
         paddingHorizontal: '2%',
@@ -308,7 +265,7 @@ const styles = StyleSheet.create({
         width: '98%',
         marginRight: '2%',
         borderRadius: 10,
-        marginTop: 30,
+        marginTop: 20,
     },
     pergunta: {
         fontSize: 16,

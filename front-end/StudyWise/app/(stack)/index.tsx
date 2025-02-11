@@ -1,35 +1,31 @@
 import { Pressable, StyleSheet, View, Text, Keyboard} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
 import IndexBackground from '@components/ui/index-background';
 import Logo from '@/components/ui/logo';
 import { useState, useEffect} from 'react';
 import LoginForm from '@/components/ui/login-form';
 import HandIcon from '@/assets/svg/hand-icon';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS} from 'react-native-reanimated';
 
 export default function App() {
 
-    // hook pra controle de navegação
-    const router = useRouter();
-
-    const transition = useSharedValue(0);
-    const [firstTouch, hasTouched] = useState(false);
+    const firstComponentOpacity = useSharedValue(1);
+    const secondComponentOpacity = useSharedValue(0);
+    const [firstTouch, setFirstTouch] = useState(false);
 
     const handleScreenTouch = () => {
-        transition.value =  withTiming(firstTouch ? 0 : 1, { duration: 200 });
-        hasTouched(true);
+        firstComponentOpacity.value =  withTiming(0, { duration: 100 }, () => {runOnJS(setFirstTouch)(true), secondComponentOpacity.value = withTiming(1, { duration: 100 })});
     }
 
     const beforeTouchStyle = useAnimatedStyle(() => {
         return {
-        opacity: 1 - transition.value,
+        opacity: firstComponentOpacity.value,
         };
     });
 
     const afterTouchStyle = useAnimatedStyle(() => {
         return {
-        opacity: transition.value,
+        opacity: secondComponentOpacity.value,
         };
     });
 

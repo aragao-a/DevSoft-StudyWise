@@ -1,32 +1,53 @@
-import {Text, View, StyleSheet, TextInput, Pressable, TextInputProps} from 'react-native';
+import {Text, View, StyleSheet, TextInput, Pressable, Alert} from 'react-native';
 import CustomInput from './custom-input';
 import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
 import CustomButton from './custom-button';
+import { storeUserID } from '@/utils/authentication';
 
 const relativeSize = '90%';
 
 export default function LoginForm() {
 
-    const { control, handleSubmit, setValue} = useForm();
+    const { control, handleSubmit} = useForm();
 
     const passwordRef = useRef<TextInput>(null);
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
     //hook pra controle de navegação
-
     const router = useRouter();
     
-    const handleLogin = () => {
-        router.push("./home-stage-1");
-        setValue('loginPassword', {content: ''});
-    }
+    const handleLogin = async (data:any) => {
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+        
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message); 
+            }
+        
+            const responseData = await response.json();
+            const userID = responseData.userResponse.id;
+
+            storeUserID(userID)
+            router.push("./home-stage-1");
+        } catch (error:unknown) {
+            if(error instanceof Error) {
+                Alert.alert("Erro", error.message);
+            }
+        }
+    };
 
     const handleSignUpTextPress = () => {
         router.push("./sign-up");
-        setValue('loginPassword', {content: ''});
-        setValue('loginEmail', {content: ''});
-    }
+    };
 
     return(
         <View style={styles.container}>
@@ -45,7 +66,7 @@ export default function LoginForm() {
                         submitBehavior: 'submit'
                     }} 
                     formProps={{
-                        name:'loginEmail',
+                        name:'email',
                         control,
                         rules: {
                             required:true,
@@ -61,7 +82,7 @@ export default function LoginForm() {
                         onSubmitEditing: handleSubmit(handleLogin),
                     }} 
                     formProps={{
-                        name:'loginPassword',
+                        name:'password',
                         control,
                         rules: {
                             required:true,

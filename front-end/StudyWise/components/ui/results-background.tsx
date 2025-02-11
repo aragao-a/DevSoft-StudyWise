@@ -1,11 +1,7 @@
-import { StyleSheet, View, ViewProps, StatusBar, Dimensions, ScrollView} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, View, ViewProps, StatusBar, ScrollView} from 'react-native';
 import Logo from './logo';
 import HomeButton from './go-home-button';
   
-
-const windowHeight = Dimensions.get("window").height;
-const windowWidth = Dimensions.get("window").width;
 
 export default function ResultsBackground({children, ...rest}: ViewProps) {
 

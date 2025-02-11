@@ -1,16 +1,18 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable, Dimensions} from "react-native";
+import { StyleSheet, View, Text, Pressable, Dimensions, Alert} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Quiz } from "@/constants/quiz-type";
 import QuizList from "@/components/ui/quiz-list";
 import SearchIcon from "@/assets/svg/search-icon";
 import CustomButton from "@/components/ui/custom-button";
+import { getUserID } from "@/utils/authentication";
+import { useFocusEffect } from "expo-router";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -18,16 +20,26 @@ const windowWidth = Dimensions.get('window').width;
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
-    const [quizzes, setQuizzes] = useState<Quiz[]>([
-        {id: '1', grade:1, field:'Biologia', name:'Platelmintos e Nematelmintos'}, 
-        {id: '1', grade:1, field:'Química', name:'Transformações físicas'}, 
-        {id: '1', grade:1, field:'Física', name:'Leis de Newton'}, 
-        {id: '1', grade:1, field:'Biologia', name:'Evolução'}, 
-        {id: '1', grade:1, field:'Lógica', name:'Lógica Aristotélica'}])
+    const [quizzes, setQuizzes] = useState<Quiz[]>([])
     const router = useRouter();
     const handleButtonPress = () => {router.push('/home-stage-2')};
     const handleProfileIconPress = () => {router.push('/profile')};
     const {control} = useForm();
+
+    useFocusEffect(
+        useCallback(() => {
+            getUserID()
+                .then(userID => fetch(`${API_URL}/quiz-history/${Number(userID)}`))
+                .then(response => response.json())
+                .then(data => {
+                    setQuizzes(data.quizzes);
+                })
+                .catch(error => {
+                    Alert.alert("Erro", "não foi possível carregar seus quizzes.");
+                });
+            }, [])
+    );
+
     return (
         <HomeBackground>
             <View style={{marginTop: 35}}>
