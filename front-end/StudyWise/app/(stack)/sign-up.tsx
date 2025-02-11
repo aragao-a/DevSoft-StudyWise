@@ -91,9 +91,9 @@ export default function Signup() {
                             control,
                             rules:{
                                 required: 'Senha é obrigatória',
-                                pattern: {
-                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                                    message: 'Senha inválida'
+                                minLength: {
+                                    value: 8,
+                                    message: "senha deve conter pelo menos 8 cacacteres"
                                 }
                             }}} 
                         fieldDescription='Senha' 
