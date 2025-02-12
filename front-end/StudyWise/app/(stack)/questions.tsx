@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
 import CustomButton from "@/components/ui/custom-button";
 import { useRouter } from "expo-router";
-import MaskedView from '@react-native-masked-view/masked-view';
-import FadedEdges from "@/components/ui/faded-edges";
 import { getUserID } from "@/utils/authentication";
 
 const windowHeight = Dimensions.get("window").height;
@@ -148,61 +146,57 @@ const currentQuestion = questionsData[currentQuestionIndex];
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
                 PERGUNTA {currentQuestion.id}
             </Text>
-            <View style={{flex:1, justifyContent:'center', alignItems:'center', marginTop:20}}>
-            <View style={{width:'85%', height:windowHeight * 0.75, overflow:'visible', maxWidth:600}}>
+            <View style={{flex:1, justifyContent:'center', alignItems:'center', marginVertical:20}}>
+            <View style={{width:'85%', overflow:'visible', maxWidth:600}}>
                 <View style={{backgroundColor:backgroundBloco3Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:10, left:-7,  transform:[{rotate:'-1deg'}]}}/>
                     <View style={{backgroundColor:backgroundBloco2Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}}/>
                     <View style={{backgroundColor:backgroundBloco1Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:3, right:-5,  transform:[{rotate:'1deg'}]}}/>
-                    <View style={{backgroundColor:blocoColor, borderRadius:20, flex:1, paddingVertical:5}}>
-                        <MaskedView style={{flex:1}} maskElement={<FadedEdges></FadedEdges>}>
-                        <ScrollView style={{flex:1}}>
-                                <View style={[styles.questionContainer]}>
-                                    <View style={styles.questNum}>
-                                        <View style={styles.numTitle}>
-                                            <Text style={[styles.quizTitle, { color: blocoColor }]}>
-                                                Quiz {currentQuestion.id}
-                                            </Text>
-                                        </View>
-                                        <Text style={styles.rightCardHeader}>
-                                            {formatNumber(currentQuestion.id)}/
-                                            
-                                            {formatNumber(questionsData.length)}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.caixaPergunta}>
-                                        <View style={[styles.bolaNum, { backgroundColor: blocoColor }]}>
-                                            <Text style={styles.bolaNumTexto}>
-                                                {formatNumber(currentQuestion.id)}
-                                            </Text>
-                                        </View>
-                                        <Text style={styles.pergunta}>
-                                            {currentQuestion.question}
-                                        </Text>
-                                    </View>
-                                        <View style={{gap: 15, marginTop:20}}>
-                                        {currentQuestion.options.map((option: string, index: number) => (
-                                            <CustomButton
-                                                key={index}
-                                                style={[
-                                                    styles.alternativasSpace, animatedStyles[index]
-                                                ]}
-                                                onPress={() => handleOptionPress(index)}>   
-                                                <View style={{paddingLeft: '5%'}}>
-                                                    <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
-                                                        {String.fromCharCode(index + 65)})
-                                                    </Text>
-                                                </View>
-                                                <View style={{flex:1}}>
-                                                <Text style={styles.alternativasText}>
-                                                    {option}
-                                                </Text>
-                                                </View>
-                                            </CustomButton>
-                                        ))}
-                                    </View>
+                    <View style={{backgroundColor:blocoColor, borderRadius:20, paddingVertical:5}}>
+                        <View style={[styles.questionContainer]}>
+                            <View style={styles.questNum}>
+                                <View style={styles.numTitle}>
+                                    <Text style={[styles.quizTitle, { color: blocoColor }]}>
+                                        Quiz {currentQuestion.id}
+                                    </Text>
                                 </View>
-                        </ScrollView>
-                        </MaskedView>
+                                <Text style={styles.rightCardHeader}>
+                                    {formatNumber(currentQuestion.id)}/
+                                    
+                                    {formatNumber(questionsData.length)}
+                                </Text>
+                            </View>
+                            <View style={styles.caixaPergunta}>
+                                <View style={[styles.bolaNum, { backgroundColor: blocoColor }]}>
+                                    <Text style={styles.bolaNumTexto}>
+                                        {formatNumber(currentQuestion.id)}
+                                    </Text>
+                                </View>
+                                <Text style={styles.pergunta}>
+                                    {currentQuestion.question}
+                                </Text>
+                            </View>
+                                <View style={{gap: 15, marginTop:20}}>
+                                {currentQuestion.options.map((option: string, index: number) => (
+                                    <CustomButton
+                                        key={index}
+                                        style={[
+                                            styles.alternativasSpace, animatedStyles[index]
+                                        ]}
+                                        onPress={() => handleOptionPress(index)}>   
+                                        <View style={{paddingLeft: '5%'}}>
+                                            <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
+                                                {String.fromCharCode(index + 65)})
+                                            </Text>
+                                        </View>
+                                        <View style={{flex:1}}>
+                                        <Text style={styles.alternativasText}>
+                                            {option}
+                                        </Text>
+                                        </View>
+                                    </CustomButton>
+                                ))}
+                            </View>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -224,8 +218,7 @@ const styles = StyleSheet.create({
         letterSpacing: 16,
     },
     questionContainer: {
-        paddingBottom:45,
-        paddingTop:45,
+        paddingVertical:30,
         paddingHorizontal: '6%',
     },
     questNum: {
