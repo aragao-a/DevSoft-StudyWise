@@ -14,17 +14,17 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
             <View style={styles.scrollableArea}>
             {list.map((quiz: Quiz, index) => {
                 return (
-                    (quiz.name.includes(searchResult) 
-                        || quiz.field.includes(searchResult)) 
+                    (quiz.id.toString().includes(searchResult) 
+                        || quiz.id.toString().includes(searchResult)) 
                     &&
                     <CustomButton key={index} onPress={handleButtonPress} style={styles.quizButton}>
                             <Text style={styles.ButtonText}>
                                 <Text style={{fontFamily:'VisbyRoundCF-Bold'}}>
                                     Quiz {index + 1}:
-                                </Text> {quiz.name}
+                                </Text> {quiz.id}
                             </Text>
                             <Text style={[styles.ButtonText, {paddingLeft:10}]}>
-                            <Text style={{fontFamily:'VisbyRoundCF-Bold', fontSize:18}}>•</Text> {quiz.field}
+                            <Text style={{fontFamily:'VisbyRoundCF-Bold', fontSize:18}}>•</Text> {quiz.id}
                             </Text>
                     </CustomButton>
             )})}

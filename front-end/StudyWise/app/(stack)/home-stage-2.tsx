@@ -12,6 +12,7 @@ import InputFileArea from "@/components/ui/input-file-area";
 import ContainerIcon from "@/assets/svg/container-icon";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import CustomButton from "@/components/ui/custom-button";
+import { getUserID } from "@/utils/authentication";
 
 const windowWidth = Dimensions.get('window').width;
   
@@ -22,7 +23,6 @@ export default function Home() {
     const [textInput, setTextInput] = useState(""); // Estado para armazenar o texto digitado
     const router = useRouter();
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
-    const userID = 1;
 
     const pickFile = async () => {
         try {
@@ -53,6 +53,8 @@ export default function Home() {
         }
 
         setIsLoading(true); // Inicia o carregamento
+
+        let userID = Number(await getUserID());
 
         try {
             let response;
@@ -92,7 +94,7 @@ export default function Home() {
             console.log("Resposta do servidor:", result);
 
             if (response.ok) {
-                router.push('/questions'); // Navega para a tela de perguntas após sucesso
+                router.replace('/questions'); // Navega para a tela de perguntas após sucesso
             } else {
                 Alert.alert("Erro", result.message || "Erro ao gerar o quiz.");
             }

@@ -1,6 +1,6 @@
 export type Quiz = {
     id: string,
-    grade: number,
-    field: string,
-    name: string,
+    user_id: string,
+    quiz_data: [],
+    data_criacao: string,
 }

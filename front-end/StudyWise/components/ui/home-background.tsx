@@ -9,8 +9,8 @@ const windowWidth = Dimensions.get("window").width;
 export default function HomeBackground({children, ...rest}: ViewProps) {
 
     return (
-        <ScrollView style={{height:windowHeight}} keyboardShouldPersistTaps="handled">
-        <View style = {{minHeight:windowHeight, backgroundColor:'white'}}>
+        <ScrollView style={{height:windowHeight, backgroundColor:'white'}} keyboardShouldPersistTaps="handled">
+        <View>
             <StatusBar backgroundColor='white'/>
             <View style={styles.header}>
                 <GobackButton style={styles.goBackButton}/>
