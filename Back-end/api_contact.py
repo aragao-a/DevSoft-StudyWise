@@ -12,9 +12,11 @@ from IPython.core.display import HTML
 
 dependencies = [
     "grpcio==1.67.1"  # Se der timeout, reduzir o grpcio para essa versão
+    # npm install geral pro node modules
     # npm install express
     # pip install -q -U google-generativeai
     # npm install cors
+    # npx expo install expo-secure-store
 ]
 
 def to_markdown(text):

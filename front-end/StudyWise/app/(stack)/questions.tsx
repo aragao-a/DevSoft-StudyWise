@@ -175,7 +175,7 @@ const currentQuestion = questionsData[currentQuestionIndex];
                                     {currentQuestion.question}
                                 </Text>
                             </View>
-                                <View style={{gap: 15, marginTop:20}}>
+                                <View style={{gap: 20, marginTop:35}}>
                                 {currentQuestion.options.map((option: string, index: number) => (
                                     <CustomButton
                                         key={index}
