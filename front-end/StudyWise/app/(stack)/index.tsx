@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View, Text, Keyboard} from 'react-native';
+import { Pressable, StyleSheet, View, Text, Keyboard, KeyboardAvoidingView, Platform} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IndexBackground from '@components/ui/index-background';
 import Logo from '@/components/ui/logo';
@@ -84,14 +84,14 @@ export default function App() {
         <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <IndexBackground>
             <Animated.View style={[styles.container, afterTouchStyle]}>
-                <SafeAreaView style={styles.container}>
+                <KeyboardAvoidingView behavior={(Platform.OS === 'android') ? undefined: 'padding'} style={styles.container}>
                     <View style={styles.container}>
                     <Animated.View style={[{flex:1}, animatedLogoStyle]}>
                         <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
                     </Animated.View>
                     <LoginForm/>
                     </View>
-                </SafeAreaView>
+                </KeyboardAvoidingView>
             </Animated.View>
         </IndexBackground>
         </Pressable>

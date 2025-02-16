@@ -43,7 +43,7 @@ export default function RootLayout() {
     color = null;
   }
   useEffect(() => {
-    SystemUI.setBackgroundColorAsync(color);
+    SystemUI.setBackgroundColorAsync('#ffffff');
   }, [color])
 
 
