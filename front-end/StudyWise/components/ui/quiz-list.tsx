@@ -19,12 +19,14 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                     &&
                     <CustomButton key={index} onPress={handleButtonPress} style={styles.quizButton}>
                             <Text style={styles.ButtonText}>
-                                <Text style={{fontFamily:'VisbyRoundCF-Bold'}}>
+                                <Text style={{fontFamily:'Montserrat_600SemiBold'}}>
                                     Quiz {index + 1}:
-                                </Text> {quiz.id}
+                                </Text>
+                                <Text style={{fontFamily:'Montserrat_400Regular'}}> [Titulo] Quiz de id {quiz.id}</Text>
                             </Text>
                             <Text style={[styles.ButtonText, {paddingLeft:10}]}>
-                            <Text style={{fontFamily:'VisbyRoundCF-Bold', fontSize:18}}>•</Text> {quiz.id}
+                            <Text style={{fontFamily:'Montserrat_400Regular', fontSize:15}}>• [Label-Assunto] | </Text>
+                            <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:15}}>17/02</Text> by user {quiz.user_id}
                             </Text>
                     </CustomButton>
             )})}
