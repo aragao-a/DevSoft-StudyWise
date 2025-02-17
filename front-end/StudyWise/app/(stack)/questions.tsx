@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
+import { useLocalSearchParams } from "expo-router";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
@@ -13,28 +14,44 @@ const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 export default function Questions() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
+    const { quizId } = useLocalSearchParams();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
     const [questionsData, setQuestionsData] = useState<any[]>([]);
     const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
     const [alreadySelected, setAlreadySelected] = useState(false);
     const [loading, setLoading] = useState(true);
-
+    console.log("Quiz ID:", quizId);
     useEffect(() => {
-        getUserID()
-            .then(userID => fetch(`${API_URL}/questions.json/${Number(userID)}`))
-            .then(response => response.json())
-            .then(data => {
+        const fetchData = async () => {
+            try {
+                const userID = await getUserID(); // Obtém o userID
+    
+                let apiUrl;
+                if (typeof quizId === "string") {
+                    // Se quizId for uma string, usa a URL específica para o quiz
+                    apiUrl = `${API_URL}/target_questions/${Number(userID)}/${Number(quizId)}`;
+                } else {
+                    // Caso contrário, usa a URL padrão para o userID
+                    apiUrl = `${API_URL}/questions.json/${Number(userID)}`;
+                }
+    
+                // Faz o fetch na URL determinada
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+    
                 // Acessa apenas quiz_data do primeiro quiz
                 const quizData = data.quizzes[0]?.quiz_data || [];
                 setQuestionsData(quizData);
-                setLoading(false);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error("Error fetching questions data:", error);
+            } finally {
                 setLoading(false);
-            });
-    }, []);
+            }
+        };
+    
+        fetchData();
+    }, [quizId]); // Adiciona quizId como dependência do useEffect
 
     const formatNumber = (num: number) => {
         return num < 10 ? `0${num}` : num.toString();
