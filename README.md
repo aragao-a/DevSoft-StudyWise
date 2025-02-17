@@ -42,11 +42,11 @@ Instalação de Dependências:
 ## npx expo install expo-secure-store
 
 ## Usage Instructions
-1 - Clonar o repositório
-3 -  Colocar a chave api no arquivo .env do backend
-4 - Rodar o server com “node server.js”
-5 - Colocar o ip no .env do Front End (em caso de incompatibilidade com LocalTunnel)
-6 - Iniciar o expo com “npx expo start”
+- Clonar o repositório
+- Colocar a chave api no arquivo .env do backend
+- Rodar o server com “node server.js”
+- Colocar o ip no .env do Front End (em caso de incompatibilidade com LocalTunnel)
+- Iniciar o expo com “npx expo start”
 
 ## Documentation
 Backlog · StudyWise Devs - https://github.com/users/aragao-a/projects/1
