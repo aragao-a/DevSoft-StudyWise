@@ -19,7 +19,7 @@ Seja sobre História, Química, Biologia, Física ou algum assunto mais particul
 - Fontes importadas, imagens, vetores e ícones 
 ### Diretório de componentes reutilizados e exibidos na tela
 - Custom button, Search bar, Quiz list
-#### - Arquivos para funcionamento do expo (npx) e .env para encaixe do local host apropriado caso o Firewall barra o tunnel
+#### - Arquivos para funcionamento do expo (npx) e .env para encaixe do local host apropriado caso o Firewall barre o tunnel
 
 ## Technologies Used
 - Google GEMINI AI API - API para implementação da inteligência
