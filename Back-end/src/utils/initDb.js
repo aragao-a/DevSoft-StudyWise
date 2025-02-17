@@ -18,6 +18,9 @@ async function initDatabase() {
       CREATE TABLE IF NOT EXISTS quizzes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
+        quiz_name TEXT NOT NULL,
+        quiz_label TEXT NOT NULL,
+        quiz_score DEFAULT 0 NOT NULL,
         quiz_data TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id)

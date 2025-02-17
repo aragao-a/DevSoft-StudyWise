@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import { validateContent, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
 import { register, login } from "./src/api/authController.js";
-import { generateQuiz, getQuizHistory, getLastQuiz } from "./src/api/quizController.js";
+import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory, getTargetQuestions, updateQuizScore} from "./src/api/quizController.js";
 import { dirname } from 'path';
 import localtunnel from 'localtunnel'
 
@@ -45,12 +45,35 @@ const storage = multer.diskStorage({
 });
 
 const extractJsonFromMarkdown = (markdown) => {
-    const jsonMatch = markdown.match(/```json\n([\s\S]*?)\n```/);
-    if (jsonMatch && jsonMatch[1]) {
-      return JSON.parse(jsonMatch[1]);
-    }
-    return null;
-  };
+  // Extrai o bloco JSON do markdown
+  const jsonMatch = markdown.match(/```json\n([\s\S]*?)\n```/);
+  if (!jsonMatch || !jsonMatch[1]) {
+      return null; // Retorna null se não encontrar um bloco JSON válido
+  }
+
+  try {
+      // Converte o JSON extraído para um objeto JavaScript
+      const fullJson = JSON.parse(jsonMatch[1]);
+
+      // Extrai o título, o label e o conteúdo de "questions"
+      const { title, label, questions } = fullJson;
+
+      // Verifica se os campos necessários estão presentes
+      if (!title || !label || !questions) {
+          throw new Error("O JSON não contém os campos obrigatórios: title, label ou questions.");
+      }
+
+      // Retorna um objeto com o título, o label e o conteúdo de "questions"
+      return {
+          title,
+          label,
+          questions,
+      };
+  } catch (error) {
+      console.error("Erro ao processar o JSON:", error);
+      return null;
+  }
+};
 
 const upload = multer({ storage });
 
@@ -86,14 +109,21 @@ app.post("/upload", upload.single("file"), async (req, res) => {
           return res.status(500).json({ message: "Erro na geração do quiz." });
       }
 
-      // Extrair o JSON da string Markdown (se necessário)
+      // Extrair o JSON da string Markdown 
       const quizData = typeof generatedQuiz === "string" ? extractJsonFromMarkdown(generatedQuiz) : generatedQuiz;
       if (!quizData) {
           return res.status(500).json({ message: "Erro ao processar o quiz gerado." });
       }
 
+      // Preparar os dados para salvar no banco de dados
+      const payload = {
+          userId,
+          quiz_name: quizData.title, // Salva o título como quiz_name
+          quiz_label: quizData.label, // Salva o label como quiz_label
+          quiz_data: quizData.questions, // Salva apenas o conteúdo de questions
+      };
+
       // Salvar o quiz no banco de dados usando o quizController
-      const payload = { userId, quizData };
       const newQuiz = await generateQuiz({ body: payload }, res);
 
       console.log("Quiz salvo com sucesso!");
@@ -120,14 +150,21 @@ app.post("/text-quiz", async (req, res) => {
           return res.status(500).json({ message: "Erro na geração do quiz." });
       }
 
-      // Extrair o JSON da string Markdown (se necessário)
+      // Extrair o JSON da string Markdown 
       const quizData = typeof generatedQuiz === "string" ? extractJsonFromMarkdown(generatedQuiz) : generatedQuiz;
       if (!quizData) {
           return res.status(500).json({ message: "Erro ao processar o quiz gerado." });
       }
 
+      // Preparar os dados para salvar no banco de dados
+      const payload = {
+          userId,
+          quiz_name: quizData.title, // Salva o título como quiz_name
+          quiz_label: quizData.label, // Salva o label como quiz_label
+          quiz_data: quizData.questions, // Salva apenas o conteúdo de questions
+      };
+
       // Salvar o quiz no banco de dados usando o quizController
-      const payload = { userId, quizData };
       const newQuiz = await generateQuiz({ body: payload }, res);
 
       console.log("Quiz salvo com sucesso!");
@@ -144,8 +181,11 @@ app.post("/register", register);
 app.post("/login", login);
 
 // Rotas de quiz
+app.get("/small-history/:userId", getSmallHistory);
 app.get("/quiz-history/:userId", getQuizHistory);
 app.get("/questions.json/:userId", getLastQuiz);
+app.get("/target_questions/:userId/:quizId", getTargetQuestions);
+app.post("/update_quiz_score", updateQuizScore);
 
 // Iniciar o servidor
 (async () => {

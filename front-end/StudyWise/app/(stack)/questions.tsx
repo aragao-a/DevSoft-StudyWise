@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
+import { useLocalSearchParams } from "expo-router";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
 import HomeBackground from "@/components/ui/home-background";
@@ -13,6 +14,8 @@ const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 export default function Questions() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
+    const { quizId } = useLocalSearchParams();
+    const [currentQuizId, setCurrentQuizId] = useState(quizId);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
     const [questionsData, setQuestionsData] = useState<any[]>([]);
@@ -21,20 +24,41 @@ export default function Questions() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getUserID()
-            .then(userID => fetch(`${API_URL}/questions.json/${Number(userID)}`))
-            .then(response => response.json())
-            .then(data => {
+        const fetchData = async () => {
+            try {
+                const userID = await getUserID(); // Obtém o userID
+
+                let apiUrl;
+                if (typeof quizId === "string") {
+                    // Se quizId for uma string, usa a URL específica para o quiz
+                    apiUrl = `${API_URL}/target_questions/${Number(userID)}/${Number(quizId)}`;
+                } else {
+                    // Caso contrário, usa a URL padrão para o userID
+                    apiUrl = `${API_URL}/questions.json/${Number(userID)}`;
+                }
+
+                // Faz o fetch na URL determinada
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
                 // Acessa apenas quiz_data do primeiro quiz
                 const quizData = data.quizzes[0]?.quiz_data || [];
+                
+                // Atualiza o quizId se ele não foi fornecido
+                if (!quizId && data.quizzes[0]?.id) {
+                    setCurrentQuizId(data.quizzes[0].id);
+                }
+
                 setQuestionsData(quizData);
-                setLoading(false);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error("Error fetching questions data:", error);
+            } finally {
                 setLoading(false);
-            });
-    }, []);
+            }
+        };
+
+        fetchData();
+    }, [quizId]); // Adiciona quizId como dependência do useEffect
 
     const formatNumber = (num: number) => {
         return num < 10 ? `0${num}` : num.toString();
@@ -80,8 +104,8 @@ export default function Questions() {
     const animatedStyles = [animatedStyle1, animatedStyle2, animatedStyle3, animatedStyle4];
     const progresses = [progress1, progress2, progress3, progress4];
 
-    const handleOptionPress = (index: number) => {
-        if(!alreadySelected) {
+    const handleOptionPress = async (index: number) => {
+        if (!alreadySelected) {
             const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
             setCorrectAnswer(correctAnswer);
             progresses[index].value = 1;
@@ -89,8 +113,8 @@ export default function Questions() {
             setAlreadySelected(true);
             setSelectedAnswers(prevAnswers => {
                 const updatedAnswers = [...prevAnswers, index];
-
-                setTimeout(() => {
+    
+                setTimeout(async () => {
                     if (currentQuestionIndex < questionsData.length - 1) {
                         setCurrentQuestionIndex(currentQuestionIndex + 1);
                         progresses[index].value = 0;
@@ -98,6 +122,26 @@ export default function Questions() {
                         setCorrectAnswer(-1);
                         setAlreadySelected(false);
                     } else {
+                        // Calcula a quantidade de respostas corretas
+                        const correctAnswers = updatedAnswers.reduce((acc, answer, idx) => {
+                            return acc + (answer === questionsData[idx].correct_answer ? 1 : 0);
+                        }, 0);
+    
+                        // Envia a pontuação para o backend
+                        const userID = await getUserID();
+                        await fetch(`${API_URL}/update_quiz_score`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                userId: userID,
+                                quizId: currentQuizId, // Usa currentQuizId aqui
+                                correctAnswers: correctAnswers,
+                            }),
+                        });
+    
+                        // Navega para a página de resultados
                         router.replace({
                             pathname: "/results",
                             params: {
@@ -108,7 +152,7 @@ export default function Questions() {
                         });
                     }
                 }, 1000);
-
+    
                 return updatedAnswers;
             });
         }

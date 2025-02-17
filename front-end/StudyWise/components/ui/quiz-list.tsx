@@ -1,10 +1,12 @@
 import { View, StyleSheet, ScrollView, Text, Pressable} from "react-native"
-import { Quiz } from "@/constants/quiz-type"
+import { Quiz } from "@/constants/quiz-small"
 import { useRouter } from "expo-router"
 import CustomButton from "./custom-button";
 export default function QuizList({list, searchResult}: {list: Quiz[], searchResult:string}) {
     const router = useRouter();
-    const handleButtonPress = () => {router.push('questions')};
+    const handleButtonPress = (quizId: string) => {
+        router.push({ pathname: 'questions', params: {quizId } });
+    };
     return (
         <ScrollView 
             nestedScrollEnabled={true}
@@ -14,22 +16,26 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
             <View style={styles.scrollableArea}>
             {list.map((quiz: Quiz, index) => {
                 return (
-                    (quiz.id.toString().includes(searchResult) 
-                        || quiz.id.toString().includes(searchResult)) 
-                    &&
-                    <CustomButton key={index} onPress={handleButtonPress} style={styles.quizButton}>
-                            <Text style={styles.ButtonText}>
-                                <Text style={{fontFamily:'Montserrat_600SemiBold'}}>
-                                    Quiz {index + 1}:
-                                </Text>
-                                <Text style={{fontFamily:'Montserrat_400Regular'}}> [Titulo] Quiz de id {quiz.id}</Text>
+                    (quiz.title.toString().includes(searchResult) || quiz.label.toString().includes(searchResult)) &&
+                    <CustomButton key={index} onPress={() => handleButtonPress(quiz.id)} style={styles.quizButton}>
+                        <Text style={styles.ButtonText}>
+                            <Text style={{ fontFamily: 'Montserrat_600SemiBold' }}>
+                                Quiz {index + 1}:
                             </Text>
-                            <Text style={[styles.ButtonText, {paddingLeft:10}]}>
-                            <Text style={{fontFamily:'Montserrat_400Regular', fontSize:15}}>• [Label-Assunto] | </Text>
-                            <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:15}}>17/02</Text> by user {quiz.user_id}
+                            <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {quiz.title}</Text>
+                        </Text>
+                        <Text style={[styles.ButtonText, { paddingLeft: 10 }]}>
+                            <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 15 }}>• {quiz.label} | </Text>
+                            <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 15 }}>
+                                {new Date(quiz.date).toLocaleDateString("pt-BR", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                })}
                             </Text>
+                        </Text>
                     </CustomButton>
-            )})}
+                )
+            })}
             </View>
         </ScrollView>
     )

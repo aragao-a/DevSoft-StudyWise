@@ -7,7 +7,7 @@ import ProfileIcon from "@/assets/svg/profile-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
 import { useForm } from "react-hook-form";
 import { useState, useCallback } from "react";
-import { Quiz } from "@/constants/quiz-type";
+import { Quiz } from "@/constants/quiz-small";
 import QuizList from "@/components/ui/quiz-list";
 import SearchIcon from "@/assets/svg/search-icon";
 import CustomButton from "@/components/ui/custom-button";
@@ -29,7 +29,7 @@ export default function Home() {
     useFocusEffect(
         useCallback(() => {
             getUserID()
-                .then(userID => fetch(`${API_URL}/quiz-history/${Number(userID)}`))
+                .then(userID => fetch(`${API_URL}/small-history/${Number(userID)}`))
                 .then(response => response.json())
                 .then(data => {
                     setQuizzes(data.quizzes);
