@@ -15,18 +15,19 @@ export default function Questions() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
     const { quizId } = useLocalSearchParams();
+    const [currentQuizId, setCurrentQuizId] = useState(quizId);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState<number>(-1);
     const [questionsData, setQuestionsData] = useState<any[]>([]);
     const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
     const [alreadySelected, setAlreadySelected] = useState(false);
     const [loading, setLoading] = useState(true);
-    console.log("Quiz ID:", quizId);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const userID = await getUserID(); // Obtém o userID
-    
+
                 let apiUrl;
                 if (typeof quizId === "string") {
                     // Se quizId for uma string, usa a URL específica para o quiz
@@ -35,13 +36,19 @@ export default function Questions() {
                     // Caso contrário, usa a URL padrão para o userID
                     apiUrl = `${API_URL}/questions.json/${Number(userID)}`;
                 }
-    
+
                 // Faz o fetch na URL determinada
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-    
+
                 // Acessa apenas quiz_data do primeiro quiz
                 const quizData = data.quizzes[0]?.quiz_data || [];
+                
+                // Atualiza o quizId se ele não foi fornecido
+                if (!quizId && data.quizzes[0]?.id) {
+                    setCurrentQuizId(data.quizzes[0].id);
+                }
+
                 setQuestionsData(quizData);
             } catch (error) {
                 console.error("Error fetching questions data:", error);
@@ -49,7 +56,7 @@ export default function Questions() {
                 setLoading(false);
             }
         };
-    
+
         fetchData();
     }, [quizId]); // Adiciona quizId como dependência do useEffect
 
@@ -97,24 +104,40 @@ export default function Questions() {
     const animatedStyles = [animatedStyle1, animatedStyle2, animatedStyle3, animatedStyle4];
     const progresses = [progress1, progress2, progress3, progress4];
 
-    const handleOptionPress = (index: number) => {
-        if(!alreadySelected) {
+    const handleOptionPress = async (index: number) => {
+        if (!alreadySelected) {
             const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
             setCorrectAnswer(correctAnswer);
-            progresses[index].value = 1;
-            progresses[correctAnswer].value = 1;
             setAlreadySelected(true);
             setSelectedAnswers(prevAnswers => {
                 const updatedAnswers = [...prevAnswers, index];
-
-                setTimeout(() => {
+    
+                setTimeout(async () => {
                     if (currentQuestionIndex < questionsData.length - 1) {
                         setCurrentQuestionIndex(currentQuestionIndex + 1);
-                        progresses[index].value = 0;
-                        progresses[correctAnswer].value = 0;
                         setCorrectAnswer(-1);
                         setAlreadySelected(false);
                     } else {
+                        // Calcula a quantidade de respostas corretas
+                        const correctAnswers = updatedAnswers.reduce((acc, answer, idx) => {
+                            return acc + (answer === questionsData[idx].correct_answer ? 1 : 0);
+                        }, 0);
+    
+                        // Envia a pontuação para o backend
+                        const userID = await getUserID();
+                        await fetch(`${API_URL}/update_quiz_score`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                userId: userID,
+                                quizId: currentQuizId, // Usa currentQuizId aqui
+                                correctAnswers: correctAnswers,
+                            }),
+                        });
+    
+                        // Navega para a página de resultados
                         router.replace({
                             pathname: "/results",
                             params: {
@@ -125,7 +148,7 @@ export default function Questions() {
                         });
                     }
                 }, 1000);
-
+    
                 return updatedAnswers;
             });
         }

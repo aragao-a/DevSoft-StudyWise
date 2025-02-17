@@ -12,6 +12,18 @@ class Quiz {
         return result;
     }
 
+    static async updateQuizScore(userId, quizId, correctAnswers) {
+        const query = `
+            UPDATE quizzes
+            SET quiz_score = ?
+            WHERE user_id = ? AND id = ?
+            RETURNING *;
+        `;
+        const values = [correctAnswers, userId, quizId];
+        const result = await db.get(query, values); // Usar db.get para retornar o quiz atualizado
+        return result;
+    }
+
     static async findByUserId(userId) {
       const query = `
           SELECT * FROM quizzes

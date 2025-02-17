@@ -79,3 +79,28 @@ export const getTargetQuestions = async (req, res) => {
         res.status(500).json({ message: "Erro ao buscar quiz." });
     }
 };
+
+export const updateQuizScore = async (req, res) => {
+  const { userId, quizId, correctAnswers } = req.body;
+
+  try {
+      // Verifica se userId, quizId e correctAnswers foram fornecidos
+      if (!userId || !quizId || correctAnswers === undefined) {
+          return res.status(400).json({ message: "userId, quizId e correctAnswers são obrigatórios." });
+      }
+
+      // Atualiza a pontuação do quiz no banco de dados
+      const updatedQuiz = await Quiz.updateQuizScore(userId, quizId, correctAnswers);
+
+      // Verifica se o quiz foi atualizado
+      if (!updatedQuiz) {
+          return res.status(404).json({ message: "Quiz não encontrado." });
+      }
+
+      // Retorna o quiz atualizado
+      res.status(200).json({ quiz: updatedQuiz });
+  } catch (error) {
+      console.error("Erro ao atualizar pontuação do quiz:", error);
+      res.status(500).json({ message: "Erro ao atualizar pontuação do quiz." });
+  }
+};
