@@ -108,6 +108,8 @@ export default function Questions() {
         if (!alreadySelected) {
             const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
             setCorrectAnswer(correctAnswer);
+            progresses[index].value = 1;
+            progresses[correctAnswer].value = 1;
             setAlreadySelected(true);
             setSelectedAnswers(prevAnswers => {
                 const updatedAnswers = [...prevAnswers, index];
@@ -115,6 +117,8 @@ export default function Questions() {
                 setTimeout(async () => {
                     if (currentQuestionIndex < questionsData.length - 1) {
                         setCurrentQuestionIndex(currentQuestionIndex + 1);
+                        progresses[index].value = 0;
+                        progresses[correctAnswer].value = 0;
                         setCorrectAnswer(-1);
                         setAlreadySelected(false);
                     } else {

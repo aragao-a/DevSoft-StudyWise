@@ -20,14 +20,12 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                     <CustomButton key={index} onPress={() => handleButtonPress(quiz.id)} style={styles.quizButton}>
                         <Text style={styles.ButtonText}>
                             <Text style={{ fontFamily: 'Montserrat_600SemiBold' }}>
-                                Quiz {quiz.id}:
+                                Quiz {index + 1}:
                             </Text>
-                            <Text style={{ fontFamily: 'Montserrat_400Regular' }}>{quiz.title}</Text>
+                            <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {quiz.title}</Text>
                         </Text>
                         <Text style={[styles.ButtonText, { paddingLeft: 10 }]}>
-                            <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 15 }}>
-                                • {quiz.label} | 
-                            </Text>
+                            <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 15 }}>• {quiz.label} | </Text>
                             <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 15 }}>
                                 {new Date(quiz.date).toLocaleDateString("pt-BR", {
                                     day: "2-digit",
