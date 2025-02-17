@@ -34,12 +34,12 @@ Front-end
 
 ## Requirements
 Instalação de Dependências:
-## "grpcio==1.67.1"  # Se der timeout, reduzir o grpcio para essa versão
-## npm install geral pro node modules
-## npm install express
-## pip install -q -U google-generativeai
-## npm install cors
-## npx expo install expo-secure-store
+#### "grpcio==1.67.1"  # Se der timeout, reduzir o grpcio para essa versão
+#### npm install geral pro node modules
+#### npm install express
+#### pip install -q -U google-generativeai
+#### npm install cors
+#### npx expo install expo-secure-store
 
 ## Usage Instructions
 - Clonar o repositório
