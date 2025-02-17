@@ -34,7 +34,7 @@ Front-end
 ## Requirements
 Instalação de Dependências:
 #### grpcio==1.67.1, se der timeout, reduzir o grpcio para essa versão
-#### npm install geral pro node modules
+#### npm install - geral pro node modules
 #### npm install express
 #### pip install -q -U google-generativeai
 #### npm install cors
