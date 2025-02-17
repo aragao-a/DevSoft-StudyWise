@@ -19,7 +19,7 @@ Seja sobre História, Química, Biologia, Física ou algum assunto mais particul
 - Fontes importadas, imagens, vetores e ícones 
 ### Diretório de componentes reutilizados e exibidos na tela
 - Custom button, Search bar, Quiz list
-##### .env para encaixe do local host apropriado para funcionamento em que o Firewall barra o tunnel
+#### .env para encaixe do local host apropriado para funcionamento em que o Firewall barra o tunnel
 ### Arquivos para funcionamento do expo (npx)
 
 ## Technologies Used
