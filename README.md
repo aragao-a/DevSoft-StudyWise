@@ -4,23 +4,23 @@ O StudyWise é um app que transforma materiais físicos (imagens, PDF’s) ou id
 Seja sobre História, Química, Biologia, Física ou algum assunto mais particular, o StudyWise aliado à API do Gemini vai gerar um quiz de 6 questões para o usuário treinar suas habilidades de forma lúdica e prática.
 
 # Conteúdo
-Diretório do Back-End (node.js)
-Banco de dados SQL de Usuários e Quizzes associados
-Diretório /src incluindo modelos .json do Prompt para geração do quiz, e queries SQL para organização do Banco de Dados
-Servidor local, e arquivos que a gerenciam
-Arquivos Node Modules para o sistema de Servidor (npm)
-.env para inserção da key da API do Gemini
-Diretório do Front-End (React Native)
-Telas do app em arquivos .tsx no /app(stack) 
-Questões (questions.tsx)
-Resultados (results.tsx)
-Login (sign-up.tsx), e mais
-Diretório de assets
-Fontes importadas, imagens, vetores e ícones 
-Diretório de componentes reutilizados e exibidos na tela
-Custom button, Search bar, Quiz list
-.env para encaixe do local host apropriado para funcionamento em que o Firewall barra o tunnel
-Arquivos para funcionamento do expo (npx)
+### Diretório do Back-End (node.js)
+- Banco de dados SQL de Usuários e Quizzes associados
+- Diretório /src incluindo modelos .json do Prompt para geração do quiz, e queries SQL para organização do Banco de Dados
+- Servidor local, e arquivos que a gerenciam
+- Arquivos Node Modules para o sistema de Servidor (npm)
+- .env para inserção da key da API do Gemini
+### Diretório do Front-End (React Native)
+- Telas do app em arquivos .tsx no /app(stack) 
+- Questões (questions.tsx)
+- Resultados (results.tsx)
+- Login (sign-up.tsx), e mais
+### Diretório de assets
+- Fontes importadas, imagens, vetores e ícones 
+### Diretório de componentes reutilizados e exibidos na tela
+- Custom button, Search bar, Quiz list
+### .env para encaixe do local host apropriado para funcionamento em que o Firewall barra o tunnel
+### Arquivos para funcionamento do expo (npx)
 
 ## Technologies Used
 - Google GEMINI AI API - API para implementação da inteligência
