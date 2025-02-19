@@ -192,10 +192,10 @@ const currentQuestion = questionsData[currentQuestionIndex];
             </Text>
             <View style={{flex:1, justifyContent:'center', alignItems:'center', marginVertical:20}}>
             <View style={{width:'85%', overflow:'visible', maxWidth:600}}>
-                <View style={{backgroundColor:backgroundBloco3Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:10, left:-7,  transform:[{rotate:'-1deg'}]}}/>
-                    <View style={{backgroundColor:backgroundBloco2Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}}/>
-                    <View style={{backgroundColor:backgroundBloco1Color, borderRadius:20, height:'100%', width:'100%', position:'absolute', top:3, right:-5,  transform:[{rotate:'1deg'}]}}/>
-                    <View style={{backgroundColor:blocoColor, borderRadius:20, paddingVertical:5}}>
+                <View style={[styles.blockStyling, {backgroundColor:backgroundBloco3Color, top:10, left:-7,  transform:[{rotate:'-1deg'}]}]}/>
+                    <View style={[styles.blockStyling, {backgroundColor:backgroundBloco2Color, top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}]}/>
+                    <View style={[styles.blockStyling, {backgroundColor:backgroundBloco1Color, top:3, right:-5,  transform:[{rotate:'1deg'}]}]}/>
+                    <View style={{backgroundColor:blocoColor, borderRadius:20, paddingVertical:5, shadowColor: "#000", shadowOffset: {width: 0, height: 6,}, shadowOpacity: 0.20, shadowRadius: 2.34, elevation: 5,}}>
                         <View style={[styles.questionContainer]}>
                             <View style={styles.questNum}>
                                 <View style={styles.numTitle}>
@@ -249,6 +249,20 @@ const currentQuestion = questionsData[currentQuestionIndex];
 }
 
 const styles = StyleSheet.create({
+    blockStyling: {
+        borderRadius:20, 
+        height:'100%', 
+        width:'100%', 
+        position:'absolute',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 2.34,
+        elevation: 5,
+    },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
