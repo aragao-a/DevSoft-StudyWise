@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import { validateContent, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
 import { register, login } from "./src/api/authController.js";
-import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory, getTargetQuestions, updateQuizScore} from "./src/api/quizController.js";
+import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory, getTargetQuestions, updateQuizScore, deleteQuiz, getLabelSummary, renameLabel} from "./src/api/quizController.js";
 import { dirname } from 'path';
 import localtunnel from 'localtunnel'
 
@@ -185,7 +185,10 @@ app.get("/small-history/:userId", getSmallHistory);
 app.get("/quiz-history/:userId", getQuizHistory);
 app.get("/questions.json/:userId", getLastQuiz);
 app.get("/target_questions/:userId/:quizId", getTargetQuestions);
+app.get("/label_summary/:userId", getLabelSummary);
 app.post("/update_quiz_score", updateQuizScore);
+app.put("/rename_label/:userId/:quizId", renameLabel);
+app.delete("/delete_quiz/:userId/:quizId", deleteQuiz);
 
 // Iniciar o servidor
 (async () => {

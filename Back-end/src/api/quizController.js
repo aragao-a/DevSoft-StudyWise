@@ -80,6 +80,52 @@ export const getTargetQuestions = async (req, res) => {
     }
 };
 
+export const getLabelSummary = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+      // Verifica se userId foi fornecido
+      if (!userId) {
+          return res.status(400).json({ message: "userId é obrigatório." });
+      }
+
+      // Busca o resumo de labels no banco de dados
+      const labelSummary = await Quiz.getLabelSummaryByUserId(userId);
+
+      // Retorna o resumo de labels
+      res.status(200).json({ labelSummary });
+  } catch (error) {
+      console.error("Erro ao buscar resumo de labels:", error);
+      res.status(500).json({ message: "Erro ao buscar resumo de labels." });
+  }
+};
+
+export const renameLabel = async (req, res) => {
+  const { userId, quizId } = req.params;
+  const { newLabel } = req.body;
+
+  try {
+      // Verifica se userId, quizId e newLabel foram fornecidos
+      if (!userId || !quizId || !newLabel) {
+          return res.status(400).json({ message: "userId, quizId e newLabel são obrigatórios." });
+      }
+
+      // Renomeia a label do quiz no banco de dados
+      const updatedQuiz = await Quiz.renameLabelByUserIdAndQuizId(userId, quizId, newLabel);
+
+      // Verifica se o quiz foi atualizado
+      if (!updatedQuiz) {
+          return res.status(404).json({ message: "Quiz não encontrado." });
+      }
+
+      // Retorna o quiz atualizado
+      res.status(200).json({ message: "Label renomeada com sucesso.", quiz: updatedQuiz });
+  } catch (error) {
+      console.error("Erro ao renomear label:", error);
+      res.status(500).json({ message: "Erro ao renomear label." });
+  }
+};
+
 export const updateQuizScore = async (req, res) => {
   const { userId, quizId, correctAnswers } = req.body;
 
@@ -102,5 +148,30 @@ export const updateQuizScore = async (req, res) => {
   } catch (error) {
       console.error("Erro ao atualizar pontuação do quiz:", error);
       res.status(500).json({ message: "Erro ao atualizar pontuação do quiz." });
+  }
+};
+
+export const deleteQuiz = async (req, res) => {
+  const { userId, quizId } = req.params;
+
+  try {
+      // Verifica se userId e quizId foram fornecidos
+      if (!userId || !quizId) {
+          return res.status(400).json({ message: "userId e quizId são obrigatórios." });
+      }
+
+      // Deleta o quiz no banco de dados
+      const deletedQuiz = await Quiz.deleteByUserIdAndQuizId(userId, quizId);
+
+      // Verifica se o quiz foi deletado
+      if (!deletedQuiz) {
+          return res.status(404).json({ message: "Quiz não encontrado." });
+      }
+
+      // Retorna confirmação de sucesso
+      res.status(200).json({ message: "Quiz deletado com sucesso.", quiz: deletedQuiz });
+  } catch (error) {
+      console.error("Erro ao deletar quiz:", error);
+      res.status(500).json({ message: "Erro ao deletar quiz." });
   }
 };
