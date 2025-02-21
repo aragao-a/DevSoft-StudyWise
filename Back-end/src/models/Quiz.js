@@ -12,6 +12,17 @@ class Quiz {
         return result;
     }
 
+    static async deleteByUserIdAndQuizId(userId, quizId) {
+        const query = `
+            DELETE FROM quizzes
+            WHERE user_id = ? AND id = ?
+            RETURNING *;
+        `;
+        const values = [userId, quizId];
+        const result = await db.get(query, values);
+        return result;
+    }
+
     static async updateQuizScore(userId, quizId, correctAnswers) {
         const query = `
             UPDATE quizzes
@@ -20,7 +31,19 @@ class Quiz {
             RETURNING *;
         `;
         const values = [correctAnswers, userId, quizId];
-        const result = await db.get(query, values); // Usar db.get para retornar o quiz atualizado
+        const result = await db.get(query, values); 
+        return result;
+    }
+
+    static async renameLabelByUserIdAndQuizId(userId, quizId, newLabel) {
+        const query = `
+            UPDATE quizzes
+            SET quiz_label = ?
+            WHERE user_id = ? AND id = ?
+            RETURNING *;
+        `;
+        const values = [newLabel, userId, quizId];
+        const result = await db.get(query, values); 
         return result;
     }
 
@@ -33,7 +56,7 @@ class Quiz {
       const quizzes = await db.all(query, [userId]);
       return quizzes.map((quiz) => ({
           ...quiz,
-          quiz_data: JSON.parse(quiz.quiz_data), // Converte de volta para JSON
+          quiz_data: JSON.parse(quiz.quiz_data), 
       }));
     }
 
@@ -45,7 +68,7 @@ class Quiz {
         ORDER BY created_at DESC;
     `;
     const quizzes = await db.all(query, [userId]);
-    return quizzes; // Retorna diretamente o resultado da consulta
+    return quizzes; 
     }
 
     static async getByUserIdAndQuizId(userId, quizId) {
@@ -56,7 +79,7 @@ class Quiz {
     const quizzes = await db.all(query, [userId, quizId])
     return quizzes.map((quiz) => ({
         ...quiz,
-        quiz_data: JSON.parse(quiz.quiz_data), // Converte de volta para JSON
+        quiz_data: JSON.parse(quiz.quiz_data), 
     }));
     }
 
@@ -70,9 +93,23 @@ class Quiz {
     const quizzes = await db.all(query, [userId]);
     return quizzes.map((quiz) => ({
         ...quiz,
-        quiz_data: JSON.parse(quiz.quiz_data), // Converte de volta para JSON
+        quiz_data: JSON.parse(quiz.quiz_data),
     }));
-}
+    }
+
+    static async getLabelSummaryByUserId(userId) {
+        const query = `
+            SELECT quiz_label AS label,
+                   COUNT(id) AS quiz_count,
+                   SUM(quiz_score) AS total_score
+            FROM quizzes
+            WHERE user_id = ?
+            GROUP BY quiz_label;
+        `;
+        const values = [userId];
+        const result = await db.all(query, values); 
+        return result;
+    }
 }
 
 export default Quiz;
