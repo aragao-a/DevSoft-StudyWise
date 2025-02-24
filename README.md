@@ -21,7 +21,7 @@ Seja sobre História, Química, Biologia, Física ou algum assunto mais particul
 - Custom button, Search bar, Quiz list
 #### - Arquivos para funcionamento do expo (npx) e .env para encaixe do local host apropriado caso o Firewall barre o tunnel
 
-## Technologias Usadas
+## Tecnologias Usadas
 - Google GEMINI AI API - API para implementação da inteligência
 artificial
 - React Native - Framework para otimizar o desenvolvimento do
