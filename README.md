@@ -53,6 +53,7 @@ Backlog · StudyWise Devs - https://github.com/users/aragao-a/projects/1
 ## Visuais
 - Protótipo de alta fidelidade do figma - https://www.figma.com/proto/kJM13olDfoxQQk2JzPQFjh?node-id=0-1&t=ytkKYi9t6iKNOkJ3-6
 - Diagrama Lógico de interação dos arquivos - [https://drive.google.com/file/d/15V3_tdHRtPFAX6O8kGa_asCmBnJHcPuo/view?usp=drive_link](https://drive.google.com/file/d/13lKpZSIPCS2nfRsCu01bdlIBOzrvdcoQ/view)
+- Test Cases - https://docs.google.com/spreadsheets/d/1pzFNj-8TCYBDTmfE6v067Y-wXdebyLeIiNzX6SrF0O4/edit?usp=sharing
 
 ## Informação de Suporte
 aaa10@cin.ufpe.br
