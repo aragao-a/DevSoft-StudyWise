@@ -2,24 +2,12 @@ import { View, StyleSheet, ScrollView, Text, Pressable} from "react-native"
 import { Quiz } from "@/constants/quiz-small"
 import { useRouter } from "expo-router"
 import CustomButton from "./custom-button";
+import LabelButton from "./label-button";
+
 export default function QuizList({list, searchResult}: {list: Quiz[], searchResult:string}) {
     const router = useRouter();
     const handleButtonPress = (quizId: string) => {
         router.push({ pathname: 'questions', params: {quizId } });
-    };
-    const getLabelColor = (label: string) => {
-        switch (label) {
-            case 'História':
-                return '#97482d'; 
-            case 'Biologia':
-                return '#009A56'; 
-            case 'Física':
-                return '#FF4770'; 
-            case 'Química':
-                return '#FF972C'; 
-            default:
-                return '#5A48ff'; // Default color
-        }
     };
     const quizCount = list.length ;
     return (
@@ -44,22 +32,23 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                             <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {quiz.title}</Text>
                         </Text>
                             
-                        <Text style={{ paddingLeft: 10 }}>
+                        <View style={{ paddingLeft: 10, flexDirection:'row', alignItems:'center', gap:4}}>
 
-                            <Text style={styles.infoContainer}>• <View style={[styles.labelContainer, { backgroundColor: getLabelColor(quiz.label)}]}>
+                            <View style={styles.infoContainer}> 
+                                <Text>•</Text> 
+                                <LabelButton label={quiz.label}/>
+                                <Text>|</Text> 
+                            </View>
 
-                                    <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 14, color: 'white'}}>{quiz.label}</Text>
-
-                            </View> | </Text>
-
-                            <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 14}}>
+                            <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 14, letterSpacing:1}}>
                                 {new Date(quiz.date).toLocaleDateString("pt-BR", {
                                     day: "2-digit",
                                     month: "2-digit",
+                                    year: "2-digit"
                                 })}
                             </Text>
 
-                        </Text>
+                        </View>
 
                     </CustomButton>
                 )
@@ -71,7 +60,7 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
 
 const styles = StyleSheet.create({
     infoContainer: {
-        
+        gap:6,
         flexDirection: 'row',
         alignItems: 'center', // Vertically align items
         justifyContent: 'center',
@@ -89,8 +78,8 @@ const styles = StyleSheet.create({
         borderRadius:20
     },
     labelContainer: {
-        transform: [{translateY: 7.5}], 
-        borderRadius: 10, 
+        justifyContent:'center',
+        borderRadius: 10,
         paddingHorizontal: 12, 
         paddingVertical: 4, 
         
@@ -107,7 +96,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingHorizontal:'4%',
         paddingVertical:7,
-        paddingBottom: 12
+        paddingBottom: 12,
+        gap:5
     },
     ButtonText: {
         flexWrap: 'wrap',

@@ -14,6 +14,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-na
 import CustomButton from "@/components/ui/custom-button";
 import { getUserID } from "@/utils/authentication";
 
+const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
   
 export default function Home() {
@@ -106,30 +107,22 @@ export default function Home() {
         }
     };
 
-    const handleProfileIconPress = () => { };
+    const handleProfileIconPress = () => {router.push('/profile')};
     const { control } = useForm();
 
     const [hasInputFocus, setHasInputFocus] = useState(false);
     const inputHeight = useSharedValue(40);
-    const logoOpacity = useSharedValue(1);
     const animatedStyleInput = useAnimatedStyle(() => {
         return {
             height: withTiming(inputHeight.value, { duration: 300 }),
         };
     });
-    const animatedStyleGeminiLogo = useAnimatedStyle(() => {
-        return {
-            opacity: withTiming(logoOpacity.value, { duration: 300 }),
-        };
-    });
     const handleInputFocus = () => {
-        setHasInputFocus(true);
         inputHeight.value = 100;
-        logoOpacity.value = 0;
+        setHasInputFocus(true);
     };
     const handleInputBlur = () => {
         inputHeight.value = 40;
-        logoOpacity.value = 1;
         setHasInputFocus(false);
     };
     const handleTouchInput = () => {
@@ -181,16 +174,18 @@ export default function Home() {
                                     multiline: true,
                                 }} />
                         </Pressable>
-                        <Animated.View style={[{ flex: 1 }, animatedStyleGeminiLogo]}>
+                        {<View>
                             <Text style={styles.smallerText}>
                                 Powered by:
                             </Text>
                             <GeminiLogo />
-                        </Animated.View>
+                        </View>}
                     </View>
-                    <Text style={styles.baseText}>
-                        Ou:
-                    </Text>
+                    <View style={{justifyContent:'center', minHeight:50}}>
+                        <Text style={styles.baseText}>
+                            Ou:
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.footer}>
                     <View style={styles.buttonsArea}>
@@ -223,12 +218,11 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        height: windowWidth * 1.75,
-        minHeight:600,
-        justifyContent:'space-between',
+        minHeight:windowHeight - (0.25 * windowWidth),
+        justifyContent:'flex-end',
     },
     group: {
-        flex: 1,
+        minHeight:windowWidth * 0.8,
         justifyContent: 'space-around'
     },
     baseText: {
@@ -243,8 +237,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat_600SemiBold',
     },
     inputTextArea: {
-        minHeight: 100,
-        height: '50%',
         justifyContent: 'center',
         gap: 15,
         alignItems: 'center',
@@ -276,7 +268,8 @@ const styles = StyleSheet.create({
         fontFamily: 'VisbyRoundCF-Bold',
     },
     footer: {
-        height: '50%',
+        height: windowWidth*0.9,
+        width:'100%',
         minHeight: 200,
         gap: 15,
         justifyContent: 'space-between',

@@ -100,8 +100,8 @@ class Quiz {
     static async getLabelSummaryByUserId(userId) {
         const query = `
             SELECT quiz_label AS label,
-                   COUNT(id) AS quiz_count,
-                   SUM(quiz_score) AS total_score
+                   COUNT(id) AS quizCount,
+                   SUM(quiz_score) AS totalScore
             FROM quizzes
             WHERE user_id = ?
             GROUP BY quiz_label;

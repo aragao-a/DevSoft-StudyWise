@@ -17,7 +17,9 @@ export default function HomeBackground({children, ...rest}: ViewProps) {
                 <GobackButton style={styles.goBackButton}/>
                 <Logo style={styles.logo} imageSize={0.05} imageVersion="1-2"/>
             </View>
-            {children}
+            <View style={styles.body}>
+                {children}
+            </View>
         </View>
         </ScrollView>
         </SafeAreaView>
@@ -29,6 +31,9 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         height: windowWidth * 0.25,
         alignItems:'center',
+    },
+    body: {
+        minHeight:windowHeight - (windowWidth * 0.25)
     },
     goBackButton: {
         position: 'absolute', 

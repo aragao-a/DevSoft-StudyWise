@@ -5,8 +5,7 @@ import {useEffect} from 'react';
 import RootBackground from '@/components/ui/root-background';
 import * as SystemUI from 'expo-system-ui';
 import { colorMap } from '@/constants/color-map';
-import { Montserrat_400Regular, Montserrat_600SemiBold, useFonts as useGoogleFonts} from '@expo-google-fonts/montserrat'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold, useFonts as useGoogleFonts} from '@expo-google-fonts/montserrat'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +30,7 @@ export default function RootLayout() {
 
   const [loadedGoogleFonts, errorGoogleFonts] = useGoogleFonts({
     Montserrat_400Regular,
-    Montserrat_600SemiBold
+    Montserrat_600SemiBold,
   })
 
   useEffect(() => {
@@ -63,11 +62,11 @@ export default function RootLayout() {
       headerShown: false,
       animationTypeForReplace:'push',
       }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="sign-up"/>
-        <Stack.Screen name="home-stage-1" />
-        <Stack.Screen name="home-stage-2" />
-        <Stack.Screen name="profile" />
+        <Stack.Screen name="(stack)/index" />
+        <Stack.Screen name="(stack)/sign-up"/>
+        <Stack.Screen name="(stack)/home-stage-1" />
+        <Stack.Screen name="(stack)/home-stage-2" />
+        <Stack.Screen name="(stack)/profile" />
     </Stack>
     </RootBackground>
   )

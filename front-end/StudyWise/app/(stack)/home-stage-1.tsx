@@ -16,7 +16,6 @@ import { useFocusEffect } from "expo-router";
 
 
 const windowWidth = Dimensions.get('window').width;
-
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
@@ -52,7 +51,7 @@ export default function Home() {
                     }}
                 />
             </View>
-            <View style={quizzes.length === 0 ?styles.container: [styles.container, {justifyContent: 'flex-start'}]}>
+            <View style={quizzes.length === 0 ?styles.quizContainer: [styles.quizContainer, {justifyContent: 'flex-start'}]}>
                 <Text  style={styles.baseText}>
                     SEUS QUIZZES:
                 </Text>
@@ -68,16 +67,18 @@ export default function Home() {
                     </View>
                     <PlusIcon/>
                 </CustomButton>
-                <Pressable onPress= {handleProfileIconPress} >
-                    <ProfileIcon style={styles.profileIcon}/>
-                </Pressable>
+                    <View style={styles.profileIcon}>
+                        <Pressable onPress= {handleProfileIconPress} >
+                            <ProfileIcon/>
+                        </Pressable>
+                    </View>
             </View>
         </HomeBackground>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    quizContainer: {
         height:windowWidth * 1, 
         justifyContent: 'center',
         gap:'5%',
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     footer: {
         height: windowWidth * 0.5, 
         alignItems:'stretch', 
-        justifyContent:'space-around',
+        justifyContent:'flex-end',
         paddingTop:'5%'
     },
     profileIcon:{
