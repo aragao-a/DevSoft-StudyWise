@@ -7,7 +7,7 @@ import LoginForm from '@/components/ui/login-form';
 import HandIcon from '@/assets/svg/hand-icon';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS} from 'react-native-reanimated';
 
-export default function App() {
+export default function Index() {
 
     const firstComponentOpacity = useSharedValue(1);
     const secondComponentOpacity = useSharedValue(0);

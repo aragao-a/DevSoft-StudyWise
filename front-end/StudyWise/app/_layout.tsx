@@ -6,6 +6,7 @@ import RootBackground from '@/components/ui/root-background';
 import * as SystemUI from 'expo-system-ui';
 import { colorMap } from '@/constants/color-map';
 import { Montserrat_400Regular, Montserrat_600SemiBold, useFonts as useGoogleFonts} from '@expo-google-fonts/montserrat'
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -13,7 +14,11 @@ const colors:colorMap = new Map;
 colors.set('/', '#00B7C9')
 colors.set('/sign-in', '#00B7C9')
 colors.set('/sign-up', 'white')
-colors.set('/home', 'white')
+colors.set('/home-stage-1', 'white')
+colors.set('/home-stage-2', 'white')
+colors.set('/questions', 'white')
+colors.set('/results', 'white')
+colors.set('/profile', 'white')
 
 export default function RootLayout() {
   // Começa a navegação somente se as fontes estiverem carregadas
@@ -40,10 +45,10 @@ export default function RootLayout() {
   const pathName = usePathname();
   let color = colors.get(pathName) || null;
   if(color === 'undefined') {
-    color = null;
+    color = 'white';
   }
   useEffect(() => {
-    SystemUI.setBackgroundColorAsync('#ffffff');
+    SystemUI.setBackgroundColorAsync(color);
   }, [color])
 
 
@@ -54,7 +59,7 @@ export default function RootLayout() {
   // stack de navegação
   return (
     <RootBackground>
-    <Stack screenOptions={{
+        <Stack screenOptions={{
       headerShown: false,
       animationTypeForReplace:'push',
       }}>
