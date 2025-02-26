@@ -13,10 +13,7 @@ import ContainerIcon from "@/assets/svg/container-icon";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import CustomButton from "@/components/ui/custom-button";
 import { getUserID } from "@/utils/authentication";
-
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
-  
+import { windowHeight, windowWidth } from "@/constants/dimensions";
 export default function Home() {
     const [hasInput, setHasInput] = useState(false);
     const [selectedFile, setSelectedFile] = useState<DocumentPicker.DocumentPickerAsset | null>(null);

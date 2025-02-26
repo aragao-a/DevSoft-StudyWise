@@ -1,11 +1,12 @@
 import labelStatsMap from "@/constants/labels-stats-map";
 const getLabelColor = (label: string) => {
     if(labelStatsMap.has(label)) {
-        return labelStatsMap.get(label)?.color
+        const labelStats = labelStatsMap.get(label)
+        if(labelStats !== undefined && labelStats.color) {
+            return labelStats.color
+        }
     }
-    else {
-        return '#5A48ff'
-    }
+    return '#5A48ff'
 };
 
 export default getLabelColor

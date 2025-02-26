@@ -3,13 +3,17 @@ import { Quiz } from "@/constants/quiz-small"
 import { useRouter } from "expo-router"
 import CustomButton from "./custom-button";
 import LabelButton from "./label-button";
+import EditIcon from "@/assets/svg/edit-icon";
 
-export default function QuizList({list, searchResult}: {list: Quiz[], searchResult:string}) {
+export default function QuizList({list, searchResult, setQuizForEditing}: {list: Quiz[], searchResult:string, setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
     const router = useRouter();
     const handleButtonPress = (quizId: string) => {
         router.push({ pathname: 'questions', params: {quizId } });
     };
-    const quizCount = list.length ;
+    const quizCount = list.length;
+    const handleEditIconPress = (quiz:Quiz) => {
+        setQuizForEditing(quiz);
+    }
     return (
         <ScrollView 
             nestedScrollEnabled={true}
@@ -32,8 +36,8 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                             <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {quiz.title}</Text>
                         </Text>
                             
-                        <View style={{ paddingLeft: 10, flexDirection:'row', alignItems:'center', gap:4}}>
-
+                        <View style={{ paddingHorizontal: 10, flexDirection:'row', justifyContent:'space-between'}}>
+                            <View style={{flexDirection:'row', alignItems:'center', gap:4}}>
                             <View style={styles.infoContainer}> 
                                 <Text>•</Text> 
                                 <LabelButton label={quiz.label}/>
@@ -47,7 +51,10 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                                     year: "2-digit"
                                 })}
                             </Text>
-
+                            </View>
+                            <Pressable onPress={() => {handleEditIconPress(quiz)}}>
+                                <EditIcon/>
+                            </Pressable>
                         </View>
 
                     </CustomButton>

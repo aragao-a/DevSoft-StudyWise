@@ -13,9 +13,9 @@ import SearchIcon from "@/assets/svg/search-icon";
 import CustomButton from "@/components/ui/custom-button";
 import { getUserID } from "@/utils/authentication";
 import { useFocusEffect } from "expo-router";
-
-
-const windowWidth = Dimensions.get('window').width;
+import { windowWidth } from "@/constants/dimensions";
+import RenamePopUP from "@/components/ui/rename-pop-up";
+import primaryLabels from "@/constants/primary-labels";
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
@@ -24,6 +24,7 @@ export default function Home() {
     const handleButtonPress = () => {router.push('/home-stage-2')};
     const handleProfileIconPress = () => {router.push('/profile')};
     const {control} = useForm();
+    const [quizForEditing, setQuizForEditing] = useState<Quiz|null>(null);
 
     useFocusEffect(
         useCallback(() => {
@@ -36,11 +37,12 @@ export default function Home() {
                 .catch(error => {
                     Alert.alert("Erro", "não foi possível carregar seus quizzes.");
                 });
-            }, [])
+            }, [quizForEditing])
     );
 
     return (
-        <HomeBackground>
+        <>
+       <HomeBackground>
             <View style={{marginTop: 35}}>
                 <SearchBar 
                     animatedStyle={{height:40}}
@@ -56,7 +58,7 @@ export default function Home() {
                     SEUS QUIZZES:
                 </Text>
                 {(quizzes.length === 0 &&
-                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult}/>)}
+                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult} setQuizForEditing={setQuizForEditing}/>)}
             </View>
             <View style={styles.footer}>
                 <CustomButton style={styles.buttonArea} onPress= {handleButtonPress}>
@@ -74,12 +76,14 @@ export default function Home() {
                     </View>
             </View>
         </HomeBackground>
+        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing} shouldEditColor={!primaryLabels.includes((quizForEditing?.label) || '')}/>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     quizContainer: {
-        height:windowWidth * 1, 
+        height:windowWidth, 
         justifyContent: 'center',
         gap:'5%',
         backgroundColor: 'white',

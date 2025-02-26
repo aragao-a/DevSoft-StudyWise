@@ -6,8 +6,7 @@ import labelStatsMap from "@/constants/labels-stats-map";
 import { LabelStats } from "@/constants/label-stats-type";
 import LabelButton from "@/components/ui/label-button";
 import PerformanceIcon from "@/assets/svg/performance-icon";
-
-const windowWidth = Dimensions.get('window').width;
+import { windowWidth } from "@/constants/dimensions";
 export default function Profile() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [statsMap, setStatsMap] = useState(new Map);

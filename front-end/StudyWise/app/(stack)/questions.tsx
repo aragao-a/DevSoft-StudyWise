@@ -7,8 +7,6 @@ import CustomButton from "@/components/ui/custom-button";
 import { useRouter } from "expo-router";
 import { getUserID } from "@/utils/authentication";
 
-const windowHeight = Dimensions.get("window").height;
-
 const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
 export default function Questions() {

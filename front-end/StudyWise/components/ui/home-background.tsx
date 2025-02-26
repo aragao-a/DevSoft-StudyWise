@@ -2,10 +2,7 @@ import { StyleSheet, View, ViewProps, Dimensions, ScrollView} from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from './logo';
 import GobackButton from './go-back-button';
-  
-
-const windowHeight = Dimensions.get("window").height;
-const windowWidth = Dimensions.get("window").width;
+import { windowWidth, windowHeight } from '@/constants/dimensions';
 
 export default function HomeBackground({children, ...rest}: ViewProps) {
 
