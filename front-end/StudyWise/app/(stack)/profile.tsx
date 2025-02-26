@@ -65,12 +65,9 @@ export default function Profile() {
                             <LabelButton label={key}/>
                         </View>
                         <View style={{flexDirection:'row', alignItems:'center', gap:5}}>
-                            <View style={{width:'80%', height:27, backgroundColor:'#7F7D7D', borderRadius:15, overflow:'hidden'}}/>
-                            <Text style={{fontFamily: 'VisbyRoundCF-Bold', fontSize:15}}>
-                                ??
-                            </Text>
+                            <View style={{width:'90%', height:27, backgroundColor:'rgba(0, 0, 0, 0.17)', borderRadius:15, overflow:'hidden'}}/>
                         </View>
-                        <Text style={{fontFamily: 'VisbyRoundCF-Bold', fontSize:12, flexWrap:'wrap', textAlign:'center'}}>
+                        <Text style={{width:'90%', fontFamily: 'VisbyRoundCF-Bold', fontSize:12, flexWrap:'wrap', textAlign:'center'}}>
                             Realize quizzes deste assunto para obter seu desempenho.
                         </Text>
                     </View>
