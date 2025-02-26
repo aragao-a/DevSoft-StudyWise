@@ -47,27 +47,6 @@ export default function RenamePopUP({quizForEditing, setQuizForEditing}:{quizFor
             }
         }
     }
-    const handleDeleteQuiz = async () => {
-        try {
-            const userID = await getUserID();
-            const response = await fetch(`${API_URL}/delete_quiz/${Number(userID)}/${Number(quizForEditing?.id)}`, {
-              method: 'Delete',
-              headers: {
-                'Content-Type': 'application/json',
-              }
-            });
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message); 
-            }
-            setQuizForEditing(null);
-
-        } catch (error:unknown) {
-            if(error instanceof Error) {
-                console.log(error.message);
-            }
-        }
-    }
     return(
         quizForEditing && (<View style={{position:'absolute', height:windowHeight + (StatusBar.currentHeight || 0), width:windowWidth, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
             <Modal transparent={true} animationType="none" visible={quizForEditing ? true: false} onRequestClose={handleCancelEditing}>
@@ -122,11 +101,6 @@ export default function RenamePopUP({quizForEditing, setQuizForEditing}:{quizFor
                     <CustomButton style={styles.button} onPress={handleSubmit(handleConfirmEditing)}>
                         <Text style={styles.buttonText}>
                             Confirmar
-                        </Text>
-                    </CustomButton>
-                    <CustomButton style={styles.deleteButton} onPress={handleDeleteQuiz}>
-                        <Text style={styles.buttonText}>
-                            Deletar Quiz
                         </Text>
                     </CustomButton>
                 </ScrollView>

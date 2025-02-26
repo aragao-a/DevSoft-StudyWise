@@ -4,8 +4,13 @@ import { useRouter } from "expo-router"
 import CustomButton from "./custom-button";
 import LabelButton from "./label-button";
 import EditIcon from "@/assets/svg/edit-icon";
+import DeleteIcon from "@/assets/svg/delete-icon";
 
-export default function QuizList({list, searchResult, setQuizForEditing}: {list: Quiz[], searchResult:string, setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
+export default function QuizList({list, searchResult, setQuizForEditing, setQuizForDeletion}: {
+    list: Quiz[], 
+    searchResult:string, 
+    setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>,
+    setQuizForDeletion:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
     const router = useRouter();
     const handleButtonPress = (quizId: string) => {
         router.push({ pathname: 'questions', params: {quizId } });
@@ -13,6 +18,9 @@ export default function QuizList({list, searchResult, setQuizForEditing}: {list:
     const quizCount = list.length;
     const handleEditIconPress = (quiz:Quiz) => {
         setQuizForEditing(quiz);
+    }
+    const handleDeleteIconPress = (quiz:Quiz) => {
+        setQuizForDeletion(quiz);
     }
     return (
         <ScrollView 
@@ -53,9 +61,14 @@ export default function QuizList({list, searchResult, setQuizForEditing}: {list:
                             </Text>
                             </View>
                         </View>
-                        <Pressable onPress={() => {handleEditIconPress(quiz)}} style={{alignSelf:'flex-end', position:'absolute', padding:'5%'}}>
+                        <View style={{alignSelf:'flex-end', position:'absolute', flexDirection:'row'}}>
+                            <Pressable onPress={() => {handleEditIconPress(quiz)}} style={{paddingVertical:'20%', paddingHorizontal:'1%'}}>
                                 <EditIcon/>
                             </Pressable>
+                            <Pressable onPress={() => {handleDeleteIconPress(quiz)}} style={{paddingVertical:'20%', paddingHorizontal:'1%'}}>
+                                <DeleteIcon/>
+                            </Pressable>
+                        </View>
                     </CustomButton>
                 )
             })}

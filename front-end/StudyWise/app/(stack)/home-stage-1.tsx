@@ -15,6 +15,7 @@ import { getUserID } from "@/utils/authentication";
 import { useFocusEffect } from "expo-router";
 import { windowWidth } from "@/constants/dimensions";
 import RenamePopUP from "@/components/ui/rename-pop-up";
+import DeletePopUP from "@/components/ui/delete-pop-up";
 
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -25,6 +26,7 @@ export default function Home() {
     const handleProfileIconPress = () => {router.push('/profile')};
     const {control} = useForm();
     const [quizForEditing, setQuizForEditing] = useState<Quiz|null>(null);
+    const [quizForDeletion, setQuizForDeletion] = useState<Quiz|null>(null);
 
     useFocusEffect(
         useCallback(() => {
@@ -37,7 +39,7 @@ export default function Home() {
                 .catch(error => {
                     Alert.alert("Erro", "não foi possível carregar seus quizzes.");
                 });
-            }, [quizForEditing])
+            }, [quizForEditing, quizForDeletion])
     );
 
     return (
@@ -58,7 +60,7 @@ export default function Home() {
                     SEUS QUIZZES:
                 </Text>
                 {(quizzes.length === 0 &&
-                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult} setQuizForEditing={setQuizForEditing}/>)}
+                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult} setQuizForEditing={setQuizForEditing} setQuizForDeletion={setQuizForDeletion}/>)}
             </View>
             <View style={styles.footer}>
                 <CustomButton style={styles.buttonArea} onPress= {handleButtonPress}>
@@ -76,7 +78,8 @@ export default function Home() {
                     </View>
             </View>
         </HomeBackground>
-        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing}/>
+        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing}></RenamePopUP>
+        <DeletePopUP quizForDeletion={quizForDeletion} setQuizForDeletion={setQuizForDeletion}></DeletePopUP>
         </>
     )
 }
