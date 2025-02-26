@@ -33,11 +33,11 @@ export default function QuizList({list, searchResult, setQuizForEditing}: {list:
                                 Quiz {quizCount - index}:
                             </Text>
 
-                            <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {quiz.title}</Text>
+                            <Text style={{ fontFamily: 'Montserrat_400Regular'}}> {quiz.title}</Text>
                         </Text>
                             
                         <View style={{ paddingHorizontal: 10, flexDirection:'row', justifyContent:'space-between'}}>
-                            <View style={{flexDirection:'row', alignItems:'center', gap:4}}>
+                            <View style={{flexDirection:'row', alignItems:'center', gap:4, flexWrap:'wrap'}}>
                             <View style={styles.infoContainer}> 
                                 <Text>•</Text> 
                                 <LabelButton label={quiz.label}/>
@@ -52,11 +52,10 @@ export default function QuizList({list, searchResult, setQuizForEditing}: {list:
                                 })}
                             </Text>
                             </View>
-                            <Pressable onPress={() => {handleEditIconPress(quiz)}}>
+                        </View>
+                        <Pressable onPress={() => {handleEditIconPress(quiz)}} style={{alignSelf:'flex-end', position:'absolute', padding:'5%'}}>
                                 <EditIcon/>
                             </Pressable>
-                        </View>
-
                     </CustomButton>
                 )
             })}
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
         gap:5
     },
     ButtonText: {
+        paddingRight:'10%',
         flexWrap: 'wrap',
         fontSize: 15,
         fontFamily: 'Montserrat_400Regular',

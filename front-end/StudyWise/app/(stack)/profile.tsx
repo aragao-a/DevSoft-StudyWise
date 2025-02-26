@@ -71,7 +71,7 @@ export default function Profile() {
                             </Text>
                         </View>
                         <Text style={{fontFamily: 'VisbyRoundCF-Bold', fontSize:12, flexWrap:'wrap', textAlign:'center'}}>
-                            Realize quizzes dessa categoria para obter seu desempenho.
+                            Realize quizzes deste assunto para obter seu desempenho.
                         </Text>
                     </View>
                 )

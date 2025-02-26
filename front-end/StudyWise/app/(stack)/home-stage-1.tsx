@@ -15,7 +15,7 @@ import { getUserID } from "@/utils/authentication";
 import { useFocusEffect } from "expo-router";
 import { windowWidth } from "@/constants/dimensions";
 import RenamePopUP from "@/components/ui/rename-pop-up";
-import primaryLabels from "@/constants/primary-labels";
+
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
@@ -76,7 +76,7 @@ export default function Home() {
                     </View>
             </View>
         </HomeBackground>
-        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing} shouldEditColor={!primaryLabels.includes((quizForEditing?.label) || '')}/>
+        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing}/>
         </>
     )
 }
