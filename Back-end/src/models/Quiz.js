@@ -99,17 +99,59 @@ class Quiz {
 
     static async getLabelSummaryByUserId(userId) {
         const query = `
-            SELECT quiz_label AS label,
-                   COUNT(id) AS quizCount,
-                   SUM(quiz_score) AS totalScore
-            FROM quizzes
-            WHERE user_id = ?
-            GROUP BY quiz_label;
+            SELECT 
+                l.label AS label,
+                l.color AS color,
+                l.primary_label_set AS primaryLabelSet,
+                COUNT(q.id) AS quiz_count,
+                SUM(quiz_score) AS total_score
+            FROM 
+                labels l
+            LEFT JOIN 
+                quizzes q ON l.user_id = q.user_id AND l.label = q.quiz_label
+            WHERE 
+                l.user_id = ?
+            GROUP BY 
+                l.label;
         `;
         const values = [userId];
-        const result = await db.all(query, values); 
+        const result = await db.all(query, values);
         return result;
     }
+
+    static async createLabel(userId, label, color, primaryLabelSet) {
+        const query = `
+            INSERT INTO labels (user_id, label, color, primary_label_set)
+            VALUES (?, ?, ?, ?)
+            RETURNING *;
+        `;
+        const values = [userId, label, color, primaryLabelSet];
+        const result = await db.get(query, values);
+        return result;
+    }
+
+    static async updateLabel(userId, oldLabel, newLabel, color, primaryLabelSet) {
+        const query = `
+            UPDATE labels
+            SET label = ?, color = ?, primary_label_set = ?
+            WHERE user_id = ? AND label = ?
+            RETURNING *;
+        `;
+        const values = [newLabel, color, primaryLabelSet, userId, oldLabel];
+        const result = await db.get(query, values);
+        return result;
+    }
+
+    static async getLabelsByUserId(userId) {
+        const query = `
+            SELECT label, color, primary_label_set AS primaryLabelSet
+            FROM labels
+            WHERE user_id = ?;
+        `;
+        const result = await db.all(query, [userId]);
+        return result;
+    }
+
 }
 
 export default Quiz;

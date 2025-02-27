@@ -1,10 +1,17 @@
 import User from "../models/User.js";
+import Quiz from "../models/Quiz.js";
 import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
   const { username, password, email } = req.body;
 
   try {
+    // Verifica se todos os campos foram fornecidos
+    if (!username || !password || !email) {
+      return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+    }
+
+
     // Verifica se o usuário já existe
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
@@ -17,6 +24,20 @@ export const register = async (req, res) => {
 
     // Cria o usuário
     const newUser = await User.create(username, passwordHash, email);
+    const userId = newUser.id;
+
+    // Cria as labels padrão para o usuário
+    const defaultLabels = [
+      { label: "Biologia", color: "#009A56", primaryLabelSet: "Biologia" },
+      { label: "Física", color: "#FF4770", primaryLabelSet: "Física" },
+      { label: "História", color: "#97482d", primaryLabelSet: "História" },
+      { label: "Miscelâneo", color: "#5A48ff", primaryLabelSet: "Miscelâneo" },
+      { label: "Química", color: "#FF972C", primaryLabelSet: "Química" },
+    ];
+
+    for (const label of defaultLabels) {
+      await Quiz.createLabel(userId, label.label, label.color, label.primaryLabelSet);
+    }
 
     res.status(201).json({ message: "Usuário criado com sucesso!", user: newUser });
   } catch (error) {
