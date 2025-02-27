@@ -80,23 +80,72 @@ export const getTargetQuestions = async (req, res) => {
     }
 };
 
+
+export const createLabel = async (req, res) => {
+  const { userId, label, color, primaryLabelSet } = req.body;
+
+  try {
+      // Verifica se todos os campos foram fornecidos
+      if (!userId || !label || !color || !primaryLabelSet) {
+          return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+      }
+
+      // Cria a label no banco de dados
+      const newLabel = await Quiz.createLabel(userId, label, color, primaryLabelSet);
+
+      // Retorna a label criada
+      res.status(201).json({ message: "Label criada com sucesso.", label: newLabel });
+  } catch (error) {
+      console.error("Erro ao criar label:", error);
+      res.status(500).json({ message: "Erro ao criar label." });
+  }
+};
+
+
+export const updateLabel = async (req, res) => {
+  const { userId, label } = req.params;
+  const { newLabel, color, primaryLabelSet } = req.body;
+
+  try {
+      // Verifica se todos os campos foram fornecidos
+      if (!userId || !label || !newLabel || !color || !primaryLabelSet) {
+          return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+      }
+
+      // Atualiza a label no banco de dados
+      const updatedLabel = await Quiz.updateLabel(userId, label, newLabel, color, primaryLabelSet);
+
+      // Verifica se a label foi atualizada
+      if (!updatedLabel) {
+          return res.status(404).json({ message: "Label não encontrada." });
+      }
+
+      // Retorna a label atualizada
+      res.status(200).json({ message: "Label atualizada com sucesso.", label: updatedLabel });
+  } catch (error) {
+      console.error("Erro ao atualizar label:", error);
+      res.status(500).json({ message: "Erro ao atualizar label." });
+  }
+};
+
+
 export const getLabelSummary = async (req, res) => {
   const { userId } = req.params;
 
   try {
-      // Verifica se userId foi fornecido
+      // Verifica se o userId foi fornecido
       if (!userId) {
           return res.status(400).json({ message: "userId é obrigatório." });
       }
 
-      // Busca o resumo de labels no banco de dados
-      const labelSummary = await Quiz.getLabelSummaryByUserId(userId);
+      // Busca as labels do usuário no banco de dados
+      const labels = await Quiz.getLabelSummaryByUserId(userId);
 
       // Retorna o resumo de labels
-      res.status(200).json({ labelSummary });
+      res.status(200).json({ labels });
   } catch (error) {
-      console.error("Erro ao buscar resumo de labels:", error);
-      res.status(500).json({ message: "Erro ao buscar resumo de labels." });
+      console.error("Erro ao buscar labels:", error);
+      res.status(500).json({ message: "Erro ao buscar labels." });
   }
 };
 

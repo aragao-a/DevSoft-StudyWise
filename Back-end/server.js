@@ -4,9 +4,10 @@ import cors from "cors";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import multer from "multer";
-import { validateContent, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
+import { validateContent, validateText, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
 import { register, login } from "./src/api/authController.js";
-import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory, getTargetQuestions, updateQuizScore, deleteQuiz, getLabelSummary, renameLabel} from "./src/api/quizController.js";
+import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory, 
+        updateLabel,createLabel, getTargetQuestions, updateQuizScore, deleteQuiz, getLabelSummary, renameLabel} from "./src/api/quizController.js";
 import { dirname } from 'path';
 import localtunnel from 'localtunnel'
 
@@ -134,45 +135,52 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-// Rota para gerar quiz baseado em texto
 app.post("/text-quiz", async (req, res) => {
-  try {
-      const { text, userId } = req.body; // Recebe o texto e o userId do corpo da requisição
-      if (!text || !userId) {
-          return res.status(400).json({ message: "Texto ou ID do usuário não fornecido." });
-      }
+    try {
+        const { text, userId } = req.body; // Recebe o texto e o userId do corpo da requisição
+        if (!text || !userId) {
+            return res.status(400).json({ message: "Texto ou ID do usuário não fornecido." });
+        }
 
-      console.log("Texto recebido:", text);
+        console.log("Texto recebido:", text);
 
-      // Gerar o quiz com base no texto
-      const generatedQuiz = await textBasedQuiz(text);
-      if (!generatedQuiz) {
-          return res.status(500).json({ message: "Erro na geração do quiz." });
-      }
+        // Validar o texto
+        const isValid = await validateText(text);
+        if (!isValid) {
+            return res.status(400).json({ message: "O texto fornecido não é válido para gerar um quiz." });
+        }
 
-      // Extrair o JSON da string Markdown 
-      const quizData = typeof generatedQuiz === "string" ? extractJsonFromMarkdown(generatedQuiz) : generatedQuiz;
-      if (!quizData) {
-          return res.status(500).json({ message: "Erro ao processar o quiz gerado." });
-      }
+        console.log("Texto validado. Gerando quiz...");
 
-      // Preparar os dados para salvar no banco de dados
-      const payload = {
-          userId,
-          quiz_name: quizData.title, // Salva o título como quiz_name
-          quiz_label: quizData.label, // Salva o label como quiz_label
-          quiz_data: quizData.questions, // Salva apenas o conteúdo de questions
-      };
+        // Gerar o quiz com base no texto
+        const generatedQuiz = await textBasedQuiz(text);
+        if (!generatedQuiz) {
+            return res.status(500).json({ message: "Erro na geração do quiz." });
+        }
 
-      // Salvar o quiz no banco de dados usando o quizController
-      const newQuiz = await generateQuiz({ body: payload }, res);
+        // Extrair o JSON da string Markdown 
+        const quizData = typeof generatedQuiz === "string" ? extractJsonFromMarkdown(generatedQuiz) : generatedQuiz;
+        if (!quizData) {
+            return res.status(500).json({ message: "Erro ao processar o quiz gerado." });
+        }
 
-      console.log("Quiz salvo com sucesso!");
-      res.status(200).json({ message: "Quiz gerado e salvo com sucesso!", quiz: newQuiz });
-  } catch (error) {
-      console.error("Erro no processamento do texto:", error);
-      res.status(500).json({ message: "Erro no processamento do texto." });
-  }
+        // Preparar os dados para salvar no banco de dados
+        const payload = {
+            userId,
+            quiz_name: quizData.title, // Salva o título como quiz_name
+            quiz_label: quizData.label, // Salva o label como quiz_label
+            quiz_data: quizData.questions, // Salva apenas o conteúdo de questions
+        };
+
+        // Salvar o quiz no banco de dados usando o quizController
+        const newQuiz = await generateQuiz({ body: payload }, res);
+
+        console.log("Quiz salvo com sucesso!");
+        res.status(200).json({ message: "Quiz gerado e salvo com sucesso!", quiz: newQuiz });
+    } catch (error) {
+        console.error("Erro no processamento do texto:", error);
+        res.status(500).json({ message: "Erro no processamento do texto." });
+    }
 });
 
 
@@ -185,10 +193,14 @@ app.get("/small-history/:userId", getSmallHistory);
 app.get("/quiz-history/:userId", getQuizHistory);
 app.get("/questions.json/:userId", getLastQuiz);
 app.get("/target_questions/:userId/:quizId", getTargetQuestions);
-app.get("/label_summary/:userId", getLabelSummary);
 app.post("/update_quiz_score", updateQuizScore);
-app.put("/rename_label/:userId/:quizId", renameLabel);
 app.delete("/delete_quiz/:userId/:quizId", deleteQuiz);
+
+//Rotas de Label
+app.post("/create_label", createLabel);
+app.put("/rename_label/:userId/:quizId", renameLabel); //Atualiza label do bd QUIZ
+app.put("/update_label/:userId/:label", updateLabel); //Atualiza label do bd LABELS
+app.get("/label_summary/:userId", getLabelSummary);
 
 // Iniciar o servidor
 (async () => {
