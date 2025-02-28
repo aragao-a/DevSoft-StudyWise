@@ -1,5 +1,8 @@
+import { ColorValue } from "react-native"
+
 export type LabelStats = {
-    label: string,
+    color: ColorValue,
+    primaryLabelSet: string,
     quizCount: number,
-    totalScore:number
+    totalScore:number,
 }

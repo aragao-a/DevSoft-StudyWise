@@ -1,7 +1,7 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable, Dimensions, Alert} from "react-native";
+import { StyleSheet, View, Text, Pressable, Alert} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
@@ -16,11 +16,13 @@ import { useFocusEffect } from "expo-router";
 import { windowWidth } from "@/constants/dimensions";
 import RenamePopUP from "@/components/ui/rename-pop-up";
 import DeletePopUP from "@/components/ui/delete-pop-up";
+import { LabelStats } from "@/constants/label-stats-type";
 
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
     const [quizzes, setQuizzes] = useState<Quiz[]>([])
+    const [labelStatsMap, setLabelStatsMap] = useState<Map<string,LabelStats>>(new Map)
     const router = useRouter();
     const handleButtonPress = () => {router.push('/home-stage-2')};
     const handleProfileIconPress = () => {router.push('/profile')};
@@ -31,13 +33,23 @@ export default function Home() {
     useFocusEffect(
         useCallback(() => {
             getUserID()
-                .then(userID => fetch(`${API_URL}/small-history/${Number(userID)}`))
-                .then(response => response.json())
+                .then(userID => Promise.all([
+                    fetch(`${API_URL}/small-history/${Number(userID)}`), 
+                    fetch(`${API_URL}/label_summary/${Number(userID)}`)
+                ]))
+                .then(responses => Promise.all([
+                    responses[0].json(),
+                    responses[1].json()
+                ]))
                 .then(data => {
-                    setQuizzes(data.quizzes);
+                    setQuizzes(data[0].quizzes);
+                    setLabelStatsMap(new Map(data[1].labels.map((stats:({label:string} & LabelStats)) => {
+                        const {label, ...otherStats} = stats;
+                        return [label, otherStats];
+                    })))
                 })
                 .catch(error => {
-                    Alert.alert("Erro", "não foi possível carregar seus quizzes.");
+                    Alert.alert(error.message);
                 });
             }, [quizForEditing, quizForDeletion])
     );
@@ -60,7 +72,7 @@ export default function Home() {
                     SEUS QUIZZES:
                 </Text>
                 {(quizzes.length === 0 &&
-                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult} setQuizForEditing={setQuizForEditing} setQuizForDeletion={setQuizForDeletion}/>)}
+                <NoQuizSign/>) || (<QuizList list={quizzes} labelStatsMap={labelStatsMap} searchResult={searchResult} setQuizForEditing={setQuizForEditing} setQuizForDeletion={setQuizForDeletion}/>)}
             </View>
             <View style={styles.footer}>
                 <CustomButton style={styles.buttonArea} onPress= {handleButtonPress}>
@@ -78,8 +90,8 @@ export default function Home() {
                     </View>
             </View>
         </HomeBackground>
-        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing}></RenamePopUP>
-        <DeletePopUP quizForDeletion={quizForDeletion} setQuizForDeletion={setQuizForDeletion}></DeletePopUP>
+        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing} labelStatsMap={labelStatsMap}></RenamePopUP>
+        <DeletePopUP quizForDeletion={quizForDeletion} setQuizForDeletion={setQuizForDeletion} labelStatsMap={labelStatsMap}></DeletePopUP>
         </>
     )
 }

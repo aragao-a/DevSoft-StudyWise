@@ -5,16 +5,21 @@ import CustomInput from './custom-input';
 import { Quiz } from '@/constants/quiz-small';
 import CustomButton from './custom-button';
 import { getUserID } from '@/utils/authentication';
-import labelStatsMap from '@/constants/labels-stats-map';
 import customLabelColors from '@/constants/custom-label-colors';
 import CorrectIcon2 from '@/assets/svg/correct-icon-2';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CloseIcon from '@/assets/svg/close-icon';
-export default function RenamePopUP({quizForEditing, setQuizForEditing}:{quizForEditing:(Quiz|null), setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
-    const shouldEditColor = (quizForEditing?.label !== undefined) && labelStatsMap.get(quizForEditing.label)?.PrimaryLabelSet === "Miscelâneo";
+import { LabelStats } from '@/constants/label-stats-type';
+
+export default function RenamePopUP({quizForEditing, setQuizForEditing, labelStatsMap}:{
+    quizForEditing:(Quiz|null), 
+    setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>
+    labelStatsMap: Map<string, LabelStats>,
+    }) {
+    const shouldEditColor = (quizForEditing?.label !== undefined) && labelStatsMap.get(quizForEditing.label)?.primaryLabelSet === "Miscelâneo";
     const [labelColorChosenIndex, setLabelColorCHosenIndex] = useState(0);
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
-    const { control, handleSubmit} = useForm();
+    const { control, handleSubmit, formState:{isSubmitSuccessful}, reset} = useForm();
     const handleCancelEditing = () => {setQuizForEditing(null)}
     const handleColorOptionPress = (colorOptionIndex:number) =>{
         setLabelColorCHosenIndex(colorOptionIndex)
@@ -31,13 +36,53 @@ export default function RenamePopUP({quizForEditing, setQuizForEditing}:{quizFor
             });
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message); 
+                throw new Error(`Erro gerando renomeando o assunto. Erro: ${errorData.message}`); 
             }
-            if(quizForEditing?.label) {
-                if(shouldEditColor)
-                    labelStatsMap.set(data.newLabel, {...labelStatsMap.get(quizForEditing.label), color: customLabelColors[labelColorChosenIndex]})
-                else 
-                    labelStatsMap.set(data.newLabel, {...labelStatsMap.get(quizForEditing.label)})
+            const oldLabel = quizForEditing?.label;
+            const newLabel = data.newLabel;
+            if(oldLabel) {
+                const primaryLabelSet = labelStatsMap.get(quizForEditing.label)?.primaryLabelSet || "Miscelâneo"
+                if(labelStatsMap.has(newLabel)){
+                    if(shouldEditColor) {
+                        const color = customLabelColors[labelColorChosenIndex];
+                        const updateLabelResponse = await fetch(`${API_URL}/update_label/${Number(userID)}/${oldLabel}`, {
+                            method: 'PUT',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                newLabel:newLabel, 
+                                color:color, 
+                                primaryLabelSet:primaryLabelSet
+                            }),
+                          });
+                        if (!updateLabelResponse.ok) {
+                            const errorData = await updateLabelResponse.json();
+                            throw new Error(`Erro ao editar o assunto. Erro: ${errorData.message}`); 
+                        }
+                    }
+                }
+                else {
+                    let color:ColorValue = '#5A48ff';
+                    if(shouldEditColor) {
+                        color = customLabelColors[labelColorChosenIndex];
+                    }
+                    else {
+                        const primaryLabel = labelStatsMap.get(quizForEditing.label)?.primaryLabelSet || "Miscelâneo";
+                        color = labelStatsMap.get(primaryLabel)?.color || color
+                    }
+                    const createLabelResponse = await fetch(`${API_URL}/create_label`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({userId:userID, label:newLabel, color:color, primaryLabelSet:primaryLabelSet}),
+                    });
+                    if (!createLabelResponse.ok) {
+                        const errorData = await createLabelResponse.json();
+                        throw new Error(`Erro ao editar o assunto. Erro: ${errorData.message}`); 
+                    }
+                }
             }
             setQuizForEditing(null);
 
@@ -47,6 +92,9 @@ export default function RenamePopUP({quizForEditing, setQuizForEditing}:{quizFor
             }
         }
     }
+    useEffect(() => {
+        reset();
+      }, [isSubmitSuccessful])
     return(
         quizForEditing && (<View style={{position:'absolute', height:windowHeight + (StatusBar.currentHeight || 0), width:windowWidth, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
             <Modal transparent={true} animationType="none" visible={quizForEditing ? true: false} onRequestClose={handleCancelEditing}>
@@ -76,7 +124,7 @@ export default function RenamePopUP({quizForEditing, setQuizForEditing}:{quizFor
                                     maxLength:40,
                                     validate: {
                                         isNotPrimaryLabel: (v) => {return (labelStatsMap.get(v) === undefined || 
-                                            (labelStatsMap.get(quizForEditing.label)?.PrimaryLabelSet) === labelStatsMap.get(v)?.PrimaryLabelSet)}
+                                            (labelStatsMap.get(quizForEditing.label)?.primaryLabelSet) === labelStatsMap.get(v)?.primaryLabelSet)}
                                     }
                                 }
                             }}

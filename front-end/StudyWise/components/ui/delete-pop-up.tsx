@@ -4,7 +4,12 @@ import { Quiz } from '@/constants/quiz-small';
 import CustomButton from './custom-button';
 import { getUserID } from '@/utils/authentication';
 import CloseIcon from '@/assets/svg/close-icon';
-export default function DeletePopUP({quizForDeletion, setQuizForDeletion}:{quizForDeletion:(Quiz|null), setQuizForDeletion:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
+import { LabelStats } from '@/constants/label-stats-type';
+export default function DeletePopUP({quizForDeletion, setQuizForDeletion}:{
+        quizForDeletion:(Quiz|null), 
+        setQuizForDeletion:React.Dispatch<React.SetStateAction<Quiz|null>>
+        labelStatsMap: Map<string, LabelStats>,
+    }) {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const handleCancelDeletion = () => {setQuizForDeletion(null)}
     const handleDeleteQuiz = async () => {

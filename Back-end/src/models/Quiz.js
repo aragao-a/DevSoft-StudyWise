@@ -103,8 +103,8 @@ class Quiz {
                 l.label AS label,
                 l.color AS color,
                 l.primary_label_set AS primaryLabelSet,
-                COUNT(q.id) AS quiz_count,
-                SUM(quiz_score) AS total_score
+                COUNT(q.id) AS quizCount,
+                SUM(quiz_score) AS totalScore
             FROM 
                 labels l
             LEFT JOIN 

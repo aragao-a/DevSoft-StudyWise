@@ -2,28 +2,22 @@ import HomeBackground from "@/components/ui/home-background";
 import { View, StyleSheet, Text, Alert, DimensionValue, Dimensions} from "react-native";
 import { useEffect, useState} from "react";
 import { getUserID } from "@/utils/authentication";
-import labelStatsMap from "@/constants/labels-stats-map";
 import { LabelStats } from "@/constants/label-stats-type";
 import LabelButton from "@/components/ui/label-button";
 import PerformanceIcon from "@/assets/svg/performance-icon";
 import { windowWidth } from "@/constants/dimensions";
 export default function Profile() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
-    const [statsMap, setStatsMap] = useState(new Map);
+    const [labelStatsArray, setLabelStatsArray] = useState<({label:string} & LabelStats)[]>([])
     useEffect(
         () => {getUserID()
             .then(userID => fetch(`${API_URL}/label_summary/${Number(userID)}`))
             .then(response => response.json())
             .then(data => {
-                for(let labelData of data.labelSummary) {
-                    const labelDataStats:LabelStats = labelData;
-                    const previousLabelData = labelStatsMap.get(labelDataStats.label)
-                    labelStatsMap.set(labelData.label, {...previousLabelData, quizCount: labelDataStats?.quizCount, totalScore: labelDataStats?.totalScore})
-                }
-                setStatsMap(labelStatsMap);
+                setLabelStatsArray(data.labels)
                 })
             .catch(error => {
-                Alert.alert("Erro", "não foi possível carregar suas estatísticas.");
+                console.log("Erro carregando as estatísticas do usuário");
             });
         }
     , [])
@@ -33,17 +27,17 @@ export default function Profile() {
                 SEU DESEMPENHO:
             </Text>
             <PerformanceIcon  width={windowWidth * 0.35} height={windowWidth * 0.35} style={{alignSelf:'center'}}/>
-            {[...statsMap.keys()].map((key) => {
-                let quizCount = statsMap.get(key)?.quizCount;
-                let totalScoreNumber = statsMap.get(key)?.totalScore;
-                if(quizCount !== undefined && totalScoreNumber !== undefined){
+            {labelStatsArray.map((stats, index) => {
+                let quizCount = stats?.quizCount;
+                let totalScoreNumber = stats?.totalScore;
+                if(quizCount !== null && totalScoreNumber !== null){
                     let questionsCount = quizCount * 6;
-                    let totalScoreString = statsMap.get(key)?.totalScore?.toString().padStart(questionsCount.toString().length, '0')
+                    let totalScoreString = stats?.totalScore?.toString().padStart(questionsCount.toString().length, '0')
                     let percentage:DimensionValue = `${Number(((totalScoreNumber/questionsCount) * 100).toFixed())}%`
                     return (
-                        <View style={styles.labelContainer} key={key}>
+                        <View style={styles.labelContainer} key={index}>
                             <View style={{flexDirection:'row', gap:4, alignItems:'center'}}>
-                                <LabelButton label={key}/>
+                                <LabelButton label={stats.label} color={stats.color}/>
                                 <Text style={{fontFamily: 'VisbyRoundCF-Bold', fontSize:12}}>- {totalScoreString}/{questionsCount} Questões</Text>
                             </View>
                             <View style={{flexDirection:'row', alignItems:'center', gap:5}}>
@@ -60,9 +54,9 @@ export default function Profile() {
                 quizCount = 0;
                 totalScoreNumber = 0;
                 return(
-                    <View style={styles.labelContainer} key={key}>
+                    <View style={styles.labelContainer} key={index}>
                         <View style={{flexDirection:'row', gap:4, alignItems:'center'}}>
-                            <LabelButton label={key}/>
+                            <LabelButton label={stats.label} color={stats.color}/>
                         </View>
                         <View style={{flexDirection:'row', alignItems:'center', gap:5}}>
                             <View style={{width:'90%', height:27, backgroundColor:'rgba(0, 0, 0, 0.17)', borderRadius:15, overflow:'hidden'}}/>

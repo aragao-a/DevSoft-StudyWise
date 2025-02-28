@@ -1,13 +1,15 @@
-import { View, StyleSheet, ScrollView, Text, Pressable} from "react-native"
+import { View, StyleSheet, ScrollView, Text, Pressable, ColorValue} from "react-native"
 import { Quiz } from "@/constants/quiz-small"
 import { useRouter } from "expo-router"
 import CustomButton from "./custom-button";
 import LabelButton from "./label-button";
 import EditIcon from "@/assets/svg/edit-icon";
 import DeleteIcon from "@/assets/svg/delete-icon";
+import { LabelStats } from "@/constants/label-stats-type";
 
-export default function QuizList({list, searchResult, setQuizForEditing, setQuizForDeletion}: {
-    list: Quiz[], 
+export default function QuizList({list, labelStatsMap, searchResult, setQuizForEditing, setQuizForDeletion}: {
+    list: Quiz[],
+    labelStatsMap: Map<string, LabelStats>,
     searchResult:string, 
     setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>,
     setQuizForDeletion:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
@@ -48,7 +50,7 @@ export default function QuizList({list, searchResult, setQuizForEditing, setQuiz
                             <View style={{flexDirection:'row', alignItems:'center', gap:4, flexWrap:'wrap'}}>
                             <View style={styles.infoContainer}> 
                                 <Text>•</Text> 
-                                <LabelButton label={quiz.label}/>
+                                <LabelButton label={quiz.label} color={labelStatsMap.get(quiz.label)?.color}/>
                                 <Text>|</Text> 
                             </View>
 
