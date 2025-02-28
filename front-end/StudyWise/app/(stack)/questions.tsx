@@ -188,7 +188,7 @@ const currentQuestion = questionsData[currentQuestionIndex];
             <Text style={[styles.questionTitle, { color: blocoColor }]}>
                 PERGUNTA {currentQuestion.id}
             </Text>
-            <View style={{flex:1, justifyContent:'center', alignItems:'center', marginVertical:20}}>
+            <View style={{ justifyContent:'center', alignItems:'center', marginVertical:30}}>
             <View style={{width:'85%', overflow:'visible', maxWidth:600}}>
                 <View style={[styles.blockStyling, {backgroundColor:backgroundBloco3Color, top:10, left:-7,  transform:[{rotate:'-1deg'}]}]}/>
                     <View style={[styles.blockStyling, {backgroundColor:backgroundBloco2Color, top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}]}/>
