@@ -5,7 +5,7 @@ import {useEffect} from 'react';
 import RootBackground from '@/components/ui/root-background';
 import * as SystemUI from 'expo-system-ui';
 import { colorMap } from '@/constants/color-map';
-import { Montserrat_400Regular, Montserrat_600SemiBold, useFonts as useGoogleFonts} from '@expo-google-fonts/montserrat'
+import { Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold, useFonts as useGoogleFonts} from '@expo-google-fonts/montserrat'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -13,7 +13,11 @@ const colors:colorMap = new Map;
 colors.set('/', '#00B7C9')
 colors.set('/sign-in', '#00B7C9')
 colors.set('/sign-up', 'white')
-colors.set('/home', 'white')
+colors.set('/home-stage-1', 'white')
+colors.set('/home-stage-2', 'white')
+colors.set('/questions', 'white')
+colors.set('/results', 'white')
+colors.set('/profile', 'white')
 
 export default function RootLayout() {
   // Começa a navegação somente se as fontes estiverem carregadas
@@ -26,7 +30,7 @@ export default function RootLayout() {
 
   const [loadedGoogleFonts, errorGoogleFonts] = useGoogleFonts({
     Montserrat_400Regular,
-    Montserrat_600SemiBold
+    Montserrat_600SemiBold,
   })
 
   useEffect(() => {
@@ -40,10 +44,10 @@ export default function RootLayout() {
   const pathName = usePathname();
   let color = colors.get(pathName) || null;
   if(color === 'undefined') {
-    color = null;
+    color = 'white';
   }
   useEffect(() => {
-    SystemUI.setBackgroundColorAsync('#ffffff');
+    SystemUI.setBackgroundColorAsync(color);
   }, [color])
 
 
@@ -54,15 +58,15 @@ export default function RootLayout() {
   // stack de navegação
   return (
     <RootBackground>
-    <Stack screenOptions={{
+        <Stack screenOptions={{
       headerShown: false,
       animationTypeForReplace:'push',
       }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="sign-up"/>
-        <Stack.Screen name="home-stage-1" />
-        <Stack.Screen name="home-stage-2" />
-        <Stack.Screen name="profile" />
+        <Stack.Screen name="(stack)/index" />
+        <Stack.Screen name="(stack)/sign-up"/>
+        <Stack.Screen name="(stack)/home-stage-1" />
+        <Stack.Screen name="(stack)/home-stage-2" />
+        <Stack.Screen name="(stack)/profile" />
     </Stack>
     </RootBackground>
   )

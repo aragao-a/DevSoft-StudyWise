@@ -62,6 +62,35 @@ export const validateContent = async (imageBase64, mimeType) => {
     }
 };
 
+export const validateText = async (text) => {
+    try {
+        const prompts = loadPrompts();
+        if (!prompts || !prompts["validate_text"]) {
+            throw new Error("Prompt de validação de texto não encontrado.");
+        }
+
+        const prompt = prompts["validate_text"];
+
+        // Monta o payload com o texto fornecido
+        const result = await model.generateContent([
+            prompt,
+            {
+                text: text,
+            },
+        ]);
+
+        if (result && result.response) {
+            const validationResult = result.response.text().toLowerCase();
+            return validationResult.includes("true");
+        } else {
+            throw new Error("Resposta inválida da API.");
+        }
+    } catch (error) {
+        console.error("Erro na validação do texto:", error.message);
+        return false;
+    }
+};
+
 // Função para validar conteúdo com base em um prompt específico
 export const generateQuestions = async (imageBase64, mimeType) => {
   try {

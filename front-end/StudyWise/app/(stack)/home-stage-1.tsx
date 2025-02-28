@@ -1,7 +1,7 @@
 import HomeBackground from "@/components/ui/home-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable, Dimensions, Alert} from "react-native";
+import { StyleSheet, View, Text, Pressable, Alert} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
 import ProfileIcon from "@/assets/svg/profile-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
@@ -13,35 +13,50 @@ import SearchIcon from "@/assets/svg/search-icon";
 import CustomButton from "@/components/ui/custom-button";
 import { getUserID } from "@/utils/authentication";
 import { useFocusEffect } from "expo-router";
-
-
-const windowWidth = Dimensions.get('window').width;
+import { windowWidth } from "@/constants/dimensions";
+import RenamePopUP from "@/components/ui/rename-pop-up";
+import DeletePopUP from "@/components/ui/delete-pop-up";
+import { LabelStats } from "@/constants/label-stats-type";
 
 export default function Home() {
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
     const [quizzes, setQuizzes] = useState<Quiz[]>([])
+    const [labelStatsMap, setLabelStatsMap] = useState<Map<string,LabelStats>>(new Map)
     const router = useRouter();
     const handleButtonPress = () => {router.push('/home-stage-2')};
     const handleProfileIconPress = () => {router.push('/profile')};
     const {control} = useForm();
+    const [quizForEditing, setQuizForEditing] = useState<Quiz|null>(null);
+    const [quizForDeletion, setQuizForDeletion] = useState<Quiz|null>(null);
 
     useFocusEffect(
         useCallback(() => {
             getUserID()
-                .then(userID => fetch(`${API_URL}/small-history/${Number(userID)}`))
-                .then(response => response.json())
+                .then(userID => Promise.all([
+                    fetch(`${API_URL}/small-history/${Number(userID)}`), 
+                    fetch(`${API_URL}/label_summary/${Number(userID)}`)
+                ]))
+                .then(responses => Promise.all([
+                    responses[0].json(),
+                    responses[1].json()
+                ]))
                 .then(data => {
-                    setQuizzes(data.quizzes);
+                    setQuizzes(data[0].quizzes);
+                    setLabelStatsMap(new Map(data[1].labels.map((stats:({label:string} & LabelStats)) => {
+                        const {label, ...otherStats} = stats;
+                        return [label, otherStats];
+                    })))
                 })
                 .catch(error => {
-                    Alert.alert("Erro", "não foi possível carregar seus quizzes.");
+                    Alert.alert(error.message);
                 });
-            }, [])
+            }, [quizForEditing, quizForDeletion])
     );
 
     return (
-        <HomeBackground>
+        <>
+       <HomeBackground>
             <View style={{marginTop: 35}}>
                 <SearchBar 
                     animatedStyle={{height:40}}
@@ -52,12 +67,12 @@ export default function Home() {
                     }}
                 />
             </View>
-            <View style={quizzes.length === 0 ?styles.container: [styles.container, {justifyContent: 'flex-start'}]}>
+            <View style={quizzes.length === 0 ?styles.quizContainer: [styles.quizContainer, {justifyContent: 'flex-start'}]}>
                 <Text  style={styles.baseText}>
                     SEUS QUIZZES:
                 </Text>
                 {(quizzes.length === 0 &&
-                <NoQuizSign/>) || (<QuizList list={quizzes} searchResult={searchResult}/>)}
+                <NoQuizSign/>) || (<QuizList list={quizzes} labelStatsMap={labelStatsMap} searchResult={searchResult} setQuizForEditing={setQuizForEditing} setQuizForDeletion={setQuizForDeletion}/>)}
             </View>
             <View style={styles.footer}>
                 <CustomButton style={styles.buttonArea} onPress= {handleButtonPress}>
@@ -68,17 +83,22 @@ export default function Home() {
                     </View>
                     <PlusIcon/>
                 </CustomButton>
-                <Pressable onPress= {handleProfileIconPress} >
-                    <ProfileIcon style={styles.profileIcon}/>
-                </Pressable>
+                    <View style={styles.profileIcon}>
+                        <Pressable onPress= {handleProfileIconPress} >
+                            <ProfileIcon/>
+                        </Pressable>
+                    </View>
             </View>
         </HomeBackground>
+        <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing} labelStatsMap={labelStatsMap}></RenamePopUP>
+        <DeletePopUP quizForDeletion={quizForDeletion} setQuizForDeletion={setQuizForDeletion} labelStatsMap={labelStatsMap}></DeletePopUP>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        height:windowWidth * 1, 
+    quizContainer: {
+        height:windowWidth, 
         justifyContent: 'center',
         gap:'5%',
         backgroundColor: 'white',
@@ -113,7 +133,7 @@ const styles = StyleSheet.create({
     footer: {
         height: windowWidth * 0.5, 
         alignItems:'stretch', 
-        justifyContent:'space-around',
+        justifyContent:'flex-end',
         paddingTop:'5%'
     },
     profileIcon:{

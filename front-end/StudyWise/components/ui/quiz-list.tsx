@@ -1,27 +1,29 @@
-import { View, StyleSheet, ScrollView, Text, Pressable} from "react-native"
+import { View, StyleSheet, ScrollView, Text, Pressable, ColorValue} from "react-native"
 import { Quiz } from "@/constants/quiz-small"
 import { useRouter } from "expo-router"
 import CustomButton from "./custom-button";
-export default function QuizList({list, searchResult}: {list: Quiz[], searchResult:string}) {
+import LabelButton from "./label-button";
+import EditIcon from "@/assets/svg/edit-icon";
+import DeleteIcon from "@/assets/svg/delete-icon";
+import { LabelStats } from "@/constants/label-stats-type";
+
+export default function QuizList({list, labelStatsMap, searchResult, setQuizForEditing, setQuizForDeletion}: {
+    list: Quiz[],
+    labelStatsMap: Map<string, LabelStats>,
+    searchResult:string, 
+    setQuizForEditing:React.Dispatch<React.SetStateAction<Quiz|null>>,
+    setQuizForDeletion:React.Dispatch<React.SetStateAction<Quiz|null>>}) {
     const router = useRouter();
     const handleButtonPress = (quizId: string) => {
         router.push({ pathname: 'questions', params: {quizId } });
     };
-    const getLabelColor = (label: string) => {
-        switch (label) {
-            case 'História':
-                return '#97482d'; 
-            case 'Biologia':
-                return '#009A56'; 
-            case 'Física':
-                return '#FF4770'; 
-            case 'Química':
-                return '#FF972C'; 
-            default:
-                return '#5A48ff'; // Default color
-        }
-    };
-    const quizCount = list.length ;
+    const quizCount = list.length;
+    const handleEditIconPress = (quiz:Quiz) => {
+        setQuizForEditing(quiz);
+    }
+    const handleDeleteIconPress = (quiz:Quiz) => {
+        setQuizForDeletion(quiz);
+    }
     return (
         <ScrollView 
             nestedScrollEnabled={true}
@@ -41,26 +43,34 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
                                 Quiz {quizCount - index}:
                             </Text>
 
-                            <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {quiz.title}</Text>
+                            <Text style={{ fontFamily: 'Montserrat_400Regular'}}> {quiz.title}</Text>
                         </Text>
                             
-                        <Text style={{ paddingLeft: 10 }}>
+                        <View style={{ paddingHorizontal: 10, flexDirection:'row', justifyContent:'space-between'}}>
+                            <View style={{flexDirection:'row', alignItems:'center', gap:4, flexWrap:'wrap'}}>
+                            <View style={styles.infoContainer}> 
+                                <Text>•</Text> 
+                                <LabelButton label={quiz.label} color={labelStatsMap.get(quiz.label)?.color}/>
+                                <Text>|</Text> 
+                            </View>
 
-                            <Text style={styles.infoContainer}>• <View style={[styles.labelContainer, { backgroundColor: getLabelColor(quiz.label)}]}>
-
-                                    <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 14, color: 'white'}}>{quiz.label}</Text>
-
-                            </View> | </Text>
-
-                            <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 14}}>
+                            <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 14, letterSpacing:1}}>
                                 {new Date(quiz.date).toLocaleDateString("pt-BR", {
                                     day: "2-digit",
                                     month: "2-digit",
+                                    year: "2-digit"
                                 })}
                             </Text>
-
-                        </Text>
-
+                            </View>
+                        </View>
+                        <View style={{alignSelf:'flex-end', position:'absolute', flexDirection:'row'}}>
+                            <Pressable onPress={() => {handleEditIconPress(quiz)}} style={{paddingVertical:'20%', paddingHorizontal:'1%'}}>
+                                <EditIcon/>
+                            </Pressable>
+                            <Pressable onPress={() => {handleDeleteIconPress(quiz)}} style={{paddingVertical:'20%', paddingHorizontal:'1%'}}>
+                                <DeleteIcon/>
+                            </Pressable>
+                        </View>
                     </CustomButton>
                 )
             })}
@@ -71,7 +81,7 @@ export default function QuizList({list, searchResult}: {list: Quiz[], searchResu
 
 const styles = StyleSheet.create({
     infoContainer: {
-        
+        gap:6,
         flexDirection: 'row',
         alignItems: 'center', // Vertically align items
         justifyContent: 'center',
@@ -89,8 +99,8 @@ const styles = StyleSheet.create({
         borderRadius:20
     },
     labelContainer: {
-        transform: [{translateY: 7.5}], 
-        borderRadius: 10, 
+        justifyContent:'center',
+        borderRadius: 10,
         paddingHorizontal: 12, 
         paddingVertical: 4, 
         
@@ -107,9 +117,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingHorizontal:'4%',
         paddingVertical:7,
-        paddingBottom: 12
+        paddingBottom: 12,
+        gap:5
     },
     ButtonText: {
+        paddingRight:'10%',
         flexWrap: 'wrap',
         fontSize: 15,
         fontFamily: 'Montserrat_400Regular',
