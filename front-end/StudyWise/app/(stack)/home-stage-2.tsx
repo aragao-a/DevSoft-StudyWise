@@ -1,8 +1,8 @@
-import HomeBackground from "@/components/ui/home-background";
+import GeneralBackground from "@/components/ui/general-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
 import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, Alert, Dimensions} from "react-native";
-import ProfileIcon from "@/assets/svg/profile-icon";
+import PerformanceIcon from "@/assets/svg/performance-icon";
 import { useForm } from "react-hook-form";
 import GeminiLogo from "@/assets/svg/gemini-logo";
 import React, { useState, useEffect, useRef } from "react";
@@ -14,7 +14,9 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-na
 import CustomButton from "@/components/ui/custom-button";
 import { getUserID } from "@/utils/authentication";
 import { windowHeight, windowWidth } from "@/constants/dimensions";
+
 export default function Home() {
+
     const [hasInput, setHasInput] = useState(false);
     const [selectedFile, setSelectedFile] = useState<DocumentPicker.DocumentPickerAsset | null>(null);
     const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
@@ -22,7 +24,7 @@ export default function Home() {
     const router = useRouter();
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-    const pickFile = async () => {
+    const pickFile = async () => { // Lógica de anexo de documentos a partir da Biblioteca DocumentPicker
         try {
             const result = await DocumentPicker.getDocumentAsync({
                 type: '*/*'
@@ -44,7 +46,8 @@ export default function Home() {
         }
     };
 
-    const handleGenerateQuiz = async () => {
+    const handleGenerateQuiz = async () => { // Lógica para geração confirmada
+
         if (!textInput && !selectedFile) {
             Alert.alert("Erro", "Nenhum texto ou arquivo enviado.");
             return;
@@ -57,6 +60,7 @@ export default function Home() {
         try {
             let response;
             if (textInput) {
+
                 // Envia o texto para a rota /text-quiz
                 response = await fetch(`${API_URL}/text-quiz`, {
                     method: "POST",
@@ -66,6 +70,7 @@ export default function Home() {
                     body: JSON.stringify({ text: textInput, userId: userID }),
                 });
             } else if (selectedFile) {
+
                 // Envia o arquivo para a rota /upload (mantido para compatibilidade)
                 const formData = new FormData();
                 const file = {
@@ -73,8 +78,10 @@ export default function Home() {
                     name: selectedFile.name,
                     type: selectedFile.mimeType || "application/octet-stream",
                 };
+
                 formData.append("file", file as any);
                 formData.append("userId", userID.toString());
+
                 response = await fetch(`${API_URL}/upload`, {
                     method: "POST",
                     body: formData,
@@ -96,6 +103,7 @@ export default function Home() {
             } else {
                 Alert.alert("Erro", result.message || "Erro ao gerar o quiz.");
             }
+
         } catch (error) {
             console.log("Erro na requisição:", error);
             Alert.alert("Erro", "Erro na conexão com o servidor. Tente novamente.");
@@ -104,7 +112,7 @@ export default function Home() {
         }
     };
 
-    const handleProfileIconPress = () => {router.push('/profile')};
+    const handlePerformanceIconPress = () => {router.push('/profile')};
     const { control } = useForm();
 
     const [hasInputFocus, setHasInputFocus] = useState(false);
@@ -142,19 +150,28 @@ export default function Home() {
     }, []);
 
     return (
-        <HomeBackground>
+        <GeneralBackground>
+
             <View style={styles.container}>
+
                 <View style={styles.group}>
+
                     <View style={styles.inputTextArea}>
+
+                        {/* Barra de procura */}
                         <Text style={styles.baseText}>
                             Descreva seu quiz:
                         </Text>
+                    
                         <Pressable onPressIn={handleTouchInput}>
+
                             <SearchBar
+
                                 ref={inputRef}
                                 animatedStyle={animatedStyleInput}
                                 layoutProps={{ children: <ContainerIcon /> }}
                                 formProps={{ name: 'pesquisa', control }}
+
                                 inputProps={{
                                     onChangeText: (text) => {
                                         setTextInput(text); // Atualiza o estado do texto
@@ -170,52 +187,68 @@ export default function Home() {
                                     readOnly: selectedFile ? true : false,
                                     multiline: true,
                                 }} />
+                                
                         </Pressable>
+
+                        {/* API Ad */}
                         {<View>
                             <Text style={styles.smallerText}>
                                 Powered by:
                             </Text>
                             <GeminiLogo />
                         </View>}
+
                     </View>
+
                     <View style={{justifyContent:'center', minHeight:50}}>
                         <Text style={styles.baseText}>
                             Ou:
                         </Text>
                     </View>
+
                 </View>
+
                 <View style={styles.footer}>
+
                     <View style={styles.buttonsArea}>
+                        
+                        {/* Componente importado de anexo de arquivo */}
                         <View style={styles.addFileArea}>
                             {selectedFile === null ?
                                 (<InputFileArea handleAddButtonPress={handleAddButtonPress} hasInput={hasInput} />)
                                 : <SelectedFile fileName={selectedFile.name} cancelFunction={setSelectedFile} />
                             }
                         </View>
+
+                        {/* Botão pra gerar quiz */}
                         <CustomButton
                             onPress={handleGenerateQuiz} // Chama a nova função
                             disabled={isLoading || (!hasInput && !selectedFile)} // Desabilita o botão durante o carregamento
                             style={(hasInput || selectedFile)
                                 ? styles.createQuizButton : [styles.createQuizButton, { backgroundColor: 'rgba(0, 183, 201, 0.2)' }]}
                         >
+
+                            {/* Alternância de botão Gerar/Gerando */}
                             <Text style={styles.ButtonText}>
                                 {isLoading ? "Gerando Quiz..." : "Gerar Quiz!"}
                             </Text>
                         </CustomButton>
                     </View>
-                    <Pressable onPress={handleProfileIconPress} >
-                        <ProfileIcon style={styles.profileIcon} />
+
+                    {/* Ícone da tela de Desempenho */} 
+                    <Pressable onPress={handlePerformanceIconPress} >
+                        <PerformanceIcon style={styles.PerformanceIcon} />
                     </Pressable>
                 </View>
             </View>
-        </HomeBackground>
+        </GeneralBackground>
     );
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        minHeight:windowHeight - (0.25 * windowWidth),
+        minHeight:windowHeight - (0.60 * windowWidth),
         justifyContent:'flex-end',
     },
     group: {
@@ -272,7 +305,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'stretch',
     },
-    profileIcon: {
+    PerformanceIcon: {
         alignSelf: 'flex-end',
         marginRight: 20,
         marginBottom: 10,

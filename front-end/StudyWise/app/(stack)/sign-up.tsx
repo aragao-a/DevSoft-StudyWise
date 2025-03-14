@@ -1,4 +1,4 @@
-import HomeBackground from "@/components/ui/home-background";
+import GeneralBackground from "@/components/ui/general-background";
 import { View, Text, TextInput, StyleSheet, Pressable, Dimensions, Alert} from "react-native";
 import { SignUpField } from "@/components/ui/sign-up-field";
 import { useRouter} from "expo-router";
@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { useRef} from "react";
 
 
-export default function Signup() {
+export default function Signup() { // Lógica de cadastro
+
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
     const {control, handleSubmit, formState: { errors }} = useForm();
@@ -41,13 +42,23 @@ export default function Signup() {
 
 
     return (
-        <HomeBackground>
+
+        <GeneralBackground>
+
             <View style={styles.body}>
+
+                {/* Tela de Cadastro */}
                 <Text style={styles.baseText}> Cadastro</Text>
+                
+
                 <View style={styles.signUpForm}>
+
+                    {/* Campo de Nome */}
                     <SignUpField
+
                         error={errors.username?.message?.toString()}
                         groupProps={{}}
+
                         formProps={{
                             name:'username', 
                             control,
@@ -55,16 +66,21 @@ export default function Signup() {
                                 required: 'Nome é obrigatório',
                             }}} 
                         fieldDescription='Nome' 
+
                         inputProps={{
                             placeholder:"Digite seu nome completo",
                             onSubmitEditing: () => emailRef.current?.focus(),
                             submitBehavior: 'submit',
                         }}
                     />
+
+                    {/* Campo de e-mail */}
                     <SignUpField
+
                         error={errors.email?.message?.toString()}
                         ref={emailRef}
                         groupProps={{}}
+
                         formProps={{
                             name:'email', 
                             control,
@@ -75,17 +91,22 @@ export default function Signup() {
                                     message: 'E-mail inválido'
                                 }
                             }}} 
-                        fieldDescription='E-mail' 
+                        fieldDescription='E-mail'
+
                         inputProps={{
                             placeholder:"Digite seu E-mail",
                             onSubmitEditing: () => passwordRef.current?.focus(),
                             submitBehavior: 'submit',
                         }}
                     />
+
+                    {/* Campo de senha */}
                     <SignUpField
+
                         error={errors.password?.message?.toString()}
                         ref={passwordRef}
                         groupProps={{}}
+
                         formProps={{
                             name:'password', 
                             control,
@@ -97,19 +118,24 @@ export default function Signup() {
                                 }
                             }}} 
                         fieldDescription='Senha' 
+
                         inputProps={{
                             secureTextEntry: true,
                             placeholder:"Digite uma senha de 8 dígitos",
                         }}
                     />
+
+                    {/* Botão de Submit */}
                     <Pressable style={styles.signUpButton} onPress={handleSubmit(handleSignUp)}>
+
                         <Text style={styles.ButtonText}>
                             Cadastrar-se
                         </Text>
+                        
                     </Pressable>
                 </View>
             </View>
-        </HomeBackground>
+        </GeneralBackground>
     )
 }
 

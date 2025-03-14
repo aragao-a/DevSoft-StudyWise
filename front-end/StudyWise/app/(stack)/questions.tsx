@@ -2,14 +2,15 @@ import { StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useSharedValue, withTiming, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
-import HomeBackground from "@/components/ui/home-background";
 import CustomButton from "@/components/ui/custom-button";
 import { useRouter } from "expo-router";
 import { getUserID } from "@/utils/authentication";
+import GeneralBackground from "@/components/ui/general-background";
 
-const colorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
+const cardsColorPalette = ["#FF4770", "#009A56", "#FF972C", "#51A5BF"];
 
 export default function Questions() {
+
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const router = useRouter();
     const { quizId } = useLocalSearchParams();
@@ -22,8 +23,11 @@ export default function Questions() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
         const fetchData = async () => {
+
             try {
+
                 const userID = await getUserID(); // Obtém o userID
 
                 let apiUrl;
@@ -103,23 +107,31 @@ export default function Questions() {
     const progresses = [progress1, progress2, progress3, progress4];
 
     const handleOptionPress = async (index: number) => {
+
         if (!alreadySelected) {
+
             const correctAnswer = questionsData[currentQuestionIndex].correct_answer;
             setCorrectAnswer(correctAnswer);
+
             progresses[index].value = 1;
             progresses[correctAnswer].value = 1;
+
             setAlreadySelected(true);
+
             setSelectedAnswers(prevAnswers => {
                 const updatedAnswers = [...prevAnswers, index];
     
                 setTimeout(async () => {
                     if (currentQuestionIndex < questionsData.length - 1) {
+
                         setCurrentQuestionIndex(currentQuestionIndex + 1);
                         progresses[index].value = 0;
                         progresses[correctAnswer].value = 0;
                         setCorrectAnswer(-1);
                         setAlreadySelected(false);
+
                     } else {
+
                         // Calcula a quantidade de respostas corretas
                         const correctAnswers = updatedAnswers.reduce((acc, answer, idx) => {
                             return acc + (answer === questionsData[idx].correct_answer ? 1 : 0);
@@ -157,19 +169,21 @@ export default function Questions() {
     };
 
     const getColorForIndex = (baseIndex: number, offset: number) => {
-        return colorPalette[(baseIndex + offset) % colorPalette.length];
+        return cardsColorPalette[(baseIndex + offset) % cardsColorPalette.length];
     };
 
-    const blocoColor = getColorForIndex(currentQuestionIndex, 0);
-    const backgroundBloco1Color = getColorForIndex(currentQuestionIndex, 1);
-    const backgroundBloco2Color = getColorForIndex(currentQuestionIndex, 2);
-    const backgroundBloco3Color = getColorForIndex(currentQuestionIndex, 3);
+    const mainCardColor = getColorForIndex(currentQuestionIndex, 0);
+    const secondCardColor = getColorForIndex(currentQuestionIndex, 1);
+    const thirdCardColor = getColorForIndex(currentQuestionIndex, 2);
+    const fourthCardColor = getColorForIndex(currentQuestionIndex, 3);
 
     if (loading) {
         return (
+
             <View style={styles.loadingContainer}>
                 <Text>Loading...</Text>
             </View>
+            
         );
     }
 
@@ -177,76 +191,115 @@ const currentQuestion = questionsData[currentQuestionIndex];
   
     if (!questionsData.length) {
         return (
+
             <View style={styles.loadingContainer}>
                 <Text>No questions available.</Text>
             </View>
-        );
+
+        ); 
     }
   
-    return (
-        <HomeBackground>
-            <Text style={[styles.questionTitle, { color: blocoColor }]}>
+    return (  
+        <GeneralBackground> 
+
+            {/* Headliner de pergunta */}
+            <Text style={[styles.questionTitle, { color: mainCardColor }]}> 
                 PERGUNTA {currentQuestion.id}
-            </Text>
-            <View style={{ justifyContent:'center', alignItems:'center', marginVertical:30}}>
-            <View style={{width:'85%', overflow:'visible', maxWidth:600}}>
-                <View style={[styles.blockStyling, {backgroundColor:backgroundBloco3Color, top:10, left:-7,  transform:[{rotate:'-1deg'}]}]}/>
-                    <View style={[styles.blockStyling, {backgroundColor:backgroundBloco2Color, top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}]}/>
-                    <View style={[styles.blockStyling, {backgroundColor:backgroundBloco1Color, top:3, right:-5,  transform:[{rotate:'1deg'}]}]}/>
-                    <View style={{backgroundColor:blocoColor, borderRadius:20, paddingVertical:5, shadowColor: "#000", shadowOffset: {width: 0, height: 6,}, shadowOpacity: 0.20, shadowRadius: 2.34, elevation: 5,}}>
+            </Text>  
+            
+            <View style={{ justifyContent:'center', alignItems:'center', marginVertical:30}}> 
+
+                <View style={{width:'85%', overflow:'visible', maxWidth:600}}> 
+
+                    {/* Cards secundários */}
+                    <View style={[styles.blockStyling, {backgroundColor:fourthCardColor, top:10, left:-7,  transform:[{rotate:'-1deg'}]}]}/>
+                    <View style={[styles.blockStyling, {backgroundColor:thirdCardColor, top:3, left:-4,  transform:[{rotate:'-1.7deg'}]}]}/>
+                    <View style={[styles.blockStyling, {backgroundColor:secondCardColor, top:3, right:-5,  transform:[{rotate:'1deg'}]}]}/>
+
+                    {/* Card principal */}
+                    <View style={[styles.mainBlockStyling, {backgroundColor: mainCardColor}]}>
+
+                        {/* N° do quiz e questão */}
                         <View style={[styles.questionContainer]}>
+
                             <View style={styles.questNum}>
+
                                 <View style={styles.numTitle}>
-                                    <Text style={[styles.quizTitle, { color: blocoColor }]}>
+                                    <Text style={[styles.quizTitle, { color: mainCardColor }]}>
                                         Quiz {currentQuestion.id}
                                     </Text>
                                 </View>
+
                                 <Text style={styles.rightCardHeader}>
-                                    {formatNumber(currentQuestion.id)}/
-                                    
-                                    {formatNumber(questionsData.length)}
+                                    {formatNumber(currentQuestion.id)}/{formatNumber(questionsData.length)}
                                 </Text>
+
                             </View>
+
+                            {/* Caixa de pergunta */}
                             <View style={styles.caixaPergunta}>
-                                <View style={[styles.bolaNum, { backgroundColor: blocoColor }]}>
+
+                                <View style={[styles.bolaNum, { backgroundColor: mainCardColor }]}>
                                     <Text style={styles.bolaNumTexto}>
                                         {formatNumber(currentQuestion.id)}
                                     </Text>
                                 </View>
+
                                 <Text style={styles.pergunta}>
                                     {currentQuestion.question}
                                 </Text>
+
                             </View>
-                                <View style={{gap: 20, marginTop:35}}>
+
+                            {/* Alternativas */}
+                            <View style={{gap: 20, marginTop:35}}>
+
                                 {currentQuestion.options.map((option: string, index: number) => (
+
                                     <CustomButton
+
                                         key={index}
                                         style={[
                                             styles.alternativasSpace, animatedStyles[index]
                                         ]}
-                                        onPress={() => handleOptionPress(index)}>   
+                                        onPress={() => handleOptionPress(index)}> 
+
                                         <View style={{paddingLeft: '5%'}}>
                                             <Text style={{fontFamily: 'VisbyRoundCF-Bold'}}>
                                                 {String.fromCharCode(index + 65)})
                                             </Text>
                                         </View>
+                                        
                                         <View style={{flex:1}}>
-                                        <Text style={styles.alternativasText}>
-                                            {option}
-                                        </Text>
+                                            <Text style={styles.alternativasText}>{option}</Text>
                                         </View>
+                                        
                                     </CustomButton>
+
                                 ))}
+
                             </View>
                         </View>
                     </View>
                 </View>
             </View>
-        </HomeBackground>
+        </GeneralBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    mainBlockStyling: {
+        borderRadius:20, 
+        paddingVertical:5, 
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 2.34,
+        elevation: 5,
+    },
     blockStyling: {
         borderRadius:20, 
         height:'100%', 

@@ -18,14 +18,20 @@ export default function Results() {
     };
 
     return (
+
         <ResultsBackground>
+
+            {/* Título do Resultado do Quiz */}
             <View style={styles.QuizTitle} >
                 <Text style={styles.resultText}>DESEMPENHO</Text>
                 <Text style={styles.quizNumberText}>Quiz 1</Text>
             </View>
 
+            {/* Map que categoriza as questões */}
             <View>
+
                 {selectedAnswers.map((answer: number, index: number) => {
+
                     const isCorrect = answer === correctAnswersArray[index];
                     const boxColor = colorPalette[index % colorPalette.length]; // Alterna cores
                     const ballColor = colorPalette[index % colorPalette.length]; // Cor da bola
@@ -35,26 +41,36 @@ export default function Results() {
                         : Wrong
 
                     return (
-                        <View 
+                        
+                        <View // Caixa de Correto/Errado por questão
+
                             key={index} 
                             style={[styles.questionContainer, { backgroundColor: boxColor }]}>
                             
                             <View style= {styles.questionHeader}>
+
+                                {/* Número da questão */}
                                 <View style={[styles.ballNum]}> 
                                     <Text style={[styles.ballNumText, { color: ballColor }]}>{formatNumber(index + 1)}</Text>
                                 </View>
+
+                                {/* Espaço da alternativa correta */}
                                 <Text style={styles.questionText}>Alternativa correta: {String.fromCharCode(65 + correctAnswer)}</Text>
+
                             </View>
                         
-                            
-                            
+                            {/* Trecho de texto de Validação/Explicação */} 
                             <View style= {styles.validationBox}>
+
                                 <Text style={styles.validationText}>
                                     {validationsArray[index]}
                                 </Text>
+
                             </View>
                             
+                            {/* Ícone de Certo/Errado */}
                             {isCorrect ? <Correct style={styles.icon} /> : <Wrong style={styles.icon} />}
+                            
                         </View>
                     );
                 })}

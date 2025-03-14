@@ -1,9 +1,9 @@
-import HomeBackground from "@/components/ui/home-background";
+import GeneralBackground from "@/components/ui/general-background";
 import SearchBar from "@/components/ui/search-bar";
 import { useRouter } from "expo-router";
 import { StyleSheet, View, Text, Pressable, Alert} from "react-native";
 import NoQuizSign from "@/components/ui/no-quiz-sign";
-import ProfileIcon from "@/assets/svg/profile-icon";
+import PerformanceIcon from "@/assets/svg/performance-icon";
 import PlusIcon from "@/assets/svg/plus-icon";
 import { useForm } from "react-hook-form";
 import { useState, useCallback } from "react";
@@ -19,18 +19,19 @@ import DeletePopUP from "@/components/ui/delete-pop-up";
 import { LabelStats } from "@/constants/label-stats-type";
 
 export default function Home() {
+
     const API_URL = process.env.EXPO_PUBLIC_API_URL;
     const [searchResult, setSearchResult] = useState('')
     const [quizzes, setQuizzes] = useState<Quiz[]>([])
     const [labelStatsMap, setLabelStatsMap] = useState<Map<string,LabelStats>>(new Map)
     const router = useRouter();
     const handleButtonPress = () => {router.push('/home-stage-2')};
-    const handleProfileIconPress = () => {router.push('/profile')};
+    const handlePerformanceIconPress = () => {router.push('/performance')};
     const {control} = useForm();
     const [quizForEditing, setQuizForEditing] = useState<Quiz|null>(null);
     const [quizForDeletion, setQuizForDeletion] = useState<Quiz|null>(null);
 
-    useFocusEffect(
+    useFocusEffect( // Obtendo informações do usuário
         useCallback(() => {
             getUserID()
                 .then(userID => Promise.all([
@@ -56,7 +57,9 @@ export default function Home() {
 
     return (
         <>
-       <HomeBackground>
+       <GeneralBackground>
+
+            {/* Barra de pesquisa*/}
             <View style={{marginTop: 35}}>
                 <SearchBar 
                     animatedStyle={{height:40}}
@@ -65,31 +68,54 @@ export default function Home() {
                     inputProps={{
                         onChangeText: (text) => {setSearchResult(text)},readOnly: quizzes.length === 0 ? true: false
                     }}
-                />
+                /> 
             </View>
+
+            {/* Caixa de Quizzes */}
             <View style={quizzes.length === 0 ?styles.quizContainer: [styles.quizContainer, {justifyContent: 'flex-start'}]}>
+
                 <Text  style={styles.baseText}>
                     SEUS QUIZZES:
                 </Text>
-                {(quizzes.length === 0 &&
-                <NoQuizSign/>) || (<QuizList list={quizzes} labelStatsMap={labelStatsMap} searchResult={searchResult} setQuizForEditing={setQuizForEditing} setQuizForDeletion={setQuizForDeletion}/>)}
+
+                {/* Lista de Quizes (componente/ui) */}
+                {(quizzes.length === 0 && <NoQuizSign/>) || (
+                    <QuizList list={quizzes} 
+                    labelStatsMap={labelStatsMap} 
+                    searchResult={searchResult} 
+                    setQuizForEditing={setQuizForEditing} 
+                    setQuizForDeletion={setQuizForDeletion}/>)}
+
             </View>
+
+            {/* Footer */}
             <View style={styles.footer}>
+
+                {/* Botão de Novo quiz e ícone de + */}
                 <CustomButton style={styles.buttonArea} onPress= {handleButtonPress}>
+
                     <View style={styles.createQuizButton}>
                         <Text style={styles.ButtonText}>
                             Novo Quiz!
                         </Text>
                     </View>
+
                     <PlusIcon/>
+
                 </CustomButton>
-                    <View style={styles.profileIcon}>
-                        <Pressable onPress= {handleProfileIconPress} >
-                            <ProfileIcon/>
-                        </Pressable>
-                    </View>
+
+                {/* ícone pra a tela de Desempenho */}
+                <View style={styles.performanceIcon}>
+                    <Pressable onPress= {handlePerformanceIconPress} >
+                        <PerformanceIcon/>
+                    </Pressable>
+                </View>
+
             </View>
-        </HomeBackground>
+
+        </GeneralBackground>
+
+        {/* Ícone de editar e apagar Quiz */}
         <RenamePopUP quizForEditing={quizForEditing} setQuizForEditing={setQuizForEditing} labelStatsMap={labelStatsMap}></RenamePopUP>
         <DeletePopUP quizForDeletion={quizForDeletion} setQuizForDeletion={setQuizForDeletion} labelStatsMap={labelStatsMap}></DeletePopUP>
         </>
@@ -136,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent:'flex-end',
         paddingTop:'5%'
     },
-    profileIcon:{
+    performanceIcon:{
         alignSelf:'flex-end', 
         marginRight:20, 
         marginBottom:10
