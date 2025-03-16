@@ -27,7 +27,7 @@ const USE_LOCALTUNNEL = process.env.USE_LOCALTUNNEL === 'true' || false ;
 
 // Função para atualizar o .env do frontend
 const updateFrontendEnv = (tunnelUrl) => {
-  const frontendEnvPath = path.join(__dirname, '../front-end/StudyWise/.env');
+  const frontendEnvPath = path.join(__dirname, '../Front-end/.env');
   const envContent = `EXPO_PUBLIC_API_URL=${tunnelUrl}`;
 
   fs.writeFileSync(frontendEnvPath, envContent);
