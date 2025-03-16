@@ -4,6 +4,7 @@ import cors from "cors";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import multer from "multer";
+import * as dotenv from "dotenv";
 import { validateContent, validateText, generateQuestions, textBasedQuiz } from "./src/api/aiIntegration.js";
 import { register, login } from "./src/api/authController.js";
 import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory, 
@@ -11,6 +12,7 @@ import { generateQuiz, getQuizHistory, getLastQuiz, getSmallHistory,
 import { dirname } from 'path';
 import localtunnel from 'localtunnel'
 
+dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
@@ -20,12 +22,12 @@ app.use(express.json()); // Para processar JSON no request body
 
 const PORT = process.env.PORT || 5000;
 const UPLOADS_DIR = path.join(__dirname, "uploads");
-const QUESTIONS_FILE = path.join(__dirname, "questions.json");
+const USE_LOCALTUNNEL = process.env.USE_LOCALTUNNEL === 'true' || false ;
 
 
 // Função para atualizar o .env do frontend
 const updateFrontendEnv = (tunnelUrl) => {
-  const frontendEnvPath = path.join(__dirname, '../front-end/StudyWise/.env');
+  const frontendEnvPath = path.join(__dirname, '../Front-end/.env');
   const envContent = `EXPO_PUBLIC_API_URL=${tunnelUrl}`;
 
   fs.writeFileSync(frontendEnvPath, envContent);
@@ -203,13 +205,15 @@ app.put("/update_label/:userId/:label", updateLabel); //Atualiza label do bd LAB
 app.get("/label_summary/:userId", getLabelSummary);
 
 // Iniciar o servidor
+
+
 (async () => {
   try {
-      // Inicia o servidor
-      app.listen(PORT, "0.0.0.0", () => {
-          console.log(`Servidor rodando em http://localhost:${PORT}`);
-      });
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Servidor rodando em http://localhost:${PORT}`);
+    });
 
+    if (USE_LOCALTUNNEL) {
       // Inicia o LocalTunnel
       const tunnel = await localtunnel({ port: PORT });
       console.log(`LocalTunnel URL: ${tunnel.url}`);
@@ -218,10 +222,11 @@ app.get("/label_summary/:userId", getLabelSummary);
       updateFrontendEnv(tunnel.url);
 
       // Fecha o túnel ao encerrar o servidor
-      tunnel.on('close', () => {
-          console.log('Túnel fechado.');
+      tunnel.on("close", () => {
+        console.log("Túnel fechado.");
       });
+    }
   } catch (error) {
-      console.error("Erro ao iniciar o LocalTunnel:", error);
+    console.error("Erro ao iniciar o Servidor:", error);
   }
 })();

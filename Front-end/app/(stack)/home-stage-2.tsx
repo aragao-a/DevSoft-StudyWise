@@ -112,7 +112,7 @@ export default function Home() {
         }
     };
 
-    const handlePerformanceIconPress = () => {router.push('/profile')};
+    const handlePerformanceIconPress = () => {router.push('/performance')};
     const { control } = useForm();
 
     const [hasInputFocus, setHasInputFocus] = useState(false);
