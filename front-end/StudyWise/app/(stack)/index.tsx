@@ -58,21 +58,31 @@ export default function Index() {
     });
     if(!firstTouch) {
         return (
+        
         <Pressable style={styles.container} onPress={handleScreenTouch}>
+
+            {/* Tela de entrada do app antes do toque */}
             <IndexBackground>
+
                 <Animated.View style={[styles.container, beforeTouchStyle]}>
+
                     <SafeAreaView style={styles.container}>
+
                             <View style={styles.group}>
+
                                 <View style={styles.logo}>
                                     <Logo style={styles.logo}imageSize={0.14} imageVersion='1-1'/>
                                 </View>
+
                                 <View style = {styles.touchInstuction}> 
                                     <HandIcon/>
                                     <Text style= {styles.baseText}> 
                                         TOQUE NA TELA
                                     </Text>
                                 </View>
+
                             </View>
+                            
                     </SafeAreaView>
                 </Animated.View>
             </IndexBackground>
@@ -81,16 +91,28 @@ export default function Index() {
     }
     
     return (
+        
         <Pressable style={styles.container} onPress={Keyboard.dismiss}>
+
+        {/* Tela de entrada do app após o toque*/}
         <IndexBackground>
+
             <Animated.View style={[styles.container, afterTouchStyle]}>
+
                 <KeyboardAvoidingView behavior={(Platform.OS === 'android') ? undefined: 'padding'} style={styles.container}>
+
                     <View style={styles.container}>
-                    <Animated.View style={[{flex:1}, animatedLogoStyle]}>
-                        <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
-                    </Animated.View>
-                    <LoginForm/>
+
+
+                        {/* LOGO */}
+                        <Animated.View style={[{flex:1}, animatedLogoStyle]}>
+                            <Logo style={styles.logo} imageSize={0.14} imageVersion='1-1'/>
+                        </Animated.View>
+
+                        {/* Componente de input do Login/Cadastro */}
+                        <LoginForm/>
                     </View>
+
                 </KeyboardAvoidingView>
             </Animated.View>
         </IndexBackground>

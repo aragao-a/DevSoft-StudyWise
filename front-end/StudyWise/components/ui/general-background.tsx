@@ -4,7 +4,7 @@ import Logo from './logo';
 import GobackButton from './go-back-button';
 import { windowWidth, windowHeight } from '@/constants/dimensions';
 
-export default function HomeBackground({children, ...rest}: ViewProps) {
+export default function GeneralBackground({children, ...rest}: ViewProps) {
 
     return (
         <SafeAreaView style={{backgroundColor:'white', flex:1}}>

@@ -66,7 +66,7 @@ export default function RootLayout() {
         <Stack.Screen name="(stack)/sign-up"/>
         <Stack.Screen name="(stack)/home-stage-1" />
         <Stack.Screen name="(stack)/home-stage-2" />
-        <Stack.Screen name="(stack)/profile" />
+        <Stack.Screen name="(stack)/performance" />
     </Stack>
     </RootBackground>
   )
