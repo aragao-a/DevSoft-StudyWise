@@ -133,21 +133,25 @@ export const getLabelSummary = async (req, res) => {
   const { userId } = req.params;
 
   try {
-      // Verifica se o userId foi fornecido
       if (!userId) {
           return res.status(400).json({ message: "userId é obrigatório." });
       }
 
-      // Busca as labels do usuário no banco de dados
       const labels = await Quiz.getLabelSummaryByUserId(userId);
+      
+      // Filtra labels sem quizzes (exceto as primárias)
+      const filteredLabels = labels.filter(label => 
+          label.quizCount > 0 || 
+          ['Biologia', 'Física', 'Química', 'História', 'Miscelâneo'].includes(label.label)
+      );
 
-      // Retorna o resumo de labels
-      res.status(200).json({ labels });
+      res.status(200).json({ labels: filteredLabels });
   } catch (error) {
       console.error("Erro ao buscar labels:", error);
       res.status(500).json({ message: "Erro ao buscar labels." });
   }
 };
+
 
 export const renameLabel = async (req, res) => {
   const { userId, quizId } = req.params;
